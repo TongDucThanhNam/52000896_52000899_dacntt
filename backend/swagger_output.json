@@ -1,0 +1,21 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "verson": "1.0.0",
+    "title": "fashionAI API",
+    "description": "API documentation for fashionAI",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3001/api",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {}
+}
