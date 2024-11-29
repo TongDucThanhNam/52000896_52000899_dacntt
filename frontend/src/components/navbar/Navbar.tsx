@@ -7,6 +7,7 @@ import {Input} from "@/components/ui/input";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {priceVietNamDongformetter} from "@/lib/utils";
 import Link from "next/link";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 interface CartItem {
     id: number;
@@ -209,6 +210,14 @@ export default function Navbar() {
                                 </div>
                             </PopoverContent>
                         </Popover>
+
+                        {/*Avatar*/}
+                        <div className="absolute right-8">
+                            <Avatar>
+                                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn"/>
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                        </div>
                     </div>
                 </div>
             </div>

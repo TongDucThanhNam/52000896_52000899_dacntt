@@ -11,3 +11,12 @@ export const siteConfig = {
         },
     ],
 };
+
+export const breadcrumbPages = [
+    {name: "Sản phẩm", href: "/danh-sach-san-pham"},
+    {name: "Bài viết", href: "/bai-viet"},
+    {name: "Giới thiệu", href: "/gioi-thieu"},
+    {name: "Giỏ hàng", href: "/gio-hang"},
+    {name: "Thành viên", href: "/thanh-vien"},
+    {name: "Liên hệ", href: "/lien-he"},
+];

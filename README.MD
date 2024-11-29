@@ -42,7 +42,7 @@ npm run dev
 ### 2.3 Cài đặt AI:
 - Cài đặt các thư viện cần thiết:
 ```bash
-cd ai
+cd ai-service
 pip install -r requirements.txt
 ```
 

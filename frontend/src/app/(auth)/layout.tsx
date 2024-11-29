@@ -1,5 +1,4 @@
 import type {Metadata} from "next";
-import localFont from "next/font/local";
 import "@/app/globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
     description: "Trang web bán hàng thời trang",
 };
 
-export default function EcommerceLayout({
+export default function AuthLayout({
                                        children,
                                    }: Readonly<{
     children: React.ReactNode;
