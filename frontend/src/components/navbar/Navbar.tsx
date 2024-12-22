@@ -206,7 +206,9 @@ export default function Navbar() {
                                             </span>
                                         </div>
                                     </div>
-                                    <Button className="w-full">Đến giỏ hàng</Button>
+                                    <Link href="/gio-hang">
+                                        <Button className="w-full">Đến giỏ hàng</Button>
+                                    </Link>
                                 </div>
                             </PopoverContent>
                         </Popover>
