@@ -19,4 +19,3 @@ export const BaseSchema: Schema = new mongoose.Schema({
         default: true,
     },
 })
-

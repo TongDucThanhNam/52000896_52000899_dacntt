@@ -1,7 +1,7 @@
-import {ClientSession} from "mongoose";
+import type {ClientSession} from "mongoose";
 import {LogWithBase} from "../../../Domain/Entities/LogEntities";
 
-interface ILogRepository {
+export interface ILogRepository {
     createLog(logData: any, session: ClientSession): Promise<typeof LogWithBase>;
 
     getLogById(logId: string, queryData: any): Promise<typeof LogWithBase | null>;
@@ -12,6 +12,3 @@ interface ILogRepository {
 
     deleteLogById(logId: string, session: ClientSession): Promise<typeof LogWithBase | null>;
 }
-
-export default ILogRepository;
-

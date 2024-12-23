@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 hostname: "via.placeholder.com",
+            },
+            {
+                hostname: "placehold.co",
             }
         ],
 

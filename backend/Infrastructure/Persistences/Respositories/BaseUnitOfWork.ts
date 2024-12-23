@@ -1,5 +1,5 @@
-import mongoose, {ClientSession} from "mongoose";
-import {IBaseUnitOfWork} from "../../../Application/Persistences/IRepositories/IBaseUnitOfWork";
+import mongoose, {type ClientSession} from "mongoose";
+import type {IBaseUnitOfWork} from "../../../Application/Persistences/IRepositories/IBaseUnitOfWork";
 
 require('dotenv').config();
 const URI = process.env.CONNECTION_STRING;

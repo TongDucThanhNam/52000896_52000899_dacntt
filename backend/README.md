@@ -13,11 +13,13 @@ bun run index.ts
 ```
 
 - Docker build
+
 ```bash
 docker build -t tongducthanhnam/nextui-ecommerce-be:1.3 .
 ```
 
 - Docker run
+
 ```bash
 docker run -p 3001:3001 \                                
   -e PORT="3001" \

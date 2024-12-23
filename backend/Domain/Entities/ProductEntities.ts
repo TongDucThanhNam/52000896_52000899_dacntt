@@ -1,25 +1,22 @@
-import mongoose, {Types} from 'mongoose';
-import {BaseSchema} from './BaseEntities';
+import mongoose from "mongoose";
+import type {IProduct} from "../Interface/IProduct.ts";
+import {BaseSchema} from "./BaseEntities.ts";
 
-const isValidObjectId = (value: Types.ObjectId) => {
-    return value === null || mongoose.Types.ObjectId.isValid(value);
-}
-
-export const Product = new mongoose.Schema({
-    item_name: {type: String},
-    description: {type: String},
-    original_price: {type: Number},
-    price: {type: Number},
-    weight: {type: Number},
-    stock: {type: Number},
-    imageUrl: {type: String},
-    category: {type: String},
-    item_status: {type: String},
-})
+export const Product = new mongoose.Schema<IProduct>({
+    //attributes related to product
+    productName: {type: String},
+    productSlug: {type: String},
+    productDescription: {type: String},
+    productBrand: {type: String},
+    imageUrls: {type: [String]},
+    categoryId: {type: mongoose.Schema.Types.ObjectId, ref: 'CategoryWithBase'},
+    productAvgRating: {type: Number},
+    productTotalViews: {type: Number},
+});
 
 export const ProductWithBaseSchema = new mongoose.Schema({
     ...Product.obj,
-    ...BaseSchema.obj
-})
+    ...BaseSchema.obj,
+});
 
-export const ProductWithBase = mongoose.model('ProductWithBase', ProductWithBaseSchema, 'products')
+export const ProductWithBase = mongoose.model('ProductWithBase', ProductWithBaseSchema, 'products');

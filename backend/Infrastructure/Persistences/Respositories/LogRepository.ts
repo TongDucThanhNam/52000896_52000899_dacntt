@@ -1,5 +1,5 @@
-import ILogRepository from "../../../Application/Persistences/IRepositories/ILogRepository";
-import {ClientSession} from "mongoose";
+import type {ILogRepository} from "../../../Application/Persistences/IRepositories/ILogRepository";
+import type {ClientSession} from "mongoose";
 import {LogWithBase} from "../../../Domain/Entities/LogEntities";
 
 class LogRepository implements ILogRepository {
