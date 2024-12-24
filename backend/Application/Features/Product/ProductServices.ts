@@ -1,10 +1,10 @@
 import {UnitOfWork} from "../../../Infrastructure/Persistences/Respositories/UnitOfWork.ts";
 import type {IProductServices} from "../../Persistences/IServices/IProductServices.ts";
 import type {IUnitOfWork} from "../../Persistences/IRepositories/IUnitOfWork.ts";
-import type {ProductTagWithBase} from "../../../Domain/Entities/ProductTagEntities.ts";
-import type {CategoryWithBase} from "../../../Domain/Entities/CategoryEntities.ts";
-import type {ProductWithBase} from "../../../Domain/Entities/ProductEntities.ts";
-import type {VariantWithBase} from "../../../Domain/Entities/VariantEntities.ts";
+import  {type ProductTagWithBase} from "../../../Domain/Entities/ProductTagEntities.ts";
+import  {type CategoryWithBase} from "../../../Domain/Entities/CategoryEntities.ts";
+import  {type ProductWithBase} from "../../../Domain/Entities/ProductEntities.ts";
+import  {type VariantWithBase} from "../../../Domain/Entities/VariantEntities.ts";
 
 class ProductServices implements IProductServices {
     private unitOfWork: IUnitOfWork = new UnitOfWork();
@@ -103,8 +103,8 @@ class ProductServices implements IProductServices {
 
     async getCategories(data: any): Promise<typeof CategoryWithBase[] | null> {
         try {
-            const categories = await this.unitOfWork.categoryRepository.getAllCategories();
-            return categories;
+            // const categories = await this.unitOfWork.categoryRepository.getAllCategories();
+            // return categories;
         } catch (error) {
             throw error;
         }
@@ -123,10 +123,22 @@ class ProductServices implements IProductServices {
         }
     }
 
+    async createTag(data: any): Promise<typeof ProductTagWithBase> {
+        try {
+            const session = await this.unitOfWork.startTransaction();
+            const tag = await this.unitOfWork.productTagRepository.createProductTag(data, session);
+            await this.unitOfWork.commitTransaction();
+            return tag;
+        } catch (error) {
+            await this.unitOfWork.abortTransaction();
+            throw error;
+        }
+    }
+
     async getProductsByTag(data: any): Promise<typeof ProductWithBase[] | null> {
         try {
-            const products = await this.unitOfWork.productTagRepository.getProductsByTag(data);
-            return products;
+            // const products = await this.unitOfWork.productTagRepository.getProductsByTag(data);
+            // return products;
         } catch (error) {
             throw error;
         }
@@ -208,6 +220,41 @@ class ProductServices implements IProductServices {
         } catch (error) {
             await this.unitOfWork.abortTransaction();
             throw error;
+        }
+    }
+
+    async createProductWithVariants(data: any): Promise<typeof ProductWithBase> {
+        try {
+            const session = await this.unitOfWork.startTransaction();
+
+            const {
+                variants,
+                ...productData
+            } = data
+
+            console.log('productData', productData)
+            console.log('variants', variants)
+
+            const product:any = await this.unitOfWork.productRepository.createProduct(productData, session);
+            console.log('product', product)
+            const resultProduct = product[0];
+
+            console.log('product', product)
+            console.log('productID', resultProduct._id)
+
+            const variantPromises = variants.map((variant: any) => {
+                return this.unitOfWork.variantRepository.createVariant({
+                    ...variant,
+                    productId: resultProduct._id
+                }, session);
+            })
+
+            await Promise.all(variantPromises);
+            await this.unitOfWork.commitTransaction();
+            return product;
+        } catch (error) {
+            await this.unitOfWork.abortTransaction();
+            throw new Error("Error creating product with variants");
         }
     }
 }

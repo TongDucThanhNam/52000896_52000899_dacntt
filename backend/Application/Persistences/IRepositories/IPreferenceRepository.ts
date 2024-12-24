@@ -1,4 +1,3 @@
-// IPreferenceRepository
 import type {ClientSession} from "mongoose";
 import type {PreferenceWithBase} from "../../../Domain/Entities/PreferenceEntities.ts";
 

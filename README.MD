@@ -49,4 +49,9 @@ pip install -r requirements.txt
 ### 2.4 Docker hóa dự án:
 ...
 
+- Push docker images:
+```bash
+docker push tongducthanhnam/fashion-ai-be:latest
+docker push tongducthanhnam/fashion-ai-fe:latest
+```
 ### 3. Triển khai:

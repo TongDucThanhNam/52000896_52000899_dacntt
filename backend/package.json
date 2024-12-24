@@ -4,7 +4,7 @@
   "description": "Backend for fashionAI",
   "main": "index.ts",
   "scripts": {
-    "start": "npx tsx ./index.ts",
+    "start": "bun --bun index.ts",
     "swagger": "npx tsx ./swagger.ts",
     "dev": "nodemon --exec tsx index.ts"
   },

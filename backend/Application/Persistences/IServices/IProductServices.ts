@@ -15,6 +15,8 @@ export interface IProductServices {
 
     deleteProduct(data: any): Promise<typeof ProductWithBase | null>;
 
+    createProductWithVariants(data: any): Promise<typeof ProductWithBase>;
+
     // Variant operations
     createVariant(data: any): Promise<typeof VariantWithBase>;
 

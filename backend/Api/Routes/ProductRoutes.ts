@@ -11,6 +11,9 @@ router.get('/products/:id', productController.getProductById);
 router.put('/products/:id', productController.updateProduct);
 router.delete('/products/:id', productController.deleteProduct);
 
+//create product with many variants at once
+router.post('/products/variants', productController.createProductWithVariants);
+
 // Variant routes
 router.post('/products/:id/variants', productController.createVariant);
 router.get('/products/:id/variants', productController.getVariantsByProduct);

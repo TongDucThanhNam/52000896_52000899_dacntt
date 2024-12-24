@@ -509,6 +509,134 @@
         }
       }
     },
+    "/products/variants": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create product with variants",
+        "description": "Endpoint to create product with variants",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Product data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productName": {
+                  "type": "string",
+                  "example": "Tên sản phẩm"
+                },
+                "productSlug": {
+                  "type": "string",
+                  "example": "ten-san-pham"
+                },
+                "productDescription": {
+                  "type": "string",
+                  "example": "Mô tả sản phẩm"
+                },
+                "productBrand": {
+                  "type": "string",
+                  "example": "Thương hiệu"
+                },
+                "imageUrls": {
+                  "type": "array",
+                  "example": [
+                    "url1",
+                    "url2"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "60d21b4667d0d8992e610c85"
+                },
+                "productAvgRating": {
+                  "type": "number",
+                  "example": 4.5
+                },
+                "productTotalViews": {
+                  "type": "number",
+                  "example": 100
+                },
+                "variants": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "variantSku": {
+                        "type": "string",
+                        "example": "SKU002"
+                      },
+                      "variantName": {
+                        "type": "string",
+                        "example": "Màu Xanh - Size L"
+                      },
+                      "variantSlug": {
+                        "type": "string",
+                        "example": "mauxanh-size-l"
+                      },
+                      "variantKeyIndex": {
+                        "type": "number",
+                        "example": 2
+                      },
+                      "variantImageUrl": {
+                        "type": "string",
+                        "example": "url-avatar2"
+                      },
+                      "variantSize": {
+                        "type": "string",
+                        "example": "L"
+                      },
+                      "variantColor": {
+                        "type": "string",
+                        "example": "Xanh"
+                      },
+                      "variantStyle": {
+                        "type": "string",
+                        "example": "X Formal"
+                      },
+                      "variantMaterial": {
+                        "type": "string",
+                        "example": "Polyester"
+                      },
+                      "variantSeason": {
+                        "type": "string",
+                        "example": "Winter"
+                      },
+                      "variantPrice": {
+                        "type": "number",
+                        "example": 220000
+                      },
+                      "variantPromotionPrice": {
+                        "type": "number",
+                        "example": 200000
+                      },
+                      "variantStockQuantity": {
+                        "type": "number",
+                        "example": 30
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/products/{id}/variants": {
       "post": {
         "tags": [

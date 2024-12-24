@@ -212,7 +212,7 @@ export default class ProductController {
                 }
              */
             const productId = req.params.id;
-                const {
+            const {
                 variantSku,
                 variantName,
                 variantKeyIndex,
@@ -393,7 +393,7 @@ export default class ProductController {
                 categoryName
             } = req.body;
 
-            const categorySlug = slugify(categoryName,{
+            const categorySlug = slugify(categoryName, {
                 replacement: '-',
                 remove: undefined,
                 lower: true,
@@ -452,7 +452,7 @@ export default class ProductController {
                 categoryName
             } = req.body;
 
-            const categorySlug = slugify(categoryName,{
+            const categorySlug = slugify(categoryName, {
                 replacement: '-',
                 remove: undefined,
                 lower: true,
@@ -548,4 +548,100 @@ export default class ProductController {
     //         return res.status(500).json({message: error.message});
     //     }
     // }
+    createProductWithVariants = async (
+        req: Request,
+        res: Response
+    ): Promise<Response> => {
+        try {
+            /*
+                #swagger.tags = ['Products']
+                #swagger.summary = 'Create product with variants'
+                #swagger.description = 'Endpoint to create product with variants'
+
+                #swagger.parameters['body'] = {
+                    in: 'body',
+                    description: 'Product data',
+                    required: true,
+                    schema: {
+                        productName: 'Tên sản phẩm',
+                        productSlug: 'ten-san-pham',
+                        productDescription: 'Mô tả sản phẩm',
+                        productBrand: 'Thương hiệu',
+                        imageUrls: ['url1', 'url2'],
+                        categoryId: '60d21b4667d0d8992e610c85',
+                        productAvgRating: 4.5,
+                        productTotalViews: 100,
+                        variants: [
+                            {
+                                variantSku: 'SKU001',
+                                variantName: 'Màu Đỏ - Size M',
+                                variantSlug: 'maudo-size-m',
+                                variantKeyIndex: 1,
+                                variantImageUrl: 'url-avatar1',
+                                variantSize: 'M',
+                                variantColor: 'Đỏ',
+                                variantStyle: 'X Casual',
+                                variantMaterial: 'Cotton',
+                                variantSeason: 'Summer',
+                                variantPrice: 200000,
+                                variantPromotionPrice: 180000,
+                                variantStockQuantity: 50
+                            },
+                            {
+                                variantSku: 'SKU002',
+                                variantName: 'Màu Xanh - Size L',
+                                variantSlug: 'mauxanh-size-l',
+                                variantKeyIndex: 2,
+                                variantImageUrl: 'url-avatar2',
+                                variantSize: 'L',
+                                variantColor: 'Xanh',
+                                variantStyle: 'X Formal',
+                                variantMaterial: 'Polyester',
+                                variantSeason: 'Winter',
+                                variantPrice: 220000,
+                                variantPromotionPrice: 200000,
+                                variantStockQuantity: 30
+                            }
+                        ]
+                    }
+                }
+             */
+            const {
+                productName,
+                productDescription,
+                productBrand,
+                imageUrls,
+                categoryId,
+                productAvgRating,
+                productTotalViews,
+                variants
+            } = req.body;
+
+            const productSlug = slugify(productName, {
+                replacement: '-',
+                remove: undefined,
+                lower: true,
+                strict: true,
+                locale: 'vi',
+                trim: true
+            })
+
+            const data = {
+                productName,
+                productSlug,
+                productDescription,
+                productBrand,
+                imageUrls,
+                categoryId,
+                productAvgRating,
+                productTotalViews,
+                variants
+            }
+            const result = await this.productServices.createProductWithVariants(data);
+
+            return res.status(200).json(result);
+        } catch (error: any) {
+            return res.status(500).json({message: error.message});
+        }
+    }
 }

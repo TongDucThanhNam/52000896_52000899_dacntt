@@ -1,4 +1,3 @@
-// ITransactionItemRepository
 import type {ClientSession} from "mongoose";
 import type {TransactionItemWithBase} from "../../../Domain/Entities/TransactionItemEntities.ts";
 

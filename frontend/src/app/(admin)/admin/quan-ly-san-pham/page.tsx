@@ -1,5 +1,4 @@
 import DataTableDemo from "@/components/products/ProductTable";
-import {Button} from "@/components/ui/button";
 
 export default function QuanLySanPham() {
     return (

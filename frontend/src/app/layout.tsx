@@ -1,4 +1,3 @@
-import type {Metadata} from "next";
 import localFont from "next/font/local";
 import "@/app/globals.css";
 
@@ -13,6 +12,9 @@ const geistMono = localFont({
     weight: "100 900",
 });
 
+import {Toaster} from "@/components/ui/toaster"
+
+
 export default function RootLayout({
                                        children,
                                    }: Readonly<{
@@ -24,6 +26,7 @@ export default function RootLayout({
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
         {children}
+        <Toaster/>
         </body>
         </html>
     );

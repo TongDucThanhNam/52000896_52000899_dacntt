@@ -29,8 +29,9 @@ app.use("/api", transactionRoutes);
 app.use("/api", userRouter);
 //------------------Routes------------------//
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on http://${process.env.HOST}:${process.env.PORT}`);
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server is running on http://${process.env.HOST}:${port}`);
 });
 
 //------------------Handle Error------------------//

@@ -1,4 +1,3 @@
-// IProductTagRepository
 import type {ClientSession} from "mongoose";
 import type {ProductTagWithBase} from "../../../Domain/Entities/ProductTagEntities.ts";
 

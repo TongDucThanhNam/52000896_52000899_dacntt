@@ -1,8 +1,8 @@
 import type {IUserServices} from "../../Persistences/IServices/IUserServices.ts";
 import type {IUnitOfWork} from "../../Persistences/IRepositories/IUnitOfWork.ts";
 import {UnitOfWork} from "../../../Infrastructure/Persistences/Respositories/UnitOfWork.ts";
-import  {type UserWithBase} from "../../../Domain/Entities/UserEntities.ts";
-import  {type PreferenceWithBase} from "../../../Domain/Entities/PreferenceEntities.ts";
+import {type UserWithBase} from "../../../Domain/Entities/UserEntities.ts";
+import {type PreferenceWithBase} from "../../../Domain/Entities/PreferenceEntities.ts";
 
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -11,15 +11,15 @@ dotenv.config();
 
 function encodeJwtToken(user: any): { accessToken: string, refreshToken: string } {
     const accessToken: string = jwt.sign(
-        { userId: user._id },
+        {userId: user._id},
         process.env.JWT_SECRET || '',
-        { algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRES_IN }
+        {algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRES_IN}
     );
 
     const refreshToken: string = jwt.sign(
-        { userId: user._id },
+        {userId: user._id},
         process.env.REFRESH_TOKEN_SECRET || '',
-        { algorithm: 'HS256', expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN }
+        {algorithm: 'HS256', expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN}
     );
 
     // console.log(accessToken, refreshToken);
@@ -164,7 +164,7 @@ class UserServices implements IUserServices {
                 isActive: true,
             }
 
-            const user:any = await this.unitOfWork.userRepository.getAllUsers(
+            const user: any = await this.unitOfWork.userRepository.getAllUsers(
                 queryData
             )
 
@@ -202,15 +202,19 @@ class UserServices implements IUserServices {
 
     async registerUser(data: any): Promise<any> {
         try {
-
+            const session = await this.unitOfWork.startTransaction();
+            const user = await this.unitOfWork.userRepository.createUser(data, session);
+            await this.unitOfWork.commitTransaction();
+            return user;
         } catch (error) {
+            await this.unitOfWork.abortTransaction();
             throw error;
         }
     }
 
     async removeUserPreference(data: any): Promise<any> {
         try {
-
+            //TODO:
         } catch (error) {
             throw error;
         }
@@ -218,7 +222,7 @@ class UserServices implements IUserServices {
 
     async resetPassword(data: any): Promise<any> {
         try {
-
+            //TODO:
         } catch (error) {
             throw error;
         }

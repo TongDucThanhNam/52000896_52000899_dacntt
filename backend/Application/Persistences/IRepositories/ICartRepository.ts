@@ -1,4 +1,3 @@
-// ICartRepository
 import type {ClientSession} from "mongoose";
 import type {CartWithBase} from "../../../Domain/Entities/CartEntities.ts";
 

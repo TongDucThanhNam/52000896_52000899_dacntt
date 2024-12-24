@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - BACKEND_URL=${BACKEND_URL}
+        - NEXT_PUBLIC_DOMAIN=${NEXT_PUBLIC_DOMAIN}
+        - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
+        - UPLOADTHING_TOKEN=${UPLOADTHING_TOKEN}
+      target: release
+    image:
+      tongducthanhnam/fashion-ai-fe:latest
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "9999:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    environment:
+      - BACKEND_URL=${BACKEND_URL}
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        - PORT=${PORT}
+        - CONNECTION_STRING=${CONNECTION_STRING}
+        - DATABASE_NAME=${DATABASE_NAME}
+        - JWT_SECRET=${JWT_SECRET}
+        - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+        - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+        - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+      target: release
+    image:
+      tongducthanhnam/fashion-ai-be:latest
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=${PORT}
+      - HOST=${HOST}
+      - CONNECTION_STRING=${CONNECTION_STRING}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - REFRESH_TOKEN_EXPIRES_IN=${REFRESH_TOKEN_EXPIRES_IN}
+    networks:
+      - app-network
+    volumes:
+      - ./backend:/app
+
+networks:
+  app-network:
+    driver: bridge
