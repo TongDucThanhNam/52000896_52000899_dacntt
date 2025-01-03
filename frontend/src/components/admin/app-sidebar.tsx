@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import {Calendar, Home, Inbox, Search} from "lucide-react"
 
 import {
     Sidebar,
@@ -38,16 +38,16 @@ const items = [
 export function AppSidebar() {
     return (
         <Sidebar>
-            <SidebarContent>
+            <SidebarContent className={"bg-yellow-50 items-center"}>
                 <SidebarGroup>
                     <SidebarGroupLabel>Application</SidebarGroupLabel>
-                    <SidebarGroupContent>
+                    <SidebarGroupContent className={""}>
                         <SidebarMenu>
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
-                                            <item.icon />
+                                        <a className={""} href={item.url}>
+                                            <item.icon/>
                                             <span>{item.title}</span>
                                         </a>
                                     </SidebarMenuButton>

@@ -1,8 +1,8 @@
-import { NextRequest } from 'next/server';
+import {NextRequest} from 'next/server';
 
 
 export async function GET() {
-    return Response.json({ message: 'Hello World' })
+    return Response.json({message: 'Hello World'})
 }
 
 export async function POST(request: NextRequest) {
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
         return Response.json(result);
     } catch (error) {
         console.error('Error in API route:', error);
-        return Response.json({ error: 'Internal Server Error' }, { status: 500 });
+        return Response.json({error: 'Internal Server Error'}, {status: 500});
     }
 }
 

@@ -11,7 +11,10 @@ const nextConfig: NextConfig = {
             },
             {
                 hostname: "placehold.co",
-            }
+            },
+            {
+                hostname: "luoichongmuoi.shop",
+            },
         ],
 
     }

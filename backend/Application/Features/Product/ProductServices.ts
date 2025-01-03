@@ -6,7 +6,7 @@ import  {type CategoryWithBase} from "../../../Domain/Entities/CategoryEntities.
 import  {type ProductWithBase} from "../../../Domain/Entities/ProductEntities.ts";
 import  {type VariantWithBase} from "../../../Domain/Entities/VariantEntities.ts";
 
-class ProductServices implements IProductServices {
+export class ProductServices implements IProductServices {
     private unitOfWork: IUnitOfWork = new UnitOfWork();
 
     async addTagToProduct(data: any): Promise<typeof ProductTagWithBase> {
@@ -103,8 +103,8 @@ class ProductServices implements IProductServices {
 
     async getCategories(data: any): Promise<typeof CategoryWithBase[] | null> {
         try {
-            // const categories = await this.unitOfWork.categoryRepository.getAllCategories();
-            // return categories;
+            const categories = await this.unitOfWork.categoryRepository.getAllCategories(data);
+            return categories;
         } catch (error) {
             throw error;
         }
@@ -137,8 +137,12 @@ class ProductServices implements IProductServices {
 
     async getProductsByTag(data: any): Promise<typeof ProductWithBase[] | null> {
         try {
+            //TODO: implement this
             // const products = await this.unitOfWork.productTagRepository.getProductsByTag(data);
             // return products;
+
+            return null;
+
         } catch (error) {
             throw error;
         }
@@ -259,4 +263,4 @@ class ProductServices implements IProductServices {
     }
 }
 
-export {ProductServices};
+export default ProductServices;

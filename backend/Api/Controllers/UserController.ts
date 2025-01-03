@@ -2,6 +2,7 @@ import type {IUserServices} from "../../Application/Persistences/IServices/IUser
 import UserServices from "../../Application/Features/User/UserServices.ts";
 import type {Request, Response,} from 'express';
 import CartServices from "../../Application/Features/Cart/CartServices.ts";
+import {CreateUserRequest} from "../../Application/Features/User/Requests/CreateUserRequest.ts";
 
 export default class UserController {
     private userServices: IUserServices = new UserServices();
@@ -15,8 +16,8 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Get all users'
-                #swagger.description = 'Endpoint to get all users'
+                #swagger.summary = 'Lấy tất cả người dùng'
+                #swagger.description = 'Endpoint để lấy tất cả người dùng'
              */
             const query = req.query;
             const result = await this.userServices.getAllUsers(query);
@@ -30,10 +31,10 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Get user by id'
-                #swagger.description = 'Endpoint to get user by id'
+                #swagger.summary = 'Lấy thông tin người dùng'
+                #swagger.description = 'Endpoint để lấy thông tin người dùng theo Id'
              */
-            const userId = req.params.id;
+            const userId = req.params.userId;
             const result = await this.userServices.getUserById(userId);
             return res.status(200).json(result);
         } catch (error: any) {
@@ -41,12 +42,15 @@ export default class UserController {
         }
     }
 
-    createUser = async (req: Request, res: Response): Promise<Response> => {
+    createUser = async (
+        req: Request<any, any, CreateUserRequest, any>,
+        res: Response
+    ): Promise<Response> => {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Create user'
-                #swagger.description = 'Endpoint to create user'
+                #swagger.summary = 'Thêm người dùng'
+                #swagger.description = 'Endpoint để thêm người dùng'
 
                 #swagger.parameters['User'] = {
                     in: 'body',
@@ -85,7 +89,6 @@ export default class UserController {
                 userJob,
                 userCity,
                 userRole
-
             } = req.body;
 
             const data = {
@@ -105,7 +108,7 @@ export default class UserController {
             }
             const result: any = await this.userServices.createUser(data);
 
-            console.log(result);
+            // console.log(result);
 
             if (result) {
                 // Create user mean create a Cart for user
@@ -121,8 +124,8 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Update user'
-                #swagger.description = 'Endpoint to update user'
+                #swagger.summary = 'Cập nhật thông tin người dùng'
+                #swagger.description = 'Endpoint để cập nhật thông tin người dùng theo Id'
 
                 #swagger.parameters['User'] = {
                     in: 'body',
@@ -147,7 +150,7 @@ export default class UserController {
                 }
 
              */
-            const userId = req.params.id;
+            const userId = req.params.userId;
             const {
                 userName,
                 userPasswordHash,
@@ -191,10 +194,10 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Delete user'
-                #swagger.description = 'Endpoint to delete user'
+                #swagger.summary = 'Xóa người dùng'
+                #swagger.description = 'Endpoint để xóa người dùng theo Id'
              */
-            const userId = req.params.id;
+            const userId = req.params.userId;
             const result = await this.userServices.deleteUser(userId);
             return res.status(200).json(result);
         } catch (error: any) {
@@ -205,8 +208,8 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Update user preferences'
-                #swagger.description = 'Endpoint to update user preferences'
+                #swagger.summary = 'Cập nhật sở thích người dùng'
+                #swagger.description = 'Endpoint để cập nhật sở thích người dùng theo Id'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -239,10 +242,10 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Get user preferences'
-                #swagger.description = 'Endpoint to get user preferences'
+                #swagger.summary = 'Lấy tất cả sở thích người dùng'
+                #swagger.description = 'Endpoint để lấy sở thích của người dùng theo Id'
              */
-            const userId = req.params.id;
+            const userId = req.params.userId;
             const result = await this.userServices.getUserPreferences(userId);
             return res.status(200).json(result);
         } catch (error: any) {
@@ -253,8 +256,8 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Add user preference'
-                #swagger.description = 'Endpoint to add user preference'
+                #swagger.summary = 'Thêm sở thích người dùng'
+                #swagger.description = 'Endpoint để thêm sở thích người dùng theo Id'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -287,10 +290,10 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Remove user preference'
-                #swagger.description = 'Endpoint to remove user preference'
+                #swagger.summary = 'Xóa sở thích người dùng'
+                #swagger.description = 'Endpoint để xóa sở thích người dùng theo Id'
              */
-            const userId = req.params.id;
+            const userId = req.params.userId;
             const result = await this.userServices.removeUserPreference(userId);
             return res.status(200).json(result);
         } catch (error: any) {
@@ -301,8 +304,26 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Register user'
-                #swagger.description = 'Endpoint to register user'
+                #swagger.summary = 'Đăng ký người dùng'
+                #swagger.description = 'Endpoint để đăng ký người dùng'
+
+                #swagger.parameters['body'] = {
+                    in: 'body',
+                    description: 'User information.',
+                    required: true,
+                    type: 'object',
+                    schema: {
+                       userName: "Linh Ngọc Đàm",
+                       userPasswordHash: "12345678",
+                       userEmail: "email@gmail.com",
+                          userPhone: "0123456789",
+                              userHeight: 170,
+                              userWeight: 60,
+                            userDateOfBirth: "01/01/2000",
+                            userAddress: "Thanh xuân Hà Nội",
+                                userImageUrl: "",
+                    }
+                }
              */
             const {
                 userName,
@@ -345,8 +366,8 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Login user'
-                #swagger.description = 'Endpoint to login user'
+                #swagger.summary = 'Đăng nhập người dùng'
+                #swagger.description = 'Endpoint để đăng nhập người dùng'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -354,8 +375,8 @@ export default class UserController {
                     required: true,
                     type: 'object',
                     schema: {
-                       userEmail: "tnguyen@example.net",
-                          userPasswordHash: "3249531603"
+                      userEmail: "tnguyen@example.net",
+                      userPasswordHash: "3249531603"
                     }
                 }
              */
@@ -385,10 +406,12 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Logout user'
-                #swagger.description = 'Endpoint to logout user'
+                #swagger.summary = 'Đăng xuất người dùng'
+                #swagger.description = 'Endpoint để đăng xuất người dùng theo Id'
+
+
              */
-            const userId = req.params.id;
+            const userId = req.params.userId;
             const result = await this.userServices.logoutUser(userId);
             return res.status(200).json(result);
         } catch (error: any) {
@@ -399,8 +422,8 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Forgot password'
-                #swagger.description = 'Endpoint to forgot password'
+                #swagger.summary = 'Quên mật khẩu'
+                #swagger.description = 'Endpoint để quên mật khẩu theo email'
              */
             const userEmail = req.body.userEmail;
             const result = await this.userServices.forgotPassword(userEmail);
@@ -413,8 +436,8 @@ export default class UserController {
         try {
             /*
                 #swagger.tags = ['Users']
-                #swagger.summary = 'Reset password'
-                #swagger.description = 'Endpoint to reset password'
+                #swagger.summary = 'Đặt lại mật khẩu'
+                #swagger.description = 'Endpoint để đặt lại mật khẩu theo email'
              */
             const {
                 userEmail,

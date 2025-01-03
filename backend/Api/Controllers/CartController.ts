@@ -6,24 +6,6 @@ export default class CartController {
     private cartServices: any = new CartServices();
 
     //CRUD
-    // createCart = async (
-    //     req: Request,
-    //     res: Response
-    // ): Promise<Response> => {
-    //     try {
-    //         /*
-    //             #swagger.tags = ['Carts']
-    //             #swagger.summary = 'Create cart'
-    //             #swagger.description = 'Endpoint to create cart'
-    //
-    //          */
-    //         const query = req.body;
-    //         const result = await this.cartServices.createCart(query);
-    //         return res.status(200).json(result);
-    //     } catch (error: any) {
-    //         return res.status(500).json({message: error.message});
-    //     }
-    // }
     getCartByUserId = async (
         req: Request,
         res: Response
@@ -31,8 +13,8 @@ export default class CartController {
         try {
             /*
                 #swagger.tags = ['Carts']
-                #swagger.summary = 'Get cart by user id'
-                #swagger.description = 'Endpoint to get cart by user id'
+                #swagger.summary = 'Lấy thông tin giỏ hàng'
+                #swagger.description = 'Endpoint để lấy thông tin giỏ hàng của user theo Id'
              */
             const userId = req.params.userId;
             const result = await this.cartServices.getCartByUserId(userId);
@@ -48,8 +30,8 @@ export default class CartController {
         try {
             /*
                 #swagger.tags = ['Carts']
-                #swagger.summary = 'Add item to cart'
-                #swagger.description = 'Endpoint to add item to cart'
+                #swagger.summary = 'Thêm sản phẩm vào giỏ hàng'
+                #swagger.description = 'Endpoint để thêm sản phẩm vào giỏ hàng của user theo Id'
              */
             const userId = req.params.id;
             const {
@@ -75,10 +57,17 @@ export default class CartController {
         try {
             /*
                 #swagger.tags = ['Carts']
-                #swagger.summary = 'Update cart item'
-                #swagger.description = 'Endpoint to update cart item'
+                #swagger.summary = 'Cập nhật giỏ hàng'
+                #swagger.description = 'Endpoint để cập nhật giỏ hàng của user theo Id'
+
+                #swagger.parameters['body'] = {
+                    in: 'body',
+                    description: 'Cart data',
+                    required: true,
+                    schema: { $ref: "#/definitions/Cart" }
+                }
              */
-            const userId = req.params.id;
+            const userId = req.params.itemId;
             const {
                 productId,
                 quantity
@@ -102,10 +91,10 @@ export default class CartController {
         try {
             /*
                 #swagger.tags = ['Carts']
-                #swagger.summary = 'Remove cart item'
-                #swagger.description = 'Endpoint to remove cart item'
+                #swagger.summary = 'Xóa sản phẩm khỏi giỏ hàng'
+                #swagger.description = 'Endpoint để xóa sản phẩm khỏi giỏ hàng của user theo Id'
              */
-            const userId = req.params.id;
+            const userId = req.params.itemId;
             const {
                 productId,
             } = req.body;
@@ -127,8 +116,8 @@ export default class CartController {
         try {
             /*
                 #swagger.tags = ['Carts']
-                #swagger.summary = 'Clear cart'
-                #swagger.description = 'Endpoint to clear cart'
+                #swagger.summary = 'Xóa toàn bộ sản phẩm khỏi giỏ hàng'
+                #swagger.description = 'Endpoint để xóa toàn bộ sản phẩm khỏi giỏ hàng'
              */
             const userId = req.params.id;
             const result = await this.cartServices.clearCart(userId);

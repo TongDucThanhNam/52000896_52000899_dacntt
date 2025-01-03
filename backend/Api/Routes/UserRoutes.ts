@@ -6,15 +6,15 @@ const userController = new UserController();
 
 router.get('/users', userController.getAllUsers);
 router.post('/users', userController.createUser);
-router.get('/users/:id', userController.getUserById);
-router.put('/users/:id', userController.updateUser);
-router.delete('/users/:id', userController.deleteUser);
+router.get('/users/:userId', userController.getUserById);
+router.put('/users/:userId', userController.updateUser);
+router.delete('/users/:userId', userController.deleteUser);
 
 // User preferences
-router.post('/users/:id/preferences', userController.addUserPreference);
-router.put('/users/:id/preferences', userController.updateUserPreferences);
-router.get('/users/:id/preferences', userController.getUserPreferences);
-router.delete('/users/:id/preferences', userController.removeUserPreference);
+router.post('/users/:userId/preferences', userController.addUserPreference);
+router.put('/users/:userId/preferences', userController.updateUserPreferences);
+router.get('/users/:userId/preferences', userController.getUserPreferences);
+router.delete('/users/:userId/preferences', userController.removeUserPreference);
 
 // Authentication services
 router.post('/register', userController.registerUser);

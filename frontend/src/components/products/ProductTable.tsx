@@ -284,7 +284,7 @@ export default function DataTableDemo() {
     return (
         <div className="w-full">
             <Button className="bg-primary text-white"
-                onClick={() => alert("Add product")}
+                    onClick={() => alert("Add product")}
             >Thêm sản phẩm</Button>
             <div className="flex items-center py-4">
                 <Input

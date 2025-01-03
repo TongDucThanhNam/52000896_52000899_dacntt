@@ -1,19 +1,19 @@
-import type {ITransactionService} from "../../Application/Persistences/IServices/ITransactionServices.ts";
+import type { ITransactionService } from "../../Application/Persistences/IServices/ITransactionServices.ts";
 import TransactionServices from "../../Application/Features/Transaction/TransactionServices.ts";
-import type {Request, Response,} from 'express';
+import type { Request, Response } from "express";
 
 export default class TransactionController {
-    private transactionServices: ITransactionService = new TransactionServices()
+  private transactionServices: ITransactionService = new TransactionServices();
 
-    createTransaction = async (
-        req: Request,
-        res: Response
-    ): Promise<Response> => {
-        try {
-            /*
+  createTransaction = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+    try {
+      /*
                 #swagger.tags = ['Transactions']
-                #swagger.summary = 'Create transaction'
-                #swagger.description = 'Endpoint to create transaction'
+                #swagger.summary = 'Tạo giao dịch'
+                #swagger.description = 'Endpoint để tạo giao dịch'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -27,80 +27,83 @@ export default class TransactionController {
                      }
                 }
              */
-            const query = req.query;
-            const result = await this.transactionServices.createTransaction(query);
-            return res.status(200).json(result);
-        } catch (error: any) {
-            return res.status(500).json({message: error.message});
-        }
+      const query = req.query;
+      const result = await this.transactionServices.createTransaction(query);
+      return res.status(200).json(result);
+    } catch (error: any) {
+      return res.status(500).json({ message: error.message });
     }
-    getTransactionById = async (
-        req: Request,
-        res: Response
-    ): Promise<Response> => {
-        try {
-            /*
+  };
+  getTransactionById = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+    try {
+      /*
                 #swagger.tags = ['Transactions']
-                #swagger.summary = 'Get transaction by id'
-                #swagger.description = 'Endpoint to get transaction by id'
+                #swagger.summary = 'Lấy thông tin giao dịch'
+                #swagger.description = 'Endpoint để lấy thông tin giao dịch theo Id'
              */
-            const transactionId = req.params.id;
-            const result = await this.transactionServices.getTransactionById(transactionId);
-            return res.status(200).json(result);
-        } catch (error: any) {
-            return res.status(500).json({message: error.message});
-        }
+      const transactionId = req.params.transactionId;
+      const result =
+        await this.transactionServices.getTransactionById(transactionId);
+      return res.status(200).json(result);
+    } catch (error: any) {
+      return res.status(500).json({ message: error.message });
     }
-    getUserTransactions = async (
-        req: Request,
-        res: Response
-    ): Promise<Response> => {
-        try {
-            /*
+  };
+  getUserTransactions = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+    try {
+      /*
                 #swagger.tags = ['Transactions']
-                #swagger.summary = 'Get user transactions'
-                #swagger.description = 'Endpoint to get user transactions'
+                #swagger.summary = 'Lấy thông tin giao dịch của user'
+                #swagger.description = 'Endpoint để lấy thông tin giao dịch của user theo Id'
              */
-            const userId = req.params.id;
-            const result = await this.transactionServices.getUserTransactions(userId);
-            return res.status(200).json(result);
-        } catch (error: any) {
-            return res.status(500).json({message: error.message});
-        }
+      const userId = req.params.userId;
+      const result = await this.transactionServices.getUserTransactions(userId);
+      return res.status(200).json(result);
+    } catch (error: any) {
+      return res.status(500).json({ message: error.message });
     }
-    getTransactionItems = async (
-        req: Request,
-        res: Response
-    ): Promise<Response> => {
-        try {
-            /*
+  };
+  getTransactionItems = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+    try {
+      /*
                 #swagger.tags = ['Transactions']
-                #swagger.summary = 'Get transaction items'
-                #swagger.description = 'Endpoint to get transaction items'
+                #swagger.summary = 'Lấy danh sách sản phẩm trong giao dịch'
+                #swagger.description = 'Endpoint để lấy danh sách sản phẩm trong giao dịch theo Id'
              */
-            const transactionId = req.params.id;
-            const result = await this.transactionServices.getTransactionItems(transactionId);
-            return res.status(200).json(result);
-        } catch (error: any) {
-            return res.status(500).json({message: error.message});
-        }
+      const transactionId = req.params.transactionId;
+      const result =
+        await this.transactionServices.getTransactionItems(transactionId);
+      return res.status(200).json(result);
+    } catch (error: any) {
+      return res.status(500).json({ message: error.message });
     }
-    updateTransactionStatus = async (
-        req: Request,
-        res: Response
-    ): Promise<Response> => {
-        try {
-            /*
+  };
+  updateTransactionStatus = async (
+    req: Request,
+    res: Response,
+  ): Promise<Response> => {
+    try {
+      /*
                 #swagger.tags = ['Transactions']
-                #swagger.summary = 'Update transaction status'
-                #swagger.description = 'Endpoint to update transaction status'
+                #swagger.summary = 'Cập nhật trạng thái giao dịch'
+                #swagger.description = 'Endpoint để cập nhật trạng thái giao dịch theo Id'
              */
-            const transactionId = req.params.id;
-            const query = req.query;
-            const result = await this.transactionServices.updateTransactionStatus(query);
-            return res.status(200).json(result);
-        } catch (error: any) {
-            return res.status(500).json({message: error.message});
-        }
+      const transactionId = req.params.transactionId;
+      const query = req.query;
+      const result =
+        await this.transactionServices.updateTransactionStatus(query);
+      return res.status(200).json(result);
+    } catch (error: any) {
+      return res.status(500).json({ message: error.message });
     }
+  };
 }

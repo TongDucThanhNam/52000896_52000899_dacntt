@@ -1,5 +1,6 @@
 import mongoose, {type ClientSession} from "mongoose";
 import type {IBaseUnitOfWork} from "../../../Application/Persistences/IRepositories/IBaseUnitOfWork";
+import {connectDB} from "../Config/DbConnection.ts";
 
 require('dotenv').config();
 const URI = process.env.CONNECTION_STRING;
@@ -10,11 +11,16 @@ export class BaseUnitOfWork implements IBaseUnitOfWork {
 
     constructor() {
         this.connect();
+        // connectDB().then(r => console.log(r));
     }
 
     async connect() {
         try {
-            await mongoose.connect(`${URI}`, {dbName: DBName})
+            await mongoose.connect(`${URI}`, {
+                dbName: DBName,
+                connectTimeoutMS: 60000,
+            });
+            console.log("Connected successfully to database !");
         } catch (error: any) {
             throw new Error(error.message)
         }

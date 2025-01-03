@@ -1,5 +1,7 @@
 import localFont from "next/font/local";
 import "@/app/globals.css";
+import {Toaster} from "@/components/ui/toaster"
+import {darkerGrotesque} from "@/app/fonts/fonts";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -12,7 +14,11 @@ const geistMono = localFont({
     weight: "100 900",
 });
 
-import {Toaster} from "@/components/ui/toaster"
+const sjBrutalDude = localFont({
+    src: "./fonts/SjBrutalDude.ttf",
+    variable: "--font-sj-brutal-dude",
+    weight: "400",
+});
 
 
 export default function RootLayout({
@@ -23,7 +29,7 @@ export default function RootLayout({
     return (
         <html lang="vi">
         <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            className={`${darkerGrotesque.className} antialiased`}
         >
         {children}
         <Toaster/>

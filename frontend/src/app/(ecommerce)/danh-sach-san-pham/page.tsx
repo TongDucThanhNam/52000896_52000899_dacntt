@@ -1,4 +1,4 @@
-import ProductGridComponent from "@/components/homepage/ProductGridComponent";
+import ProductGridComponent from "@/components/products/ProductGridComponent";
 import {Badge} from "@/components/ui/badge";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
@@ -38,7 +38,7 @@ export default function DanhSachSanPham() {
                                     key={filter.name}
                                 >
                                     <DropdownMenuTrigger asChild={true}>
-                                        <Button variant="outline" className="bg-background">
+                                        <Button variant={"neutral"} className="bg-background">
                                             {filter.name}
                                         </Button>
                                     </DropdownMenuTrigger>
@@ -57,7 +57,7 @@ export default function DanhSachSanPham() {
                         {activeFilters.map((filter: any, index: any) => (
                             <Badge
                                 key={`${filter}-${index}`}
-                                variant="secondary"
+                                variant={"default"}
                                 className="rounded-full px-3 py-1"
                             >
                                 {filter}

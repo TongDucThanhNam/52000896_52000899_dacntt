@@ -14,12 +14,12 @@ export default class InteractionController {
         try {
             /*
                 #swagger.tags = ['Interactions']
-                #swagger.summary = 'Track interaction'
-                #swagger.description = 'Endpoint to track interaction'
+                #swagger.summary = 'Theo dõi tương tác'
+                #swagger.description = 'Endpoint để theo dõi tương tác của ngừoi dùng'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
-                    description: 'Query to track interaction',
+                    description: 'Thông tin tương tác',
                     required: true,
                     type: 'object',
                     schema: {
@@ -63,8 +63,8 @@ export default class InteractionController {
         try {
             /*
                 #swagger.tags = ['Interactions']
-                #swagger.summary = 'Get user interactions'
-                #swagger.description = 'Endpoint to get user interactions'
+                #swagger.summary = 'Lấy thông tin tương tác của của một user'
+                #swagger.description = 'Endpoint để lấy thông tin tương tác của một user'
              */
             const userId = req.params.userId;
             const result = await this.interactionServices.getUserInteractions(userId);
@@ -81,8 +81,8 @@ export default class InteractionController {
         try {
             /*
                 #swagger.tags = ['Interactions']
-                #swagger.summary = 'Get product interactions'
-                #swagger.description = 'Endpoint to get product interactions'
+                #swagger.summary = 'Lấy thông tin tương tác của một sản phẩm'
+                #swagger.description = 'Endpoint để lấy thông tin tương tác của một sản phẩm'
              */
             const productId = req.params.productId;
             const result = await this.interactionServices.getProductInteractions(productId);
@@ -99,8 +99,8 @@ export default class InteractionController {
         try {
             /*
                 #swagger.tags = ['Interactions']
-                #swagger.summary = 'Create log'
-                #swagger.description = 'Endpoint to create log'
+                #swagger.summary = 'Tạo log'
+                #swagger.description = 'Endpoint để tạo log'
              */
             const query = req.query;
             const result = await this.interactionServices.createLog(query);
@@ -116,11 +116,12 @@ export default class InteractionController {
         try {
             /*
                 #swagger.tags = ['Interactions']
-                #swagger.summary = 'Get user logs'
-                #swagger.description = 'Endpoint to get user logs'
+                #swagger.summary = 'Lấy thông tin log từ user'
+                #swagger.description = 'Endpoint để lấy thông tin log từ user'
              */
             const userId = req.params.id;
             const result = await this.interactionServices.getUserLogs(userId);
+            
             return res.status(200).json(result);
         } catch (error: any) {
             return res.status(500).json({message: error.message});

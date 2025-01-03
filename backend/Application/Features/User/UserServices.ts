@@ -145,6 +145,7 @@ class UserServices implements IUserServices {
 
     async forgotPassword(data: any): Promise<void> {
         try {
+            //TODO: implement this
 
         } catch (error) {
             throw error;
@@ -193,7 +194,7 @@ class UserServices implements IUserServices {
 
     async logoutUser(data: any): Promise<any> {
         try {
-
+            //TODO: implement this
 
         } catch (error) {
             throw error;
@@ -214,7 +215,7 @@ class UserServices implements IUserServices {
 
     async removeUserPreference(data: any): Promise<any> {
         try {
-            //TODO:
+            //TODO: implement this
         } catch (error) {
             throw error;
         }
@@ -222,7 +223,7 @@ class UserServices implements IUserServices {
 
     async resetPassword(data: any): Promise<any> {
         try {
-            //TODO:
+            //TODO: implement this
         } catch (error) {
             throw error;
         }

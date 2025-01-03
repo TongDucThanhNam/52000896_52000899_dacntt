@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import {Button} from "@/components/ui/button";
-import {MenuIcon, Search, ShoppingCart, CircleX} from "lucide-react";
+import {CircleX, MenuIcon, Search, ShoppingCart} from "lucide-react";
 import {siteConfig} from "@/config/site";
 import {Input} from "@/components/ui/input";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
@@ -42,7 +42,7 @@ const cartItems: CartItem[] = [
 
 export default function Navbar() {
     return (
-        <nav className="w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <nav className="w-full border-b bg-blue-300 backdrop-blur supports-[backdrop-filter]:bg-blue-200">
             <div className="container mx-auto px-4 sm:px-6 lg:px-20">
                 <div className="flex items-center justify-between md:justify-around h-16">
                     <div className="flex items-center">
@@ -100,7 +100,7 @@ export default function Navbar() {
                             </div>
 
 
-                            <span className="font-bold text-lg">fasionAI</span>
+                            <span className="font-bold text-lg font-san">fasionAI</span>
                         </Link>
                         <nav className="hidden sm:ml-6 sm:flex sm:space-x-4">
                             {siteConfig.navItems.map((item) => (
@@ -135,7 +135,7 @@ export default function Navbar() {
                         </div>
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button variant="outline" size="icon">
+                                <Button variant={"neutral"} size="icon">
                                     <ShoppingCart className="h-4 w-4"/>
                                     <span className="sr-only">Giỏ hàng</span>
                                 </Button>

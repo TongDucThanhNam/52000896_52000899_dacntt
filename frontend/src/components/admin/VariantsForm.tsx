@@ -30,7 +30,8 @@ export default function VariantsForm(
                     {/* Toggle Atribute */}
                     <ToggleGroup
                         type="multiple"
-                        variant="outline"
+                        variant={"reverse"}
+
                         onValueChange={(value) => {
                             setHeader(value)
                         }}
@@ -71,7 +72,7 @@ export default function VariantsForm(
                     </Table>
                 </CardContent>
                 <CardFooter className="justify-center border-t p-4">
-                    <Button size="sm" variant="ghost" className="gap-1"
+                    <Button size="sm" variant={"default"} className="gap-1"
                             onClick={() => {
                                 const currentVariantLength = variants.length
                                 setVariants([...variants, {

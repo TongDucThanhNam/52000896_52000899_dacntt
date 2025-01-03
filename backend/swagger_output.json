@@ -45,8 +45,8 @@
         "tags": [
           "Carts"
         ],
-        "summary": "Get cart by user id",
-        "description": "Endpoint to get cart by user id",
+        "summary": "Lấy thông tin giỏ hàng",
+        "description": "Endpoint để lấy thông tin giỏ hàng của user theo Id",
         "parameters": [
           {
             "name": "userId",
@@ -65,53 +65,13 @@
         }
       }
     },
-    "/cart/{cartId}/items": {
-      "post": {
-        "tags": [
-          "Carts"
-        ],
-        "summary": "Add item to cart",
-        "description": "Endpoint to add item to cart",
-        "parameters": [
-          {
-            "name": "cartId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "productId": {
-                  "example": "any"
-                },
-                "quantity": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/cart/items/{itemId}": {
       "put": {
         "tags": [
           "Carts"
         ],
-        "summary": "Update cart item",
-        "description": "Endpoint to update cart item",
+        "summary": "Cập nhật giỏ hàng",
+        "description": "Endpoint để cập nhật giỏ hàng của user theo Id",
         "parameters": [
           {
             "name": "itemId",
@@ -122,16 +82,10 @@
           {
             "name": "body",
             "in": "body",
+            "description": "Cart data",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "productId": {
-                  "example": "any"
-                },
-                "quantity": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Cart"
             }
           }
         ],
@@ -148,8 +102,8 @@
         "tags": [
           "Carts"
         ],
-        "summary": "Remove cart item",
-        "description": "Endpoint to remove cart item",
+        "summary": "Xóa sản phẩm khỏi giỏ hàng",
+        "description": "Endpoint để xóa sản phẩm khỏi giỏ hàng của user theo Id",
         "parameters": [
           {
             "name": "itemId",
@@ -168,31 +122,6 @@
                 }
               }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/cart/{cartId}": {
-      "delete": {
-        "tags": [
-          "Carts"
-        ],
-        "summary": "Clear cart",
-        "description": "Endpoint to clear cart",
-        "parameters": [
-          {
-            "name": "cartId",
-            "in": "path",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
@@ -210,13 +139,13 @@
         "tags": [
           "Interactions"
         ],
-        "summary": "Track interaction",
-        "description": "Endpoint to track interaction",
+        "summary": "Theo dõi tương tác",
+        "description": "Endpoint để theo dõi tương tác của ngừoi dùng",
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "description": "Query to track interaction",
+            "description": "Thông tin tương tác",
             "required": true,
             "schema": {
               "type": "object",
@@ -264,8 +193,8 @@
         "tags": [
           "Interactions"
         ],
-        "summary": "Get user interactions",
-        "description": "Endpoint to get user interactions",
+        "summary": "Lấy thông tin tương tác của của một user",
+        "description": "Endpoint để lấy thông tin tương tác của một user",
         "parameters": [
           {
             "name": "userId",
@@ -289,8 +218,8 @@
         "tags": [
           "Interactions"
         ],
-        "summary": "Get product interactions",
-        "description": "Endpoint to get product interactions",
+        "summary": "Lấy thông tin tương tác của một sản phẩm",
+        "description": "Endpoint để lấy thông tin tương tác của một sản phẩm",
         "parameters": [
           {
             "name": "productId",
@@ -314,8 +243,8 @@
         "tags": [
           "Interactions"
         ],
-        "summary": "Create log",
-        "description": "Endpoint to create log",
+        "summary": "Tạo log",
+        "description": "Endpoint để tạo log",
         "responses": {
           "200": {
             "description": "OK"
@@ -331,64 +260,8 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get all products",
-        "description": "Endpoint to get all products",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Create product",
-        "description": "Endpoint to create product",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Product data",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "productName": {
-                  "type": "string",
-                  "example": "Product name"
-                },
-                "productDescription": {
-                  "type": "string",
-                  "example": "Product description"
-                },
-                "productBrand": {
-                  "type": "string",
-                  "example": "Product brand"
-                },
-                "imageUrls": {
-                  "type": "string",
-                  "example": "[]"
-                },
-                "categoryId": {
-                  "type": "string",
-                  "example": "6765a3b549de95984148bf5b"
-                },
-                "productAvgRating": {
-                  "type": "string",
-                  "example": "0"
-                },
-                "productTotalViews": {
-                  "type": "string",
-                  "example": "0"
-                }
-              }
-            }
-          }
-        ],
+        "summary": "Lấy tất cả sản phẩm",
+        "description": "Endpoint để lấy tất cả sản phẩm",
         "responses": {
           "200": {
             "description": "OK"
@@ -399,16 +272,16 @@
         }
       }
     },
-    "/products/{id}": {
+    "/products/{productId}": {
       "get": {
         "tags": [
           "Products"
         ],
-        "summary": "Get product by id",
-        "description": "Endpoint to get product by id",
+        "summary": "Lấy sản phẩm theo id",
+        "description": "Endpoint để lấy sản phẩm theo id",
         "parameters": [
           {
-            "name": "id",
+            "name": "productId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -427,11 +300,11 @@
         "tags": [
           "Products"
         ],
-        "summary": "Update product",
-        "description": "Endpoint to update product",
+        "summary": "Cập nhật sản phẩm",
+        "description": "Endpoint để cập nhật thông tin sản phẩm",
         "parameters": [
           {
-            "name": "id",
+            "name": "productId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -489,11 +362,11 @@
         "tags": [
           "Products"
         ],
-        "summary": "Delete product",
-        "description": "Endpoint to delete product",
+        "summary": "Xóa sản phẩm",
+        "description": "Endpoint để xóa sản phẩm",
         "parameters": [
           {
-            "name": "id",
+            "name": "productId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -514,8 +387,8 @@
         "tags": [
           "Products"
         ],
-        "summary": "Create product with variants",
-        "description": "Endpoint to create product with variants",
+        "summary": "Tạo sản phẩm với biến thể",
+        "description": "Endpoint để tạo sản phẩm với biến thể",
         "parameters": [
           {
             "name": "body",
@@ -637,16 +510,16 @@
         }
       }
     },
-    "/products/{id}/variants": {
+    "/products/{productId}/variants": {
       "post": {
         "tags": [
           "Products"
         ],
-        "summary": "Create variant",
-        "description": "Endpoint to create variant",
+        "summary": "Thêm biến thể cho sản phẩm",
+        "description": "Endpoint để thêm biến thể",
         "parameters": [
           {
-            "name": "id",
+            "name": "productId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -724,11 +597,11 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get variants by product",
-        "description": "Endpoint to get variants by product",
+        "summary": "Lấy biến thể theo sản phẩm",
+        "description": "Endpoint để lấy biến thể theo sản phẩm",
         "parameters": [
           {
-            "name": "id",
+            "name": "productId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -744,16 +617,16 @@
         }
       }
     },
-    "/variants/{id}": {
+    "/variants/{variantId}": {
       "put": {
         "tags": [
           "Products"
         ],
-        "summary": "Update variant",
-        "description": "Endpoint to update variant",
+        "summary": "Cập nhật biến thể",
+        "description": "Endpoint để cập nhật thông tin biến thể",
         "parameters": [
           {
-            "name": "id",
+            "name": "variantId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -831,11 +704,11 @@
         "tags": [
           "Products"
         ],
-        "summary": "Delete variant",
-        "description": "Endpoint to delete variant",
+        "summary": "Xóa biến thể",
+        "description": "Endpoint để xóa biến thể",
         "parameters": [
           {
-            "name": "id",
+            "name": "variantId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -856,8 +729,8 @@
         "tags": [
           "Products"
         ],
-        "summary": "Create category",
-        "description": "Endpoint to create category",
+        "summary": "Thêm danh mục",
+        "description": "Endpoint để thêm danh mục",
         "parameters": [
           {
             "name": "body",
@@ -888,8 +761,8 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get categories",
-        "description": "Endpoint to get categories",
+        "summary": "Lấy danh mục",
+        "description": "Endpoint để lấy danh mục",
         "responses": {
           "200": {
             "description": "OK"
@@ -900,16 +773,16 @@
         }
       }
     },
-    "/categories/{id}": {
+    "/categories/{categoryId}": {
       "put": {
         "tags": [
           "Products"
         ],
-        "summary": "Update category",
-        "description": "Endpoint to update category",
+        "summary": "Cập nhật danh mục",
+        "description": "Endpoint để cập nhật thông tin danh mục",
         "parameters": [
           {
-            "name": "id",
+            "name": "categoryId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -945,8 +818,8 @@
         "tags": [
           "Products"
         ],
-        "summary": "Add tag to product",
-        "description": "Endpoint to add tag to product",
+        "summary": "Thêm tag vào sản phẩm",
+        "description": "Endpoint để thêm tag vào sản phẩm",
         "parameters": [
           {
             "name": "body",
@@ -983,8 +856,8 @@
         "tags": [
           "Products"
         ],
-        "summary": "Remove tag from product",
-        "description": "Endpoint to remove tag from product",
+        "summary": "Xóa tag khỏi sản phẩm",
+        "description": "Endpoint để xóa tag khỏi sản phẩm",
         "parameters": [
           {
             "name": "productId",
@@ -1014,8 +887,8 @@
         "tags": [
           "Transactions"
         ],
-        "summary": "Create transaction",
-        "description": "Endpoint to create transaction",
+        "summary": "Tạo giao dịch",
+        "description": "Endpoint để tạo giao dịch",
         "parameters": [
           {
             "name": "body",
@@ -1055,16 +928,16 @@
         }
       }
     },
-    "/transactions/{id}": {
+    "/transactions/{transactionId}": {
       "get": {
         "tags": [
           "Transactions"
         ],
-        "summary": "Get transaction by id",
-        "description": "Endpoint to get transaction by id",
+        "summary": "Lấy thông tin giao dịch",
+        "description": "Endpoint để lấy thông tin giao dịch theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "transactionId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1085,8 +958,8 @@
         "tags": [
           "Transactions"
         ],
-        "summary": "Get user transactions",
-        "description": "Endpoint to get user transactions",
+        "summary": "Lấy thông tin giao dịch của user",
+        "description": "Endpoint để lấy thông tin giao dịch của user theo Id",
         "parameters": [
           {
             "name": "userId",
@@ -1105,16 +978,16 @@
         }
       }
     },
-    "/transactions/{id}/items": {
+    "/transactions/{transactionId}/items": {
       "get": {
         "tags": [
           "Transactions"
         ],
-        "summary": "Get transaction items",
-        "description": "Endpoint to get transaction items",
+        "summary": "Lấy danh sách sản phẩm trong giao dịch",
+        "description": "Endpoint để lấy danh sách sản phẩm trong giao dịch theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "transactionId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1130,16 +1003,16 @@
         }
       }
     },
-    "/transactions/{id}/status": {
+    "/transactions/{transactionId}/status": {
       "put": {
         "tags": [
           "Transactions"
         ],
-        "summary": "Update transaction status",
-        "description": "Endpoint to update transaction status",
+        "summary": "Cập nhật trạng thái giao dịch",
+        "description": "Endpoint để cập nhật trạng thái giao dịch theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "transactionId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1160,8 +1033,8 @@
         "tags": [
           "Users"
         ],
-        "summary": "Get all users",
-        "description": "Endpoint to get all users",
+        "summary": "Lấy tất cả người dùng",
+        "description": "Endpoint để lấy tất cả người dùng",
         "responses": {
           "200": {
             "description": "OK"
@@ -1175,8 +1048,8 @@
         "tags": [
           "Users"
         ],
-        "summary": "Create user",
-        "description": "Endpoint to create user",
+        "summary": "Thêm người dùng",
+        "description": "Endpoint để thêm người dùng",
         "parameters": [
           {
             "name": "User",
@@ -1243,25 +1116,22 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       }
     },
-    "/users/{id}": {
+    "/users/{userId}": {
       "get": {
         "tags": [
           "Users"
         ],
-        "summary": "Get user by id",
-        "description": "Endpoint to get user by id",
+        "summary": "Lấy thông tin người dùng",
+        "description": "Endpoint để lấy thông tin người dùng theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1280,11 +1150,11 @@
         "tags": [
           "Users"
         ],
-        "summary": "Update user",
-        "description": "Endpoint to update user",
+        "summary": "Cập nhật thông tin người dùng",
+        "description": "Endpoint để cập nhật thông tin người dùng theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1366,11 +1236,11 @@
         "tags": [
           "Users"
         ],
-        "summary": "Delete user",
-        "description": "Endpoint to delete user",
+        "summary": "Xóa người dùng",
+        "description": "Endpoint để xóa người dùng theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1386,16 +1256,16 @@
         }
       }
     },
-    "/users/{id}/preferences": {
+    "/users/{userId}/preferences": {
       "post": {
         "tags": [
           "Users"
         ],
-        "summary": "Add user preference",
-        "description": "Endpoint to add user preference",
+        "summary": "Thêm sở thích người dùng",
+        "description": "Endpoint để thêm sở thích người dùng theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1433,11 +1303,11 @@
         "tags": [
           "Users"
         ],
-        "summary": "Update user preferences",
-        "description": "Endpoint to update user preferences",
+        "summary": "Cập nhật sở thích người dùng",
+        "description": "Endpoint để cập nhật sở thích người dùng theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1475,11 +1345,11 @@
         "tags": [
           "Users"
         ],
-        "summary": "Get user preferences",
-        "description": "Endpoint to get user preferences",
+        "summary": "Lấy tất cả sở thích người dùng",
+        "description": "Endpoint để lấy sở thích của người dùng theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1498,11 +1368,11 @@
         "tags": [
           "Users"
         ],
-        "summary": "Remove user preference",
-        "description": "Endpoint to remove user preference",
+        "summary": "Xóa sở thích người dùng",
+        "description": "Endpoint để xóa sở thích người dùng theo Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1523,53 +1393,52 @@
         "tags": [
           "Users"
         ],
-        "summary": "Register user",
-        "description": "Endpoint to register user",
+        "summary": "Đăng ký người dùng",
+        "description": "Endpoint để đăng ký người dùng",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "description": "User information.",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "userName": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Linh Ngọc Đàm"
                 },
                 "userPasswordHash": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "12345678"
                 },
                 "userEmail": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "email@gmail.com"
                 },
                 "userPhone": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "0123456789"
                 },
                 "userHeight": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 170
                 },
                 "userWeight": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 60
                 },
                 "userDateOfBirth": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "01/01/2000"
                 },
                 "userAddress": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Thanh xuân Hà Nội"
                 },
                 "userImageUrl": {
-                  "example": "any"
-                },
-                "userGender": {
-                  "example": "any"
-                },
-                "userJob": {
-                  "example": "any"
-                },
-                "userCity": {
-                  "example": "any"
-                },
-                "userRole": {
-                  "example": "any"
+                  "type": "string",
+                  "example": ""
                 }
               }
             }
@@ -1590,8 +1459,8 @@
         "tags": [
           "Users"
         ],
-        "summary": "Login user",
-        "description": "Endpoint to login user",
+        "summary": "Đăng nhập người dùng",
+        "description": "Endpoint để đăng nhập người dùng",
         "parameters": [
           {
             "name": "body",
@@ -1628,8 +1497,8 @@
         "tags": [
           "Users"
         ],
-        "summary": "Logout user",
-        "description": "Endpoint to logout user",
+        "summary": "Đăng xuất người dùng",
+        "description": "Endpoint để đăng xuất người dùng theo Id",
         "responses": {
           "200": {
             "description": "OK"
@@ -1645,8 +1514,8 @@
         "tags": [
           "Users"
         ],
-        "summary": "Forgot password",
-        "description": "Endpoint to forgot password",
+        "summary": "Quên mật khẩu",
+        "description": "Endpoint để quên mật khẩu theo email",
         "parameters": [
           {
             "name": "body",
@@ -1676,8 +1545,8 @@
         "tags": [
           "Users"
         ],
-        "summary": "Reset password",
-        "description": "Endpoint to reset password",
+        "summary": "Đặt lại mật khẩu",
+        "description": "Endpoint để đặt lại mật khẩu theo email",
         "parameters": [
           {
             "name": "body",

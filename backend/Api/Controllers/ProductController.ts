@@ -15,8 +15,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Get all products'
-                #swagger.description = 'Endpoint to get all products'
+                #swagger.summary = 'Lấy tất cả sản phẩm'
+                #swagger.description = 'Endpoint để lấy tất cả sản phẩm'
              */
             const query = req.query;
             const result = await this.productServices.getAllProducts(query);
@@ -32,8 +32,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Create product'
-                #swagger.description = 'Endpoint to create product'
+                #swagger.summary = 'Tạo sản phẩm'
+                #swagger.description = 'Endpoint để tạo sản phẩm'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -92,10 +92,10 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Get product by id'
-                #swagger.description = 'Endpoint to get product by id'
+                #swagger.summary = 'Lấy sản phẩm theo id'
+                #swagger.description = 'Endpoint để lấy sản phẩm theo id'
              */
-            const productId = req.params.id;
+            const productId = req.params.productId;
             const result = await this.productServices.getProductById(productId);
             return res.status(200).json(result);
         } catch (error: any) {
@@ -109,8 +109,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Update product'
-                #swagger.description = 'Endpoint to update product'
+                #swagger.summary = 'Cập nhật sản phẩm'
+                #swagger.description = 'Endpoint để cập nhật thông tin sản phẩm'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -127,7 +127,7 @@ export default class ProductController {
                     }
                 }
              */
-            const productId = req.params.id;
+            const productId = req.params.productId;
             const {
                 productName,
                 productDescription,
@@ -171,10 +171,10 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Delete product'
-                #swagger.description = 'Endpoint to delete product'
+                #swagger.summary = 'Xóa sản phẩm'
+                #swagger.description = 'Endpoint để xóa sản phẩm'
              */
-            const productId = req.params.id;
+            const productId = req.params.productId;
             const result = await this.productServices.deleteProduct(productId);
             return res.status(200).json(result);
         } catch (error: any) {
@@ -188,8 +188,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Create variant'
-                #swagger.description = 'Endpoint to create variant'
+                #swagger.summary = 'Thêm biến thể cho sản phẩm'
+                #swagger.description = 'Endpoint để thêm biến thể'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -211,7 +211,7 @@ export default class ProductController {
                     }
                 }
              */
-            const productId = req.params.id;
+            const productId = req.params.productId;
             const {
                 variantSku,
                 variantName,
@@ -265,10 +265,10 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Get variants by product'
-                #swagger.description = 'Endpoint to get variants by product'
+                #swagger.summary = 'Lấy biến thể theo sản phẩm'
+                #swagger.description = 'Endpoint để lấy biến thể theo sản phẩm'
              */
-            const productId = req.params.id;
+            const productId = req.params.productId;
             const result = await this.productServices.getVariantsByProduct(productId);
             return res.status(200).json(result);
         } catch (error: any) {
@@ -282,8 +282,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Update variant'
-                #swagger.description = 'Endpoint to update variant'
+                #swagger.summary = 'Cập nhật biến thể'
+                #swagger.description = 'Endpoint để cập nhật thông tin biến thể'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -305,7 +305,7 @@ export default class ProductController {
                     }
                 }
              */
-            const variantId = req.params.id;
+            const variantId = req.params.variantId;
 
             const {
                 variantSku,
@@ -360,10 +360,10 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Delete variant'
-                #swagger.description = 'Endpoint to delete variant'
+                #swagger.summary = 'Xóa biến thể'
+                #swagger.description = 'Endpoint để xóa biến thể'
              */
-            const variantId = req.params.id;
+            const variantId = req.params.variantId;
             const result = await this.productServices.deleteVariant(variantId);
             return res.status(200).json(result);
         } catch (error: any) {
@@ -377,8 +377,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Create category'
-                #swagger.description = 'Endpoint to create category'
+                #swagger.summary = 'Thêm danh mục'
+                #swagger.description = 'Endpoint để thêm danh mục'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -419,10 +419,11 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Get categories'
-                #swagger.description = 'Endpoint to get categories'
+                #swagger.summary = 'Lấy danh mục'
+                #swagger.description = 'Endpoint để lấy danh mục'
              */
-            const result = await this.productServices.getCategories();
+            const query = req.query;
+            const result = await this.productServices.getCategories(query);
             return res.status(200).json(result);
         } catch (error: any) {
             return res.status(500).json({message: error.message});
@@ -435,8 +436,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Update category'
-                #swagger.description = 'Endpoint to update category'
+                #swagger.summary = 'Cập nhật danh mục'
+                #swagger.description = 'Endpoint để cập nhật thông tin danh mục'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -447,7 +448,7 @@ export default class ProductController {
                     }
                 }
              */
-            const categoryId = req.params.id;
+            const categoryId = req.params.categoryId;
             const {
                 categoryName
             } = req.body;
@@ -478,8 +479,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Add tag to product'
-                #swagger.description = 'Endpoint to add tag to product'
+                #swagger.summary = 'Thêm tag vào sản phẩm'
+                #swagger.description = 'Endpoint để thêm tag vào sản phẩm'
 
                 #swagger.parameters['body'] = {
                     in: 'body',
@@ -513,8 +514,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Remove tag from product'
-                #swagger.description = 'Endpoint to remove tag from product'
+                #swagger.summary = 'Xóa tag khỏi sản phẩm'
+                #swagger.description = 'Endpoint để xóa tag khỏi sản phẩm'
              */
             const {
                 productId,
@@ -531,6 +532,7 @@ export default class ProductController {
             return res.status(500).json({message: error.message});
         }
     }
+
     // getProductsByTag = async (
     //     req: Request,
     //     res: Response
@@ -538,8 +540,8 @@ export default class ProductController {
     //     try {
     //         /*
     //             #swagger.tags = ['Products']
-    //             #swagger.summary = 'Get products by tag'
-    //             #swagger.description = 'Endpoint to get products by tag'
+    //             #swagger.summary = 'Lấy các sản phẩm theo tag'
+    //             #swagger.description = 'Endpoint để lấy các sản phẩm theo tag'
     //          */
     //         const tagId = req.params.id;
     //         const result = await this.productServices.getProductsByTag(tagId);
@@ -548,6 +550,8 @@ export default class ProductController {
     //         return res.status(500).json({message: error.message});
     //     }
     // }
+
+
     createProductWithVariants = async (
         req: Request,
         res: Response
@@ -555,8 +559,8 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Create product with variants'
-                #swagger.description = 'Endpoint to create product with variants'
+                #swagger.summary = 'Tạo sản phẩm với biến thể'
+                #swagger.description = 'Endpoint để tạo sản phẩm với biến thể'
 
                 #swagger.parameters['body'] = {
                     in: 'body',

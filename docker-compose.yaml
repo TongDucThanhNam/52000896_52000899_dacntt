@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   frontend:
     build:
@@ -23,6 +21,7 @@ services:
       - app-network
     environment:
       - BACKEND_URL=${BACKEND_URL}
+    restart: always  # Automatically restart on error
 
   backend:
     build:
@@ -54,6 +53,7 @@ services:
       - app-network
     volumes:
       - ./backend:/app
+    restart: always  # Automatically restart on error
 
 networks:
   app-network:

@@ -1,13 +1,13 @@
 import express from 'express';
-import TransactionController from "../Controllers/TransactionController";
+import TransactionController from "../Controllers/TransactionController.ts";
 
 const router = express.Router();
 const transactionController = new TransactionController();
 
 router.post('/transactions', transactionController.createTransaction);
-router.get('/transactions/:id', transactionController.getTransactionById);
+router.get('/transactions/:transactionId', transactionController.getTransactionById);
 router.get('/users/:userId/transactions', transactionController.getUserTransactions);
-router.get('/transactions/:id/items', transactionController.getTransactionItems);
-router.put('/transactions/:id/status', transactionController.updateTransactionStatus);
+router.get('/transactions/:transactionId/items', transactionController.getTransactionItems);
+router.put('/transactions/:transactionId/status', transactionController.updateTransactionStatus);
 
 export default router;
