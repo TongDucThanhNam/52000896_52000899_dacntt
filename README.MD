@@ -15,6 +15,11 @@
 - AI: Python, FastAPI, Tensorflow, Keras
 
 # 2. Cài đặt
+- Đầu tiên chúng ta cần thêm các biến môi trường:
+   - `.env` cho backend (copy nội dung từ `.env.example`)
+   - `.env.local` cho frontend (copy nội dung từ `.env.example`)
+- Để chạy dự án, ta sẽ cần mở 2 tab terminal, một tab để chạy backend, một tab để chạy frontend.
+
 ### 2.1 Cài đặt Backend:
 - Cài đặt các thư viện cần thiết:
 ```bash
@@ -27,6 +32,8 @@ npm run start
 # hoặc 
 npm run dev
 ```
+
+- Mở API docs tại địa chỉ: http://localhost:3001/api-docs
 
 ### 2.2 Cài đặt Frontend:
 - Cài đặt các thư viện cần thiết:
