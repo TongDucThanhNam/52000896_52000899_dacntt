@@ -30,3 +30,12 @@ export function priceVietNamDongformetter(price: string) {
         maximumFractionDigits: 0,
     }).format(parseInt(price));
 }
+
+export function priceVietNamDongFormatter(price: string): string {
+    const parsedPrice = parseFloat(price);
+    if (isNaN(parsedPrice)) return "0₫";
+    return parsedPrice.toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+}
