@@ -1,25 +1,7 @@
-import localFont from "next/font/local";
 import "@/app/globals.css";
 import {Toaster} from "@/components/ui/toaster"
 import {darkerGrotesque} from "@/app/fonts/fonts";
-
-const geistSans = localFont({
-    src: "./fonts/GeistVF.woff",
-    variable: "--font-geist-sans",
-    weight: "100 900",
-});
-const geistMono = localFont({
-    src: "./fonts/GeistMonoVF.woff",
-    variable: "--font-geist-mono",
-    weight: "100 900",
-});
-
-const sjBrutalDude = localFont({
-    src: "./fonts/SjBrutalDude.ttf",
-    variable: "--font-sj-brutal-dude",
-    weight: "400",
-});
-
+import {AuthProvider} from "@/components/auth/AuthProvider";
 
 export default function RootLayout({
                                        children,
@@ -28,10 +10,16 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="vi">
+        <head>
+            {/*<script src="https://unpkg.com/react-scan/dist/auto.global.js" async/>*/}
+            {/* rest of your scripts go under */}
+        </head>
         <body
             className={`${darkerGrotesque.className} antialiased`}
         >
-        {children}
+        <AuthProvider>
+            {children}
+        </AuthProvider>
         <Toaster/>
         </body>
         </html>

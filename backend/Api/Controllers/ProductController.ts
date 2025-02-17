@@ -92,11 +92,29 @@ export default class ProductController {
         try {
             /*
                 #swagger.tags = ['Products']
-                #swagger.summary = 'Lấy sản phẩm theo id'
-                #swagger.description = 'Endpoint để lấy sản phẩm theo id'
+                #swagger.summary = 'Lấy sản phẩm theo [id]'
+                #swagger.description = 'Endpoint để lấy sản phẩm theo [id]'
              */
             const productId = req.params.productId;
             const result = await this.productServices.getProductById(productId);
+            return res.status(200).json(result);
+        } catch (error: any) {
+            return res.status(500).json({message: error.message});
+        }
+    }
+
+    getProductByVariantId = async (
+        req: Request,
+        res: Response
+    ): Promise<Response> => {
+        try {
+            /*
+                #swagger.tags = ['Products']
+                #swagger.summary = 'Lấy sản phẩm theo variantId'
+                #swagger.description = 'Endpoint để lấy sản phẩm theo variantId'
+             */
+            const variantId = req.params.variantId;
+            const result = await this.productServices.getProductByVariantId(variantId);
             return res.status(200).json(result);
         } catch (error: any) {
             return res.status(500).json({message: error.message});
@@ -484,7 +502,7 @@ export default class ProductController {
 
                 #swagger.parameters['body'] = {
                     in: 'body',
-                    description: 'Product id and tag id',
+                    description: 'Product [id] and tag [id]',
                     required: true,
                     schema: {
                         productId: '6765a809c044f8a8dc24ef08',
@@ -543,7 +561,7 @@ export default class ProductController {
     //             #swagger.summary = 'Lấy các sản phẩm theo tag'
     //             #swagger.description = 'Endpoint để lấy các sản phẩm theo tag'
     //          */
-    //         const tagId = req.params.id;
+    //         const tagId = req.params.[id];
     //         const result = await this.productServices.getProductsByTag(tagId);
     //         return res.status(200).json(result);
     //     } catch (error: any) {
@@ -643,6 +661,29 @@ export default class ProductController {
             }
             const result = await this.productServices.createProductWithVariants(data);
 
+            return res.status(200).json(result);
+        } catch (error: any) {
+            return res.status(500).json({message: error.message});
+        }
+    }
+
+    getProductAndVariants = async (
+        req: Request,
+        res: Response
+    ): Promise<Response> => {
+        try {
+            /*
+                #swagger.tags = ['Products']
+                #swagger.summary = 'Lấy sản phẩm và biến thể'
+                #swagger.description = 'Endpoint để lấy sản phẩm và biến thể'
+             */
+            const productId = req.params.productId;
+            const product = await this.productServices.getProductById(productId);
+            const variants = await this.productServices.getVariantsByProduct(productId);
+            const result = {
+                product,
+                variants
+            }
             return res.status(200).json(result);
         } catch (error: any) {
             return res.status(500).json({message: error.message});

@@ -5,33 +5,10 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {UploadDropzone} from "@/lib/uploadthing";
 
-
-const mainVariant = {
-    initial: {
-        x: 0,
-        y: 0,
-    },
-    animate: {
-        x: 20,
-        y: -20,
-        opacity: 0.9,
-    },
-};
-
-const secondaryVariant = {
-    initial: {
-        opacity: 0,
-    },
-    animate: {
-        opacity: 1,
-    },
-};
-
 interface FileUploadProps {
     imageUrls: string[],
     productAttributes: any,
     setProductAttributes: React.Dispatch<React.SetStateAction<any>>;
-
 }
 
 export const FileUpload = (
@@ -89,6 +66,13 @@ export const FileUpload = (
                                     container: "p-4 flex-row rounded-md border-sky-400 ",
                                     allowedContent:
                                         "flex h-8 flex-col items-center justify-center px-2 text-white",
+                                }}
+                                content={{
+                                    button({ ready }) {
+                                        if (ready) return <div>Tải ảnh sản phẩm</div>;
+
+                                        return "Đang upload...";
+                                    },
                                 }}
                                 endpoint="imageUploader"
                                 onClientUploadComplete={(res: any) => {
@@ -162,9 +146,18 @@ export const FileUpload = (
                                                         height={40}
                                                         className="mr-2 rounded-sm object-cover"
                                                     />
-                                                    <span className="flex-grow truncate">{img}</span>
+                                                    <span className="flex-grow w-[300px] truncate ">{img}</span>
                                                 </a>
-                                                <Button size="sm">
+                                                <Button size="sm"
+                                                        onClick={() => {
+                                                            setProductAttributes({
+                                                                ...productAttributes,
+                                                                imageUrls: uploadedImages.filter((_, i) => i !== index)
+                                                            })
+                                                            setUploadedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+                                                        }}
+                                                        variant="destructive"
+                                                >
                                                     Xóa
                                                 </Button>
                                             </div>

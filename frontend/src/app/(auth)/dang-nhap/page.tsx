@@ -1,25 +1,62 @@
-"use client";
+"use client"
 
-import {useState} from "react";
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Card} from "@/components/ui/card";
-import {useRouter} from "next/navigation";
-import Link from "next/link";
-import {Separator} from "@/components/ui/separator";
-import {Label} from "@/components/ui/label";
-import {useToast} from "@/hooks/use-toast";
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
+import { useToast } from "@/hooks/use-toast"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import { useAuthStore } from "@/store/useAuthStore"
 
-export default function DangNhap() {
-    const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
-    const {toast} = useToast();
+const loginSchema = z.object({
+    email: z.string().email({ message: "Email không hợp lệ" }),
+    password: z.string().min(6, { message: "Mật khẩu phải có ít nhất 6 ký tự" }),
+})
 
-    async function handleSubmit(formData: FormData) {
-        toast({
-            title: "Đăng nhập",
-            description: "Đang xử lý...",
-        });
+export default function LoginPage() {
+    const [error, setError] = useState<string | null>(null)
+    const router = useRouter()
+    const { toast } = useToast()
+    const login = useAuthStore((state) => state.login)
+    const isSignedIn = useAuthStore((state) => state.isSignedIn)
+
+    const form = useForm<z.infer<typeof loginSchema>>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    })
+
+    useEffect(() => {
+        if (isSignedIn) {
+            router.push("/")
+        }
+    }, [isSignedIn, router])
+
+    async function handleSubmit(values: z.infer<typeof loginSchema>) {
+        try {
+            await login(values.email, values.password)
+            toast({
+                title: "Đăng nhập",
+                description: "Đăng nhập thành công",
+                duration: 5000,
+            })
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : "Đăng nhập thất bại"
+            toast({
+                title: "Đăng nhập",
+                description: errorMessage,
+                variant: "destructive",
+            })
+            setError(errorMessage)
+        }
     }
 
     return (
@@ -27,26 +64,42 @@ export default function DangNhap() {
             <Card className="w-96">
                 <div className="p-6">
                     <h1 className="text-2xl font-bold mb-6 text-center">Đăng nhập</h1>
-                    <form action={handleSubmit} className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="email" className="text-sm font-medium">
-                                Email
-                            </Label>
-                            <Input id="email" name="email" type="email" required/>
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="password" className="text-sm font-medium">
-                                Mật khẩu
-                            </Label>
-                            <Input id="password" name="password" type="password" required/>
-                        </div>
-                        <Button type="submit" className="w-full">
-                            Đăng nhập
-                        </Button>
-                        {error && <p className="text-red-500 text-sm">{error}</p>}
-                    </form>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+                            <FormField
+                                control={form.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Email</FormLabel>
+                                        <FormControl>
+                                            <Input type="email" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Mật khẩu</FormLabel>
+                                        <FormControl>
+                                            <Input type="password" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" className="w-full">
+                                Đăng nhập
+                            </Button>
+                            {error && <p className="text-red-500 text-sm">{error}</p>}
+                        </form>
+                    </Form>
                     <div className="mt-6">
-                        <Separator/>
+                        <Separator />
                         <div className="mt-4 text-center text-sm text-gray-600">
                             Chưa có tài khoản?{" "}
                             <Link href="/dang-ky" className="text-primary hover:underline">
@@ -57,5 +110,5 @@ export default function DangNhap() {
                 </div>
             </Card>
         </div>
-    );
+    )
 }

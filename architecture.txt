@@ -1,0 +1,399 @@
+.
+├── ai-services
+│  ├── app
+│  │  ├── config.py
+│  │  ├── database
+│  │  │  └── mongodb.py
+│  │  ├── main.py
+│  │  ├── models
+│  │  │  ├── __init__.py
+│  │  │  ├── interaction.py
+│  │  │  ├── preference.py
+│  │  │  ├── product.py
+│  │  │  └── user.py
+│  │  ├── routers
+│  │  │  ├── __init__.py
+│  │  │  └── recommendations.py
+│  │  └── services
+│  │     └── recommend.py
+│  ├── Dockerfile
+│  ├── env.example
+│  ├── README.md
+│  ├── requirements.txt
+│  └── test_main.http
+├── architecture.txt
+├── backend
+│  ├── Api
+│  │  ├── Controllers
+│  │  │  ├── CartController.ts
+│  │  │  ├── InteractionController.ts
+│  │  │  ├── ProductController.ts
+│  │  │  ├── TransactionController.ts
+│  │  │  └── UserController.ts
+│  │  ├── MIddlewares
+│  │  │  └── AuthenticationMiddleWare.ts
+│  │  └── Routes
+│  │     ├── CartRoutes.ts
+│  │     ├── InteractionRoutes.ts
+│  │     ├── ProductRoutes.ts
+│  │     ├── TransactionRoutes.ts
+│  │     └── UserRoutes.ts
+│  ├── Application
+│  │  ├── Common
+│  │  │  ├── Exceptions
+│  │  │  │  └── CoreException.ts
+│  │  │  ├── Helpers
+│  │  │  └── Model
+│  │  │     └── Response
+│  │  │        └── BaseResponse.ts
+│  │  ├── EventBus
+│  │  │  └── RabbitMQ
+│  │  │     └── Events
+│  │  ├── Features
+│  │  │  ├── Cart
+│  │  │  │  ├── CartServices.ts
+│  │  │  │  ├── Requests
+│  │  │  │  │  ├── CreateCartRequest.ts
+│  │  │  │  │  ├── DeleteCartRequest.ts
+│  │  │  │  │  ├── FindAllCartRequest.ts
+│  │  │  │  │  ├── FindCartById.Request.ts
+│  │  │  │  │  └── UpdateCartRequest.ts
+│  │  │  │  └── Response
+│  │  │  │     ├── CreateLogResponse.ts
+│  │  │  │     ├── DeleteLogResponse.ts
+│  │  │  │     ├── FindAllLogResponse.ts
+│  │  │  │     ├── FindLogByIdResponse.ts
+│  │  │  │     └── UpdateLogResponse.ts
+│  │  │  ├── Interaction
+│  │  │  │  ├── InteractionServices.ts
+│  │  │  │  ├── Requests
+│  │  │  │  │  ├── CreateLogRequest.ts
+│  │  │  │  │  ├── DeleteLogRequest.ts
+│  │  │  │  │  ├── FindAllLogRequest.ts
+│  │  │  │  │  ├── FindLogById.Request.ts
+│  │  │  │  │  └── UpdateLogRequest.ts
+│  │  │  │  └── Response
+│  │  │  │     ├── CreateLogResponse.ts
+│  │  │  │     ├── DeleteLogResponse.ts
+│  │  │  │     ├── FindAllLogResponse.ts
+│  │  │  │     ├── FindLogByIdResponse.ts
+│  │  │  │     └── UpdateLogResponse.ts
+│  │  │  ├── Product
+│  │  │  │  ├── ProductServices.ts
+│  │  │  │  ├── Requests
+│  │  │  │  │  ├── CreateLogRequest.ts
+│  │  │  │  │  ├── DeleteLogRequest.ts
+│  │  │  │  │  ├── FindAllLogRequest.ts
+│  │  │  │  │  ├── FindLogById.Request.ts
+│  │  │  │  │  └── UpdateLogRequest.ts
+│  │  │  │  └── Response
+│  │  │  │     ├── CreateLogResponse.ts
+│  │  │  │     ├── DeleteLogResponse.ts
+│  │  │  │     ├── FindAllLogResponse.ts
+│  │  │  │     ├── FindLogByIdResponse.ts
+│  │  │  │     └── UpdateLogResponse.ts
+│  │  │  ├── Transaction
+│  │  │  │  ├── Requests
+│  │  │  │  │  ├── CreateLogRequest.ts
+│  │  │  │  │  ├── DeleteLogRequest.ts
+│  │  │  │  │  ├── FindAllLogRequest.ts
+│  │  │  │  │  ├── FindLogById.Request.ts
+│  │  │  │  │  └── UpdateLogRequest.ts
+│  │  │  │  ├── Response
+│  │  │  │  │  ├── CreateLogResponse.ts
+│  │  │  │  │  ├── DeleteLogResponse.ts
+│  │  │  │  │  ├── FindAllLogResponse.ts
+│  │  │  │  │  ├── FindLogByIdResponse.ts
+│  │  │  │  │  └── UpdateLogResponse.ts
+│  │  │  │  └── TransactionServices.ts
+│  │  │  └── User
+│  │  │     ├── Requests
+│  │  │     │  ├── CreateUserRequest.ts
+│  │  │     │  ├── DeleteLogRequest.ts
+│  │  │     │  ├── FindAllLogRequest.ts
+│  │  │     │  ├── FindLogById.Request.ts
+│  │  │     │  └── UpdateLogRequest.ts
+│  │  │     ├── Response
+│  │  │     │  ├── CreateLogResponse.ts
+│  │  │     │  ├── DeleteLogResponse.ts
+│  │  │     │  ├── FindAllLogResponse.ts
+│  │  │     │  ├── FindLogByIdResponse.ts
+│  │  │     │  └── UpdateLogResponse.ts
+│  │  │     └── UserServices.ts
+│  │  └── Persistences
+│  │     ├── IRepositories
+│  │     │  ├── IBaseUnitOfWork.ts
+│  │     │  ├── ICartItemRepository.ts
+│  │     │  ├── ICartRepository.ts
+│  │     │  ├── ICategoryRepository.ts
+│  │     │  ├── IInteractionRepository.ts
+│  │     │  ├── ILogRepository.ts
+│  │     │  ├── IPreferenceRepository.ts
+│  │     │  ├── IProductRepository.ts
+│  │     │  ├── IProductTagRepository.ts
+│  │     │  ├── ITagRepository.ts
+│  │     │  ├── ITransactionItemRepository.ts
+│  │     │  ├── ITransactionRepository.ts
+│  │     │  ├── IUnitOfWork.ts
+│  │     │  ├── IUserRepository.ts
+│  │     │  └── IVariantRepository.ts
+│  │     └── IServices
+│  │        ├── ICartServices.ts
+│  │        ├── IInteractionServices.ts
+│  │        ├── IProductServices.ts
+│  │        ├── ITransactionServices.ts
+│  │        └── IUserServices.ts
+│  ├── bun.lockb
+│  ├── Dockerfile
+│  ├── Domain
+│  │  ├── Entities
+│  │  │  ├── BaseEntities.ts
+│  │  │  ├── CartEntities.ts
+│  │  │  ├── CartItemEntities.ts
+│  │  │  ├── CategoryEntities.ts
+│  │  │  ├── InteractionEntities.ts
+│  │  │  ├── LogEntities.ts
+│  │  │  ├── PreferenceEntities.ts
+│  │  │  ├── ProductEntities.ts
+│  │  │  ├── ProductTagEntities.ts
+│  │  │  ├── ReviewEntities.ts
+│  │  │  ├── TagEntities.ts
+│  │  │  ├── TransactionEntities.ts
+│  │  │  ├── TransactionItemEntities.ts
+│  │  │  ├── UserEntities.ts
+│  │  │  └── VariantEntities.ts
+│  │  ├── Enums
+│  │  └── Interface
+│  │     ├── IBaseEntities.ts
+│  │     ├── ICart.ts
+│  │     ├── ICartItem.ts
+│  │     ├── ICategory.ts
+│  │     ├── IInteraction.ts
+│  │     ├── ILog.ts
+│  │     ├── IPreference.ts
+│  │     ├── IProduct.ts
+│  │     ├── IProductTag.ts
+│  │     ├── IReview.ts
+│  │     ├── ITag.ts
+│  │     ├── ITransaction.ts
+│  │     ├── ITransactionItem.ts
+│  │     ├── IUser.ts
+│  │     └── IVariant.ts
+│  ├── env.example
+│  ├── index.ts
+│  ├── Infrastructure
+│  │  ├── EventBus
+│  │  │  └── RabbitMQ
+│  │  ├── Persistences
+│  │  │  ├── Config
+│  │  │  │  └── DbConnection.ts
+│  │  │  └── Respositories
+│  │  │     ├── BaseUnitOfWork.ts
+│  │  │     ├── CartItemRepository.ts
+│  │  │     ├── CartRepository.ts
+│  │  │     ├── CategoryRepository.ts
+│  │  │     ├── InteractionRepository.ts
+│  │  │     ├── LogRepository.ts
+│  │  │     ├── PreferenceRepository.ts
+│  │  │     ├── ProductRepository.ts
+│  │  │     ├── ProductTagRepository.ts
+│  │  │     ├── TagRepository.ts
+│  │  │     ├── TransactionItemRepository.ts
+│  │  │     ├── TransactionRepository.ts
+│  │  │     ├── UnitOfWork.ts
+│  │  │     ├── UserRepository.ts
+│  │  │     └── VariantRepository.ts
+│  │  └── Services
+│  ├── package-lock.json
+│  ├── package.json
+│  ├── README.md
+│  ├── swagger.ts
+│  ├── swagger_output.json
+│  └── tsconfig.json
+├── docker-compose.yaml
+├── frontend
+│  ├── assets
+│  │  └── images
+│  │     └── logo.webp
+│  ├── bun.lockb
+│  ├── components.json
+│  ├── Dockerfile
+│  ├── env.example
+│  ├── next-env.d.ts
+│  ├── next.config.ts
+│  ├── package-lock.json
+│  ├── package.json
+│  ├── postcss.config.mjs
+│  ├── public
+│  │  ├── banner_0.png
+│  │  ├── banner_1.png
+│  │  ├── banner_2.png
+│  │  ├── logo.webp
+│  │  └── productImage.webp
+│  ├── README.md
+│  ├── src
+│  │  ├── app
+│  │  │  ├── (admin)
+│  │  │  │  ├── admin
+│  │  │  │  │  ├── page.tsx
+│  │  │  │  │  ├── quan-ly-nguoi-dung
+│  │  │  │  │  │  ├── page.tsx
+│  │  │  │  │  │  ├── sua-nguoi-dung
+│  │  │  │  │  │  │  └── [id]
+│  │  │  │  │  │  │     └── page.tsx
+│  │  │  │  │  │  ├── them-nguoi-dung
+│  │  │  │  │  │  │  └── page.tsx
+│  │  │  │  │  │  └── xem-giao-dich
+│  │  │  │  │  │     └── [id]
+│  │  │  │  │  │        └── page.tsx
+│  │  │  │  │  └── quan-ly-san-pham
+│  │  │  │  │     ├── page.tsx
+│  │  │  │  │     ├── sua-san-pham
+│  │  │  │  │     │  ├── [id]
+│  │  │  │  │     │  │  └── page.tsx
+│  │  │  │  │     │  └── layout.tsx
+│  │  │  │  │     └── them-san-pham
+│  │  │  │  │        ├── layout.tsx
+│  │  │  │  │        └── page.tsx
+│  │  │  │  └── layout.tsx
+│  │  │  ├── (auth)
+│  │  │  │  ├── cai-dat
+│  │  │  │  │  └── page.tsx
+│  │  │  │  ├── dang-ky
+│  │  │  │  │  └── page.tsx
+│  │  │  │  ├── dang-nhap
+│  │  │  │  │  └── page.tsx
+│  │  │  │  ├── layout.tsx
+│  │  │  │  └── trang-ca-nhan
+│  │  │  │     └── page.tsx
+│  │  │  ├── (ecommerce)
+│  │  │  │  ├── chi-tiet-san-pham
+│  │  │  │  │  └── [id]
+│  │  │  │  │     └── page.tsx
+│  │  │  │  ├── danh-sach-san-pham
+│  │  │  │  │  └── page.tsx
+│  │  │  │  ├── error.tsx
+│  │  │  │  ├── gio-hang
+│  │  │  │  │  └── page.tsx
+│  │  │  │  ├── gioi-thieu
+│  │  │  │  │  └── page.tsx
+│  │  │  │  ├── layout.tsx
+│  │  │  │  ├── lich-su-mua-hang
+│  │  │  │  │  └── page.tsx
+│  │  │  │  ├── page.tsx
+│  │  │  │  └── quen-mat-khau
+│  │  │  ├── actions.ts
+│  │  │  ├── api
+│  │  │  │  └── uploadthing
+│  │  │  │     ├── core.ts
+│  │  │  │     └── route.ts
+│  │  │  ├── favicon.ico
+│  │  │  ├── fonts
+│  │  │  │  └── fonts.ts
+│  │  │  ├── globals.css
+│  │  │  └── layout.tsx
+│  │  ├── components
+│  │  │  ├── admin
+│  │  │  │  ├── app-sidebar.tsx
+│  │  │  │  ├── Overview.tsx
+│  │  │  │  ├── products
+│  │  │  │  │  ├── EditProduct.tsx
+│  │  │  │  │  ├── ProductDetailsForm.tsx
+│  │  │  │  │  ├── VariantRow.tsx
+│  │  │  │  │  └── VariantsForm.tsx
+│  │  │  │  ├── RecentTransaction.tsx
+│  │  │  │  └── users
+│  │  │  │     ├── AddUserInfo.tsx
+│  │  │  │     ├── EditUserInfo.tsx
+│  │  │  │     ├── ManageUserTable.tsx
+│  │  │  │     ├── TransactionDetails.tsx
+│  │  │  │     └── UserInfo.tsx
+│  │  │  ├── auth
+│  │  │  │  ├── AuthProvider.tsx
+│  │  │  │  └── AvatarUpload.tsx
+│  │  │  ├── cart
+│  │  │  │  ├── CheckoutModal.tsx
+│  │  │  │  ├── PaymentCard.tsx
+│  │  │  │  └── TransactionSumaryCard.tsx
+│  │  │  ├── footer
+│  │  │  │  └── Footer.tsx
+│  │  │  ├── homepage
+│  │  │  │  ├── CaroselComponent.tsx
+│  │  │  │  └── ProductRecommend.tsx
+│  │  │  ├── navbar
+│  │  │  │  ├── AvatarDropdown.tsx
+│  │  │  │  ├── CartDropdown.tsx
+│  │  │  │  └── Navbar.tsx
+│  │  │  ├── products
+│  │  │  │  ├── BreadcumbComponent.tsx
+│  │  │  │  ├── ProductCard.tsx
+│  │  │  │  ├── ProductCollection.tsx
+│  │  │  │  ├── ProductDetail.tsx
+│  │  │  │  ├── ProductGridComponent.tsx
+│  │  │  │  ├── ProductImageCarousel.tsx
+│  │  │  │  ├── ProductTable.tsx
+│  │  │  │  └── ProductVariantDetail.tsx
+│  │  │  ├── purchase
+│  │  │  │  ├── PurchaseHistory.tsx
+│  │  │  │  ├── TransacionItemCard.tsx
+│  │  │  │  └── TransactionCard.tsx
+│  │  │  └── ui
+│  │  │     ├── accordion.tsx
+│  │  │     ├── alert.tsx
+│  │  │     ├── aspect-ratio.tsx
+│  │  │     ├── avatar.tsx
+│  │  │     ├── badge.tsx
+│  │  │     ├── breadcrumb.tsx
+│  │  │     ├── button.tsx
+│  │  │     ├── calendar.tsx
+│  │  │     ├── card.tsx
+│  │  │     ├── carousel.tsx
+│  │  │     ├── chart.tsx
+│  │  │     ├── checkbox.tsx
+│  │  │     ├── collapsible.tsx
+│  │  │     ├── date-picker.tsx
+│  │  │     ├── dialog.tsx
+│  │  │     ├── dropdown-menu.tsx
+│  │  │     ├── file-upload.tsx
+│  │  │     ├── form.tsx
+│  │  │     ├── input-number.tsx
+│  │  │     ├── input.tsx
+│  │  │     ├── label.tsx
+│  │  │     ├── pagination.tsx
+│  │  │     ├── popover.tsx
+│  │  │     ├── radio-group.tsx
+│  │  │     ├── scroll-area.tsx
+│  │  │     ├── select.tsx
+│  │  │     ├── separator.tsx
+│  │  │     ├── sheet.tsx
+│  │  │     ├── sidebar.tsx
+│  │  │     ├── skeleton.tsx
+│  │  │     ├── slider.tsx
+│  │  │     ├── table.tsx
+│  │  │     ├── tabs.tsx
+│  │  │     ├── textarea.tsx
+│  │  │     ├── toast.tsx
+│  │  │     ├── toaster.tsx
+│  │  │     ├── toggle-group.tsx
+│  │  │     ├── toggle.tsx
+│  │  │     └── tooltip.tsx
+│  │  ├── config
+│  │  │  └── site.ts
+│  │  ├── config.ts
+│  │  ├── hooks
+│  │  │  ├── use-mobile.tsx
+│  │  │  ├── use-toast.ts
+│  │  │  ├── useAuth.ts
+│  │  │  └── useTrackInteraction.ts
+│  │  ├── lib
+│  │  │  ├── uploadthing.ts
+│  │  │  └── utils.ts
+│  │  ├── middleware.ts
+│  │  ├── store
+│  │  │  ├── useAuthStore.ts
+│  │  │  └── useCartStore.ts
+│  │  └── types.ts
+│  ├── tailwind.config.ts
+│  └── tsconfig.json
+├── LICENSE
+└── README.MD

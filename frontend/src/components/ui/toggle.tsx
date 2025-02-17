@@ -22,7 +22,6 @@ const toggleVariants = cva(
                     'bg-white dark:bg-secondaryBlack text-text dark:text-darkText border-2 border-border dark:border-darkBorder shadow-light dark:shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none dark:hover:shadow-none',
                 reverse:
                     'text-text bg-main border-2 border-border dark:border-darkBorder hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-light dark:hover:shadow-dark',
-
             },
             size: {
                 default: "h-9 px-2 min-w-9",
@@ -31,8 +30,8 @@ const toggleVariants = cva(
             },
         },
         defaultVariants: {
-            variant: "default",
-            size: "default",
+            variant: "noShadow",
+            size: "lg",
         },
     }
 )

@@ -6,7 +6,7 @@ class TransactionRepository implements ITransactionRepository {
     async createTransaction(transactionData: any, session: ClientSession): Promise<typeof TransactionWithBase> {
         try {
             const transaction: any = await TransactionWithBase.create([transactionData], {session: session});
-            return transaction;
+            return transaction[0];
         } catch (error) {
             throw new Error("Error at TransactionRepository: " + error);
         }

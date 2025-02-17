@@ -5,6 +5,8 @@ const router = express.Router();
 const transactionController = new TransactionController();
 
 router.post('/transactions', transactionController.createTransaction);
+// get all transactions
+router.get('/transactions', transactionController.getAllTransactions);
 router.get('/transactions/:transactionId', transactionController.getTransactionById);
 router.get('/users/:userId/transactions', transactionController.getUserTransactions);
 router.get('/transactions/:transactionId/items', transactionController.getTransactionItems);

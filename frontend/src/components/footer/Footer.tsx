@@ -50,13 +50,13 @@ export default function Footer() {
                             <li className="flex items-center space-x-2">
                                 <Mail size={16}/>
                                 <a href="mailto:info@fashionai.com" className="">
-                                    info@fashionai.com
+                                    contact@fashionai.com
                                 </a>
                             </li>
                             <li className="flex items-center space-x-2">
                                 <Phone size={16}/>
                                 <a href="tel:+84123456789" className="">
-                                    +84 123 456 789
+                                    0869887363
                                 </a>
                             </li>
                         </ul>

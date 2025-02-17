@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
                 hostname: "placehold.co",
             },
             {
-                hostname: "luoichongmuoi.shop",
+                hostname: "down-vn.img.susercontent.com",
             },
         ],
 

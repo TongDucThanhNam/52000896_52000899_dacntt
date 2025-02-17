@@ -165,14 +165,6 @@
                 "interactionType": {
                   "type": "string",
                   "example": "view"
-                },
-                "interactionContent": {
-                  "type": "string",
-                  "example": "product"
-                },
-                "interactionScore": {
-                  "type": "string",
-                  "example": "1"
                 }
               }
             }
@@ -277,8 +269,8 @@
         "tags": [
           "Products"
         ],
-        "summary": "Lấy sản phẩm theo id",
-        "description": "Endpoint để lấy sản phẩm theo id",
+        "summary": "Lấy sản phẩm theo [id]",
+        "description": "Endpoint để lấy sản phẩm theo [id]",
         "parameters": [
           {
             "name": "productId",
@@ -367,6 +359,31 @@
         "parameters": [
           {
             "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/variant/{variantId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Lấy sản phẩm theo variantId",
+        "description": "Endpoint để lấy sản phẩm theo variantId",
+        "parameters": [
+          {
+            "name": "variantId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -498,6 +515,31 @@
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/variants/product/{productId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Lấy sản phẩm và biến thể",
+        "description": "Endpoint để lấy sản phẩm và biến thể",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -824,7 +866,7 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Product id and tag id",
+            "description": "Product [id] and tag [id]",
             "required": true,
             "schema": {
               "type": "object",
@@ -888,36 +930,75 @@
           "Transactions"
         ],
         "summary": "Tạo giao dịch",
-        "description": "Endpoint để tạo giao dịch",
+        "description": "Endpoint để tạo giao dịch với danh sách các item",
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "description": "Transaction data",
+            "description": "Transaction data including items",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "userId": {
                   "type": "string",
-                  "example": "1"
+                  "example": "609c0b1f531123456789abcd"
                 },
                 "orderStatus": {
                   "type": "string",
                   "example": "pending"
                 },
                 "totalValue": {
-                  "type": "string",
-                  "example": "1000"
+                  "type": "number",
+                  "example": 1000
                 },
                 "paymentMethod": {
                   "type": "string",
                   "example": "cash"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "productId": {
+                        "type": "string",
+                        "example": "609c0b1f531123456789abce"
+                      },
+                      "variantId": {
+                        "type": "string",
+                        "example": "609c0b1f531123456789abcf"
+                      },
+                      "quantity": {
+                        "type": "number",
+                        "example": 2
+                      },
+                      "purchasePrice": {
+                        "type": "number",
+                        "example": 500
+                      }
+                    }
+                  }
                 }
               }
             }
           }
         ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Lấy danh sách giao dịch",
+        "description": "Endpoint để lấy danh sách giao dịch",
         "responses": {
           "200": {
             "description": "OK"
@@ -1009,13 +1090,32 @@
           "Transactions"
         ],
         "summary": "Cập nhật trạng thái giao dịch",
-        "description": "Endpoint để cập nhật trạng thái giao dịch theo Id",
+        "description": "Endpoint để cập nhật trạng thái của giao dịch",
         "parameters": [
           {
             "name": "transactionId",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Transaction status update data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transactionId": {
+                  "type": "string",
+                  "example": "609c0b1f531123456789abcd"
+                },
+                "orderStatus": {
+                  "type": "string",
+                  "example": "completed"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -1280,11 +1380,19 @@
               "properties": {
                 "userId": {
                   "type": "string",
-                  "example": "1"
+                  "example": "609c0b1f531123456789abcd"
                 },
-                "userPreference": {
+                "preferenceType": {
                   "type": "string",
-                  "example": ""
+                  "example": "Style"
+                },
+                "preferenceValue": {
+                  "type": "string",
+                  "example": "Casual"
+                },
+                "preferenceScore": {
+                  "type": "number",
+                  "example": 10
                 }
               }
             }
@@ -1293,48 +1401,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Cập nhật sở thích người dùng",
-        "description": "Endpoint để cập nhật sở thích người dùng theo Id",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "description": "User preferences.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "type": "string",
-                  "example": "1"
-                },
-                "userPreferences": {
-                  "type": "string",
-                  "example": ""
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
@@ -1438,7 +1504,23 @@
                 },
                 "userImageUrl": {
                   "type": "string",
-                  "example": ""
+                  "example": "https://cdn-icons-png.flaticon.com/128/2202/2202112.png"
+                },
+                "userGender": {
+                  "type": "string",
+                  "example": "Male"
+                },
+                "userJob": {
+                  "type": "string",
+                  "example": "Software Engineer"
+                },
+                "userCity": {
+                  "type": "string",
+                  "example": "Hanoi"
+                },
+                "userRole": {
+                  "type": "string",
+                  "example": "User"
                 }
               }
             }
@@ -1472,11 +1554,11 @@
               "properties": {
                 "userEmail": {
                   "type": "string",
-                  "example": "tnguyen@example.net"
+                  "example": "an.nguyen@gmail.com"
                 },
                 "userPasswordHash": {
                   "type": "string",
-                  "example": "3249531603"
+                  "example": "newpass123"
                 }
               }
             }
@@ -1567,6 +1649,39 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Lấy thông tin người dùng hiện tại",
+        "description": "Endpoint để lấy thông tin người dùng hiện tại",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"

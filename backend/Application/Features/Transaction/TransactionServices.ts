@@ -9,12 +9,49 @@ class TransactionServices implements ITransactionService {
 
     async createTransaction(data: any): Promise<typeof TransactionWithBase> {
         try {
+            const { userId, orderStatus, totalValue, paymentMethod, items } = data;
+            if (
+                !userId ||
+                !orderStatus ||
+                totalValue == null ||
+                !paymentMethod ||
+                !Array.isArray(items) ||
+                items.length === 0
+            ) {
+                throw new Error("Missing required transaction or item fields.");
+            }
+
+            items.forEach((item: any, index: number) => {
+                if (!item.productId || !item.variantId || item.quantity == null || item.purchasePrice == null) {
+                    throw new Error(`Missing required fields for item at index ${index}.`);
+                }
+            });
+
             const session = await this.unitOfWork.startTransaction();
-            const transaction = await this.unitOfWork.transactionRepository.createTransaction(data, session);
+            const transaction:any = await this.unitOfWork.transactionRepository.createTransaction(data, session);
+
+            console.log("Transaction created: ", transaction);
+            for (const item of items) {
+                item.transactionId = transaction._id;
+                await this.unitOfWork.transactionItemRepository.createTransactionItem(item, session);
+            }
+
             await this.unitOfWork.commitTransaction();
             return transaction;
         } catch (error) {
             await this.unitOfWork.abortTransaction();
+            throw error;
+        }
+    }
+
+    async getAllTransactions(data: any): Promise<typeof TransactionWithBase[] | null> {
+        try {
+            const queryData = {
+
+            };
+            const transactions = await this.unitOfWork.transactionRepository.getAllTransactions(queryData);
+            return transactions;
+        } catch (error) {
             throw error;
         }
     }
@@ -30,7 +67,10 @@ class TransactionServices implements ITransactionService {
 
     async getTransactionItems(data: any): Promise<typeof TransactionItemWithBase[] | null> {
         try {
-            const transactionItems = await this.unitOfWork.transactionItemRepository.getTransactionItemsByTransactionId(data);
+            const queryData = {
+
+            }
+            const transactionItems = await this.unitOfWork.transactionItemRepository.getTransactionItemsByTransactionId(data, queryData);
             return transactionItems;
         } catch (error) {
             throw error;
@@ -39,7 +79,10 @@ class TransactionServices implements ITransactionService {
 
     async getUserTransactions(data: any): Promise<typeof TransactionWithBase[] | null> {
         try {
-            const transactions = await this.unitOfWork.transactionRepository.getTransactionsByUserId(data);
+            const queryData = {
+                
+            };
+            const transactions = await this.unitOfWork.transactionRepository.getTransactionsByUserId(data, queryData);
             return transactions;
         } catch (error) {
             throw error;

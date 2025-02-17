@@ -1,6 +1,9 @@
 import CarouselComponent from "@/components/homepage/CaroselComponent";
 import ProductReccomend from "@/components/homepage/ProductRecommend";
-import ProductGridComponent from "@/components/products/ProductGridComponent";
+import ProductCollection from "@/components/products/ProductCollection";
+
+export const dynamic = 'force-dynamic'
+
 
 export default function Home() {
     return (
@@ -14,12 +17,12 @@ export default function Home() {
             {/* Recommend product*/}
             <div className={"w-3/4"}>
                 <h2 className={"text-2xl font-bold"}>Có thể bạn thích</h2>
-                <ProductReccomend length={10}/>
+                <ProductReccomend/>
             </div>
 
             {/* Product grid */}
             <div className={"w-3/4"}>
-                <ProductGridComponent/>
+                <ProductCollection/>
             </div>
         </main>
     );

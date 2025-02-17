@@ -1,11 +1,16 @@
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import type {IUserServices} from "../../Persistences/IServices/IUserServices.ts";
 import type {IUnitOfWork} from "../../Persistences/IRepositories/IUnitOfWork.ts";
 import {UnitOfWork} from "../../../Infrastructure/Persistences/Respositories/UnitOfWork.ts";
 import {type UserWithBase} from "../../../Domain/Entities/UserEntities.ts";
 import {type PreferenceWithBase} from "../../../Domain/Entities/PreferenceEntities.ts";
 
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+function parseDate(dateStr: string): Date {
+    const [day, month, year] = dateStr.split("/");
+    return new Date(`${year}-${month}-${day}`);
+}
 
 dotenv.config();
 
@@ -134,9 +139,35 @@ class UserServices implements IUserServices {
     async addUserPreference(data: any): Promise<typeof PreferenceWithBase | null> {
         try {
             const session = await this.unitOfWork.startTransaction();
-            const preferences = await this.unitOfWork.preferenceRepository.createPreference(data, session);
+            const { userId, preferenceType, preferenceValue, preferenceScore } = data;
+            
+            // Check if the preference already exists for this user
+            const queryData = {};
+            const existingPreferences:any = await this.unitOfWork.preferenceRepository.getPreferencesByUserId(
+                userId,
+                queryData
+            );
+            
+            let result;
+            if (existingPreferences && existingPreferences.length > 0) {
+                // Use the first existing preference record
+                const existingPreference = existingPreferences[0];
+                // If exists, add to the current preferenceScore
+                const newScore = existingPreference.preferenceScore + preferenceScore;
+                result = await this.unitOfWork.preferenceRepository.updatePreferenceById(
+                    existingPreference._id,
+                    { preferenceScore: newScore },
+                    session
+                );
+            } else {
+                // Otherwise, create a new preference record
+                result = await this.unitOfWork.preferenceRepository.createPreference(
+                    { userId, preferenceType, preferenceValue, preferenceScore },
+                    session
+                );
+            }
             await this.unitOfWork.commitTransaction();
-            return preferences;
+            return result;
         } catch (error) {
             await this.unitOfWork.abortTransaction();
             throw error;
@@ -154,39 +185,30 @@ class UserServices implements IUserServices {
 
     async loginUser(data: any): Promise<any> {
         try {
-            const {
-                userEmail,
-                userPasswordHash
-            } = data;
-
+            const { userEmail, userPasswordHash } = data;
+    
             const queryData = {
                 userEmail: userEmail,
                 isDeleted: false,
                 isActive: true,
-            }
-
-            const user: any = await this.unitOfWork.userRepository.getAllUsers(
-                queryData
-            )
-
-            // console.log(user);
-            if (!user) {
+            };
+    
+            const users: any = await this.unitOfWork.userRepository.getAllUsers(queryData);
+    
+            if (!users || users.length === 0) {
                 throw new Error('User not found');
             }
-
-            const result = user[0];
-
-
-            //TODO: convert to bcrypt
-            if (result.userPasswordHash !== userPasswordHash) {
+    
+            const user = users[0];
+    
+            // Compare plain-text password with the hashed password using bcrypt
+            const isValid = await bcrypt.compare(userPasswordHash, user.userPasswordHash);
+            if (!isValid) {
                 throw new Error('Password is incorrect');
             }
-
-            const token = encodeJwtToken(result);
-            // console.log(token);
+    
+            const token = encodeJwtToken(user);
             return token;
-
-
         } catch (error) {
             throw error;
         }
@@ -203,7 +225,14 @@ class UserServices implements IUserServices {
 
     async registerUser(data: any): Promise<any> {
         try {
+            // Parse the userDateOfBirth if it's in "dd/mm/yyyy" format
+            if (data.userDateOfBirth && typeof data.userDateOfBirth === "string") {
+                data.userDateOfBirth = parseDate(data.userDateOfBirth);
+            }
             const session = await this.unitOfWork.startTransaction();
+            const saltRounds = 12;
+            data.userPasswordHash = await bcrypt.hash(data.userPasswordHash, saltRounds);
+            console.log(data);
             const user = await this.unitOfWork.userRepository.createUser(data, session);
             await this.unitOfWork.commitTransaction();
             return user;

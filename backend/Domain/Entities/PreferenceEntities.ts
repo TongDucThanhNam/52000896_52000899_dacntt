@@ -8,6 +8,7 @@ export const Preference = new mongoose.Schema({
         enum: ['Style', 'Color', 'Size', 'Brand', 'ProductTags'],
         required: true,
     },
+    preferenceValue: {type: String, required: true},
     preferenceScore: {type: Number, required: true},
 });
 

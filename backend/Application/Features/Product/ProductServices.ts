@@ -123,6 +123,24 @@ export class ProductServices implements IProductServices {
         }
     }
 
+    async getProductByVariantId(data: any): Promise<typeof ProductWithBase | null> {
+        try {
+            const queryData = {
+                isDeleted: false,
+                isActive: true
+            }
+            const variant:any = await this.unitOfWork.variantRepository.getVariantById(data, queryData);
+            if (!variant) {
+                return null;
+            }
+            const productId = variant.productId;
+            const product = await this.unitOfWork.productRepository.getProductById(productId, queryData);
+            return product;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async createTag(data: any): Promise<typeof ProductTagWithBase> {
         try {
             const session = await this.unitOfWork.startTransaction();
@@ -236,15 +254,15 @@ export class ProductServices implements IProductServices {
                 ...productData
             } = data
 
-            console.log('productData', productData)
-            console.log('variants', variants)
+            // console.log('productData', productData)
+            // console.log('variants', variants)
 
             const product:any = await this.unitOfWork.productRepository.createProduct(productData, session);
-            console.log('product', product)
+            // console.log('product', product)
             const resultProduct = product[0];
 
-            console.log('product', product)
-            console.log('productID', resultProduct._id)
+            // console.log('product', product)
+            // console.log('productID', resultProduct._id)
 
             const variantPromises = variants.map((variant: any) => {
                 return this.unitOfWork.variantRepository.createVariant({

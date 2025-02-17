@@ -1,5 +1,6 @@
 import express from 'express';
 import UserController from "../Controllers/UserController";
+import {AuthenticationMiddleWare} from "../MIddlewares/AuthenticationMiddleWare.ts";
 
 const router = express.Router();
 const userController = new UserController();
@@ -10,9 +11,11 @@ router.get('/users/:userId', userController.getUserById);
 router.put('/users/:userId', userController.updateUser);
 router.delete('/users/:userId', userController.deleteUser);
 
+
+
 // User preferences
 router.post('/users/:userId/preferences', userController.addUserPreference);
-router.put('/users/:userId/preferences', userController.updateUserPreferences);
+// router.put('/users/:userId/preferences', userController.updateUserPreferences);
 router.get('/users/:userId/preferences', userController.getUserPreferences);
 router.delete('/users/:userId/preferences', userController.removeUserPreference);
 
@@ -22,5 +25,8 @@ router.post('/login', userController.loginUser);
 router.post('/logout', userController.logoutUser);
 router.post('/forgot-password', userController.forgotPassword);
 router.post('/reset-password', userController.resetPassword);
+
+//get current user
+router.get('/profile', AuthenticationMiddleWare,userController.getCurrentUser);
 
 export default router;

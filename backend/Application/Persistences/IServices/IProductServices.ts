@@ -9,6 +9,8 @@ export interface IProductServices {
 
     getProductById(data: any): Promise<typeof ProductWithBase | null>;
 
+    getProductByVariantId(data: any): Promise<typeof ProductWithBase | null>;
+
     getAllProducts(data: any): Promise<typeof ProductWithBase[] | null>;
 
     updateProduct(data: any): Promise<typeof ProductWithBase | null>;

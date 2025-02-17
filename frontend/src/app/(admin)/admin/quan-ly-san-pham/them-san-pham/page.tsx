@@ -3,14 +3,16 @@
 import {Button} from "@/components/ui/button";
 import {ArrowUpIcon, ChevronLeft} from "lucide-react";
 import React, {useCallback, useState} from "react";
-import {ProductAttributes, Variant} from "@/components/admin/types";
-import ProductDetailsForm from "@/components/admin/ProductDetailsForm";
-import VariantsForm from "@/components/admin/VariantsForm";
+import {ProductAttributes, Variant} from "@/types";
+import ProductDetailsForm from "@/components/admin/products/ProductDetailsForm";
+import VariantsForm from "@/components/admin/products/VariantsForm";
 import {useToast} from "@/hooks/use-toast";
+import {useRouter} from "next/navigation";
 
-
-export default function ThemSanPham() {
+export default function AddProductPage() {
     const {toast} = useToast()
+    const router = useRouter()
+
 
     const scrollToTop = useCallback(() => {
         window.scrollTo({top: 0, behavior: 'smooth'})
@@ -29,24 +31,7 @@ export default function ThemSanPham() {
     })
 
     // variants
-    const [variants, setVariants] = useState<Variant[]>([
-        // {
-        //     variantSku: 'GGPC001',
-        //     variantName: 'Gamer Gear Pro Controller',
-        //     variantSlug: 'gamer-gear-pro-controller',
-        //     variantKeyIndex: 0,
-        //     variantImageUrl: 'https://placeholder.co/150x150',
-        //     variantSize: '',
-        //     variantColor: '',
-        //     variantStyle: '',
-        //     variantMaterial: '',
-        //     variantSeason: '',
-        //     variantPrice: 49.99,
-        //     variantPromotionPrice: 39.99,
-        //     variantStockQuantity: 100,
-        //     variantStatus: 'active'
-        // }
-    ])
+    const [variants, setVariants] = useState<Variant[]>([])
 
     // Submit create product
     const handleSubmit = async () => {
@@ -55,9 +40,9 @@ export default function ThemSanPham() {
             variants: variants
         };
 
-        console.log('Product Data:', JSON.stringify(productData, null, 2));
+        // console.log('Product Data:', JSON.stringify(productData, null, 2));
         try {
-            const response = await fetch('/api/products/variants', {  // Changed this line
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/variants`, {  // Changed this line
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,24 +51,20 @@ export default function ThemSanPham() {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`Lỗi: ${response.status}`);
             }
 
-            const result = await response.json();
-            // alert('Thêm sản phẩm thành công');
             toast({
                 variant: "default",
                 title: "Thêm sản phẩm thành công",
                 description: `Sản phẩm ${productAttributes.productName} đã được thêm thành công`,
-
             })
         } catch (error) {
-            // alert('Thêm sản phẩm thất bại');
             toast(
                 {
                     variant: "destructive",
                     title: "Thêm sản phẩm thất bại",
-                    description: `Sản phẩm ${productAttributes.productName} đã được thêm thất bại`,
+                    description: `Sản phẩm ${productAttributes.productName} đã được thêm thất bại, ${error}`,
                 }
             )
         }
@@ -93,9 +74,11 @@ export default function ThemSanPham() {
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
             <div className="mx-auto grid w-3/4 flex-1 auto-rows-max gap-4">
                 <div className="flex items-center gap-4">
-                    <Button variant="neutral" size="icon" className="h-7 w-7">
+                    <Button variant="neutral" size="icon" className="h-7 w-7"
+                            onClick={() => router.back()}
+                    >
                         <ChevronLeft className="h-4 w-4"/>
-                        <span className="sr-only">Back</span>
+                        <span className="sr-only">Trở về</span>
                     </Button>
                     <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
                         Thêm sản phẩm
@@ -104,9 +87,12 @@ export default function ThemSanPham() {
                         <Button variant="neutral" size="sm">
                             Hủy
                         </Button>
-                        <Button size="sm"
-                                onClick={handleSubmit}
-                        >Lưu sản phẩm</Button>
+                        <Button
+                            size="sm"
+                            onClick={handleSubmit}
+                        >
+                            Lưu sản phẩm
+                        </Button>
                     </div>
                 </div>
                 <div className="grid gap-4 ">

@@ -6,7 +6,7 @@ export default function Layout({children}: { children: React.ReactNode }) {
         <SidebarProvider>
             <AppSidebar/>
             <div className={"min-h-screen w-full"}>
-                <div className={"absolute mt-3 ml-2"}>
+                <div className={"absolute mt-3 ml-6"}>
                     <SidebarTrigger/>
                 </div>
 

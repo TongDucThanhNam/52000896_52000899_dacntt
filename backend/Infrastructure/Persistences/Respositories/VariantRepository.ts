@@ -27,7 +27,7 @@ class VariantRepository implements IVariantRepository {
 
     async getAllVariants(queryData: any): Promise<(typeof VariantWithBase)[] | null> {
         try {
-            console.log('queryData', queryData);
+            // console.log('queryData', queryData);
 
             const variants: any = VariantWithBase.find(queryData)
             return variants;

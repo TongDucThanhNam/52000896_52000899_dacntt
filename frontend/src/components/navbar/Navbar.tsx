@@ -1,43 +1,12 @@
 import Image from "next/image";
 import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import {Button} from "@/components/ui/button";
-import {CircleX, MenuIcon, Search, ShoppingCart} from "lucide-react";
+import {MenuIcon, Search} from "lucide-react";
 import {siteConfig} from "@/config/site";
 import {Input} from "@/components/ui/input";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {priceVietNamDongformetter} from "@/lib/utils";
 import Link from "next/link";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-
-interface CartItem {
-    id: number;
-    name: string;
-    imageUrl: string;
-    price: number;
-    quantity: number;
-    variants?: string[];
-}
-
-// Sample cart items
-const cartItems: CartItem[] = [
-    {
-        id: 1,
-        name: "Sản phẩm 1",
-        imageUrl: "https://via.placeholder.com/150",
-        price: 100000,
-        quantity: 1,
-        variants: ["Size: M", "Màu : Đỏ"],
-    },
-    {
-        id: 2,
-        name: "Sản phẩm 2",
-        imageUrl: "https://via.placeholder.com/150",
-        price: 200000,
-        quantity: 2,
-        variants: ["Size: L", "Màu: Xanh"],
-    },
-];
-
+import AvatarDropdown from "@/components/navbar/AvatarDropdown";
+import CartDropdown from "@/components/navbar/CartDropdown";
 // import logo from "/public/logo.webp";
 
 export default function Navbar() {
@@ -133,92 +102,13 @@ export default function Navbar() {
                                 </Button>
                             </form>
                         </div>
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant={"neutral"} size="icon">
-                                    <ShoppingCart className="h-4 w-4"/>
-                                    <span className="sr-only">Giỏ hàng</span>
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-80">
-                                <div className="grid gap-4">
-                                    <div className="space-y-2">
-                                        <h4 className="font-medium leading-none">Giỏ hàng của bạn</h4>
-                                    </div>
-                                    <div className="grid gap-2">
-                                        {cartItems.map((item) => (
-                                            <div
-                                                key={item.id}
-                                                className={
-                                                    "flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4"
-                                                }
-                                            >
-                                                <div className="w-full sm:w-auto flex justify-center sm:justify-start">
-                                                    <Image
-                                                        alt={`${item.name} image`}
-                                                        className="rounded-md object-cover"
-                                                        height={60}
-                                                        src={item.imageUrl}
-                                                        width={60}
-                                                    />
-                                                </div>
-                                                <div className="flex-1 min-w-0 w-full sm:w-fit">
-                                                    <div className="flex items-start justify-between">
-                                                        <h4 className="text-base sm:text-lg font-semibold text-foreground truncate pr-2 sm:max-w-sm md:max-w-xs">
-                                                            {item.name}
-                                                        </h4>
-                                                        <Button
-                                                            aria-label="Remove item"
-                                                            className="h-7 w-7 sm:h-8 sm:w-8"
-                                                            color={"danger"}
-                                                            // onClick={() => removeFromCart(product)}
-                                                        >
-                                                            <CircleX className="h-3 w-3 sm:h-4 sm:w-4"/>
-                                                        </Button>
-                                                    </div>
-                                                    <div className="flex items-center space-x-2 mt-1">
-                                                        <span className="text-sm font-medium text-foreground">
-                                                          {priceVietNamDongformetter(item.price.toString())}
-                                                        </span>
-                                                        <span className="text-xs sm:text-sm text-muted-foreground">
-                                                          x {item.quantity}
-                                                       </span>
-                                                    </div>
-                                                    <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-2">
-                                                        {item.variants?.map((variant) => (
-                                                            <div key={variant}>{variant}</div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                        <div className="grid grid-cols-3 items-center gap-4 pt-4 border-t">
-                                            <span className="font-medium">Tổng cộng</span>
-                                            <span className="col-span-2 text-right font-medium">
-                                                {
-                                                    priceVietNamDongformetter(
-                                                        cartItems.reduce(
-                                                            (acc, item) => acc + item.price * item.quantity,
-                                                            0
-                                                        ).toString()
-                                                    )
-                                                }
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <Link href="/gio-hang">
-                                        <Button className="w-full">Đến giỏ hàng</Button>
-                                    </Link>
-                                </div>
-                            </PopoverContent>
-                        </Popover>
+                        {/* Cart dropdown*/}
+                        <CartDropdown/>
 
-                        {/*Avatar*/}
+
+                        {/*Avatar dropdown*/}
                         <div className="absolute right-8">
-                            <Avatar>
-                                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn"/>
-                                <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
+                            <AvatarDropdown/>
                         </div>
                     </div>
                 </div>

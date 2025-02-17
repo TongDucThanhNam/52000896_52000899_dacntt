@@ -1,4 +1,27 @@
+name: Fashion AI
+
 services:
+  ai-services:
+    build:
+      context: ./ai-services
+      dockerfile: Dockerfile
+      args:
+        - CONNECTION_STRING=${CONNECTION_STRING}
+        - DATABASE_NAME=${DATABASE_NAME}
+    image:
+      tongducthanhnam/fashion-ai-ai-services:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - CONNECTION_STRING=${CONNECTION_STRING}
+      - DATABASE_NAME=${DATABASE_NAME}
+    networks:
+      - app-network
+    depends_on:
+      - backend
+    restart: always  # Automatically restart on error
+    volumes:
+      - ./ai-services:/app
   frontend:
     build:
       context: ./frontend
@@ -8,6 +31,7 @@ services:
         - NEXT_PUBLIC_DOMAIN=${NEXT_PUBLIC_DOMAIN}
         - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
         - UPLOADTHING_TOKEN=${UPLOADTHING_TOKEN}
+        - NEXT_PUBLIC_AI_URL=${NEXT_PUBLIC_AI_URL}
       target: release
     image:
       tongducthanhnam/fashion-ai-fe:latest
@@ -21,6 +45,9 @@ services:
       - app-network
     environment:
       - BACKEND_URL=${BACKEND_URL}
+      - NEXT_PUBLIC_DOMAIN=${NEXT_PUBLIC_DOMAIN}
+      - NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
+      - UPLOADTHING_TOKEN=${UPLOADTHING_TOKEN}
     restart: always  # Automatically restart on error
 
   backend:

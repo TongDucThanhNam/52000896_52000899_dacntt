@@ -18,7 +18,14 @@ import swaggerFile from "./swagger_output.json";
 const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors());
+// Configure CORS
+const corsOptions = {
+    origin: '*', // Allow all origins (for development - NOT recommended for production)
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Allow cookies to be sent back and forth
+    optionsSuccessStatus: 204, // Some legacy browsers choke on 204
+  };
+app.use(cors(corsOptions));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 //------------------Routes------------------//
 
