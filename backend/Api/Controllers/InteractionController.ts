@@ -1,7 +1,7 @@
 import type { IInteractionServices } from "../../Application/Persistences/IServices/IInteractionServices.ts";
 import InteractionServices from "../../Application/Features/Interaction/InteractionServices.ts";
 import type { Request, Response } from "express";
-import { Console } from "console";
+// import { Console } from "console";
 
 export default class InteractionController {
   private interactionServices: IInteractionServices = new InteractionServices();
@@ -62,7 +62,7 @@ export default class InteractionController {
       const data = {
         userId,
         productId,
-        variantId,
+        // variantId,
         interactionType,
         interactionContent,
       };

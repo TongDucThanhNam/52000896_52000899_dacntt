@@ -41,7 +41,7 @@ class CollaborativeFilteringRecommenderSystem:
         # Select top K similar users
         top_users = similarity_scores.nlargest(k).index
 
-        # Get ratings of top K similar users
+        # Get interatings of top K similar users
         similarity_scores = similarity_scores[top_users]
 
         # Get interratings of top K similar users for the product
@@ -155,7 +155,7 @@ class CollaborativeFilteringRecommenderSystem:
         # find uninteracted products
         uninteracted = self.user_product_matrix.columns[self.user_product_matrix.loc[target_user_id] == 0]
 
-        # Predict rating for each uninteracted product
+        # Predict interating for each uninteracted product
         predictions = {}
         for product in uninteracted:
             # print(f"Predicting interacting for product {product}")

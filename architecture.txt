@@ -51,74 +51,14 @@
 │  │  │     └── Events
 │  │  ├── Features
 │  │  │  ├── Cart
-│  │  │  │  ├── CartServices.ts
-│  │  │  │  ├── Requests
-│  │  │  │  │  ├── CreateCartRequest.ts
-│  │  │  │  │  ├── DeleteCartRequest.ts
-│  │  │  │  │  ├── FindAllCartRequest.ts
-│  │  │  │  │  ├── FindCartById.Request.ts
-│  │  │  │  │  └── UpdateCartRequest.ts
-│  │  │  │  └── Response
-│  │  │  │     ├── CreateLogResponse.ts
-│  │  │  │     ├── DeleteLogResponse.ts
-│  │  │  │     ├── FindAllLogResponse.ts
-│  │  │  │     ├── FindLogByIdResponse.ts
-│  │  │  │     └── UpdateLogResponse.ts
+│  │  │  │  └── CartServices.ts
 │  │  │  ├── Interaction
-│  │  │  │  ├── InteractionServices.ts
-│  │  │  │  ├── Requests
-│  │  │  │  │  ├── CreateLogRequest.ts
-│  │  │  │  │  ├── DeleteLogRequest.ts
-│  │  │  │  │  ├── FindAllLogRequest.ts
-│  │  │  │  │  ├── FindLogById.Request.ts
-│  │  │  │  │  └── UpdateLogRequest.ts
-│  │  │  │  └── Response
-│  │  │  │     ├── CreateLogResponse.ts
-│  │  │  │     ├── DeleteLogResponse.ts
-│  │  │  │     ├── FindAllLogResponse.ts
-│  │  │  │     ├── FindLogByIdResponse.ts
-│  │  │  │     └── UpdateLogResponse.ts
+│  │  │  │  └── InteractionServices.ts
 │  │  │  ├── Product
-│  │  │  │  ├── ProductServices.ts
-│  │  │  │  ├── Requests
-│  │  │  │  │  ├── CreateLogRequest.ts
-│  │  │  │  │  ├── DeleteLogRequest.ts
-│  │  │  │  │  ├── FindAllLogRequest.ts
-│  │  │  │  │  ├── FindLogById.Request.ts
-│  │  │  │  │  └── UpdateLogRequest.ts
-│  │  │  │  └── Response
-│  │  │  │     ├── CreateLogResponse.ts
-│  │  │  │     ├── DeleteLogResponse.ts
-│  │  │  │     ├── FindAllLogResponse.ts
-│  │  │  │     ├── FindLogByIdResponse.ts
-│  │  │  │     └── UpdateLogResponse.ts
+│  │  │  │  └── ProductServices.ts
 │  │  │  ├── Transaction
-│  │  │  │  ├── Requests
-│  │  │  │  │  ├── CreateLogRequest.ts
-│  │  │  │  │  ├── DeleteLogRequest.ts
-│  │  │  │  │  ├── FindAllLogRequest.ts
-│  │  │  │  │  ├── FindLogById.Request.ts
-│  │  │  │  │  └── UpdateLogRequest.ts
-│  │  │  │  ├── Response
-│  │  │  │  │  ├── CreateLogResponse.ts
-│  │  │  │  │  ├── DeleteLogResponse.ts
-│  │  │  │  │  ├── FindAllLogResponse.ts
-│  │  │  │  │  ├── FindLogByIdResponse.ts
-│  │  │  │  │  └── UpdateLogResponse.ts
 │  │  │  │  └── TransactionServices.ts
 │  │  │  └── User
-│  │  │     ├── Requests
-│  │  │     │  ├── CreateUserRequest.ts
-│  │  │     │  ├── DeleteLogRequest.ts
-│  │  │     │  ├── FindAllLogRequest.ts
-│  │  │     │  ├── FindLogById.Request.ts
-│  │  │     │  └── UpdateLogRequest.ts
-│  │  │     ├── Response
-│  │  │     │  ├── CreateLogResponse.ts
-│  │  │     │  ├── DeleteLogResponse.ts
-│  │  │     │  ├── FindAllLogResponse.ts
-│  │  │     │  ├── FindLogByIdResponse.ts
-│  │  │     │  └── UpdateLogResponse.ts
 │  │  │     └── UserServices.ts
 │  │  └── Persistences
 │  │     ├── IRepositories
@@ -211,6 +151,7 @@
 │  ├── swagger_output.json
 │  └── tsconfig.json
 ├── docker-compose.yaml
+├── env.example
 ├── frontend
 │  ├── assets
 │  │  └── images
@@ -282,6 +223,7 @@
 │  │  │  │  │  └── page.tsx
 │  │  │  │  ├── page.tsx
 │  │  │  │  └── quen-mat-khau
+│  │  │  ├── actions
 │  │  │  ├── actions.ts
 │  │  │  ├── api
 │  │  │  │  └── uploadthing
@@ -396,4 +338,5 @@
 │  ├── tailwind.config.ts
 │  └── tsconfig.json
 ├── LICENSE
-└── README.MD
+├── README.MD
+└── readme.txt

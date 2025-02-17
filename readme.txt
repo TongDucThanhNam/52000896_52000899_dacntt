@@ -24,13 +24,11 @@
 - AI: Python, FastAPI, Pandas, Numpy, Scikit-learn, TensorFlow
 
 # 2. Cài đặt và chạy local ở chế độ development
-- Tôi sử dụng ubuntu nên câu lệnh có thể sẽ khác so với môi trường khác.
 - Yêu cầu có mạng để sử dụng (Do sử dụng MongoDB Atlas nên có thể sẽ cần bỏ lọc IP)
 - Đầu tiên chúng ta cần thêm các biến môi trường:
     - `.env` cho backend (điền các biến từ `.env.example`)
     - `.env.local` cho frontend (điền các biến từ `.env.example`)
     - `.env` cho ai-service (điền các biến từ `.env.example`)
-    - Khi chạy docker compose thì sẽ cần chuẩn bị env chứ tất cả env trên đặt thành `.env trong folder source`
 - Để chạy dự án, ta sẽ cần mở 3 tab terminal, một tab để chạy backend, một tab để chạy frontend.
 - Sync project architecture (optional):
 
@@ -50,8 +48,8 @@ npm install
 - Chạy backend:
 
 ```bash
-npm run start 
-# hoặc 
+npm run start
+# hoặc
 npm run dev
 ```
 
@@ -71,7 +69,6 @@ npm install
 ```bash
 npm run dev
 ```
-- Xem kết quả ở url http://localhost:3000
 
 ### 2.3 Cài đặt AI:
 
@@ -86,14 +83,14 @@ pip install -r requirements.txt
 - Chạy AI service:
 
 ```bash
-uvicorn src.main:app 
+uvicorn src.main:app
 ```
-- AI services chạy ở url http://localhost:8000
-### 2.4 Docker hóa dự án (Ưu tiên):
+
+### 2.4 Docker hóa dự án:
 
 - Build docker compose:
 
-```bash  
+```bash
 docker compose build # verson 2
 ```
 
@@ -105,11 +102,11 @@ docker push tongducthanhnam/fashion-ai-fe:latest
 docker push tongducthanhnam/fashion-ai-ai:latest
 ```
 
-## 3. Triển khai (Ưu tiên sử dụng Docker):
+## 3. Triển khai:
 
 - Sử dụng docker-compose để triển khai dự án:
 
 ```bash
 docker compose up # verson 2
 ```
-- Để chạy dự án chúng ta sẽ mở url http://localhost:9999
+- Để chạy dự án chúng ta sẽ trang http://localhost:9999
