@@ -1,4 +1,5 @@
 import {MongoClient} from "mongodb";
+
 require('dotenv').config();
 const URI = process.env.CONNECTION_STRING;
 const dbName = process.env.DATABASE_NAME;

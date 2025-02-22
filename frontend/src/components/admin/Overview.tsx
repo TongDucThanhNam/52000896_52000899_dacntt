@@ -29,15 +29,25 @@ export function Overview(
 ) {
     const chartData = data.map(transaction => {
         return {
-            month: new Date(transaction.updatedAt).toLocaleDateString('en-GB'),
+            month: new Date(transaction.updatedAt).toLocaleDateString('vi-GB'),
             revenue: transaction.totalValue,
         }
     })
 
+    // Group by date
+    const groupedData = chartData.reduce((acc, curr) => {
+        const month = curr.month
+        if (!acc[month]) {
+            acc[month] = { month, revenue: 0 }
+        }
+        acc[month].revenue += curr.revenue
+        return acc
+    }, {} as Record<string, { month: string; revenue: number }>)
+
 
     return (
         <ChartContainer config={chartConfig} className="w-full aspect-[4/3]">
-            <BarChart accessibilityLayer data={chartData}>
+            <BarChart accessibilityLayer data={Object.values(groupedData)}>
                 <CartesianGrid vertical={false}/>
                 <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false}/>
                 <ChartTooltip content={<ChartTooltipContent/>}/>

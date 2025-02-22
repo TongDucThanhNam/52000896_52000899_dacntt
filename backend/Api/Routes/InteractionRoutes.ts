@@ -8,14 +8,8 @@ const interactionController = new InteractionController();
 router.post("/interactions", interactionController.trackInteraction);
 // Interaction purchase
 router.post("/interactions/purchase", interactionController.trackPurchase);
-router.get(
-  "/users/:userId/interactions",
-  interactionController.getUserInteractions,
-);
-router.get(
-  "/products/:productId/interactions",
-  interactionController.getProductInteractions,
-);
+router.get("/users/:userId/interactions", interactionController.getUserInteractions,);
+router.get("/products/:productId/interactions", interactionController.getProductInteractions,);
 
 // Log routes
 router.post("/logs", interactionController.createLog);

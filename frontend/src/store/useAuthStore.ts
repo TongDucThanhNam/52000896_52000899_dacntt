@@ -41,7 +41,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     signOut: async () => {
         try {
             localStorage.removeItem("token")
-            logout()
+            await logout()
             set({ user: null, isSignedIn: false, error: null })
         } catch (error) {
             set({ error: error as Error })

@@ -47,8 +47,8 @@ export default function EditProduct(
                 productBrand: productAttributes.productBrand,
                 imageUrls: productAttributes.imageUrls,
                 categoryId: productAttributes.categoryId,
+                productTag: productAttributes.productTag || [],
                 variants: variants,
-
             });
 
             if (result.success) {

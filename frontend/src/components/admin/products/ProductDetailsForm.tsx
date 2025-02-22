@@ -6,6 +6,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {ProductAttributes} from '@/types'
 import {FileUpload} from "@/components/ui/file-upload";
 import {Label} from "@/components/ui/label";
+import {TagsInput} from "@/components/ui/tag-input";
 
 interface ProductDetailsFormProps {
     productAttributes: ProductAttributes
@@ -47,7 +48,7 @@ export default function ProductDetailsForm({productAttributes, setProductAttribu
                         <div className="grid gap-3">
                             <Label htmlFor="name">Slug sản phẩm</Label>
                             <Input
-                                id="name"
+                                id="productTag"
                                 type="text"
                                 className="w-full"
                                 onChange={(e) => setProductAttributes({
@@ -55,6 +56,21 @@ export default function ProductDetailsForm({productAttributes, setProductAttribu
                                     productSlug: e.target.value
                                 })}
                                 defaultValue={productAttributes.productSlug}
+                            />
+                        </div>
+
+                        <div className="grid gap-3">
+                            <Label htmlFor="name">Tag sản phẩm</Label>
+                            <TagsInput
+                                value={productAttributes.productTag || []}
+                                onValueChange={(value:string[]) => setProductAttributes(
+                                    {
+                                        ...productAttributes,
+                                        productTag: value
+                                    }
+                                )}
+                                placeholder="Nhập các tag của sản phẩm"
+                                className="w-full"
                             />
                         </div>
 

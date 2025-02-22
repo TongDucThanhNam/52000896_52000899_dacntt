@@ -12,7 +12,6 @@ router.put('/users/:userId', userController.updateUser);
 router.delete('/users/:userId', userController.deleteUser);
 
 
-
 // User preferences
 router.post('/users/:userId/preferences', userController.addUserPreference);
 // router.put('/users/:userId/preferences', userController.updateUserPreferences);
@@ -27,6 +26,6 @@ router.post('/forgot-password', userController.forgotPassword);
 router.post('/reset-password', userController.resetPassword);
 
 //get current user
-router.get('/profile', AuthenticationMiddleWare,userController.getCurrentUser);
+router.get('/profile', AuthenticationMiddleWare, userController.getCurrentUser);
 
 export default router;

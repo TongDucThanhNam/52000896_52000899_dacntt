@@ -11,3 +11,4 @@ class User(BaseModel):
     userAddress: str
     userGender: str
     userJob: str
+    userCity: str

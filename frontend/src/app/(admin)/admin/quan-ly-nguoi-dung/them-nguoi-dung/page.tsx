@@ -3,7 +3,7 @@ import AddUserInfo from "@/components/admin/users/AddUserInfo";
 
 export default function AddUserPage() {
     return (
-        <Card className="w-full shadow-lg">
+        <Card className="w-3/4 mx-auto shadow-lg">
             <CardHeader className="bg-gray-50 border-b">
                 <CardTitle className="text-2xl font-semibold text-gray-700">Thêm người dùng</CardTitle>
             </CardHeader>

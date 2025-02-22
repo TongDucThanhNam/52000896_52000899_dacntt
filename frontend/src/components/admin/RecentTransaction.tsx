@@ -10,6 +10,10 @@ interface RecentTransactionsProps {
 }
 
 export function RecentTransactions({transactions}: RecentTransactionsProps) {
+    // sort by lastest and get 7 lastest
+    transactions.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    transactions = transactions.slice(0, 7)
+
     return (
         <div className="space-y-4">
             <div className="space-y-4">

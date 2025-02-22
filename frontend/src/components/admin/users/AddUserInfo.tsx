@@ -40,10 +40,10 @@ export default function AddUserInfo() {
             userPhone: "",
             userHeight: 150,
             userWeight: 50,
-            userDateOfBirth: new Date(Date.now()),
+            userDateOfBirth: new Date("1/1/2000"),
             userGender: "Male",
             userJob: "",
-            userCity: "",
+            userCity: "Hồ Chí Minh",
             userRole: "User",
             userImageUrl: "",
             userAddress: "",
@@ -54,7 +54,15 @@ export default function AddUserInfo() {
         setIsLoading(true)
         try {
             // Update existing user
-            await createUser(data)
+            const result = await createUser(data)
+            if (result.error) {
+                toast({
+                    title: "Lỗi khi thêm người dùng",
+                    description: `Đã xảy ra lỗi khi thêm người dùng: ${result.error}`,
+                    variant: "destructive",
+                })
+                return
+            }
             toast({
                 title: "Thêm người dùng thành công",
                 description: "Người dùng đã được thêm vào hệ thống",

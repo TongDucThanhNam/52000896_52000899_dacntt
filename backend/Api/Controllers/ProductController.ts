@@ -1,13 +1,13 @@
 import type {IProductServices} from "../../Application/Persistences/IServices/IProductServices.ts";
-import {ProductServices} from "../../Application/Features/Product/ProductServices.ts";
 import type {Request, Response,} from 'express';
 
 import slugify from "slugify";
+import ProductServices from "../../Application/Features/Product/ProductServices.ts";
 
 export default class ProductController {
     private productServices: IProductServices = new ProductServices();
 
-
+    //CRUD
     getAllProducts = async (
         req: Request,
         res: Response
@@ -47,6 +47,7 @@ export default class ProductController {
                         categoryId: '6765a3b549de95984148bf5b',
                         productAvgRating: '0',
                         productTotalViews: '0',
+                        productTag: '[]',
                     }
                 }
              */
@@ -57,7 +58,8 @@ export default class ProductController {
                 imageUrls,
                 categoryId,
                 productAvgRating,
-                productTotalViews
+                productTotalViews,
+                productTag
             } = req.body;
 
             const productSlug = slugify(productName, {
@@ -77,7 +79,8 @@ export default class ProductController {
                 imageUrls,
                 categoryId,
                 productAvgRating,
-                productTotalViews
+                productTotalViews,
+                productTag
             }
             const result = await this.productServices.createProduct(data);
             return res.status(200).json(result);
@@ -152,6 +155,7 @@ export default class ProductController {
                 productBrand,
                 imageUrls,
                 categoryId,
+
                 productAvgRating,
                 productTotalViews
             } = req.body;
@@ -639,6 +643,8 @@ export default class ProductController {
                 variants
             } = req.body;
 
+            console.log("req.body", req.body);
+
             const productSlug = slugify(productName, {
                 replacement: '-',
                 remove: undefined,
@@ -659,6 +665,8 @@ export default class ProductController {
                 productTotalViews,
                 variants
             }
+
+
             const result = await this.productServices.createProductWithVariants(data);
 
             return res.status(200).json(result);

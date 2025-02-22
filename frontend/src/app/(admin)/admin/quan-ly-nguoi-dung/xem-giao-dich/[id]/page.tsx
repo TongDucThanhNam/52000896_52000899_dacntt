@@ -49,7 +49,7 @@ export default async function ViewUserTransactionsPage(
     }
 
     return (
-        <div className="container mx-auto py-8">
+        <div className="container mx-auto py-8 w-3/4">
             <div className="mb-6">
                 <Button asChild variant="ghost">
                     <Link href={"/admin/quan-ly-nguoi-dung/"}>

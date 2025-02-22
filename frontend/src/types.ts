@@ -1,4 +1,5 @@
 export interface ProductAttributes {
+    productTag?: string[];
     productId?: string,
     //attributes related to product
     productName: string,
@@ -45,6 +46,7 @@ export interface Product {
     categoryId: string,
     productAvgRating?: number,
     productTotalViews?: number,
+    productTag: string[],
     variants?: Variant[]
 }
 

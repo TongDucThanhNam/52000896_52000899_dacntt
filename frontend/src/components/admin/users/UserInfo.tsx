@@ -18,27 +18,17 @@ import {
     Briefcase,
     Building,
     UserCog,
-    Image,
     MapPin,
 } from "lucide-react"
-
-const cities = [
-    "Hà Nội",
-    "Hồ Chí Minh",
-    "Đà Nẵng",
-    "Hải Phòng",
-    "Cần Thơ",
-    "Huế",
-    "Nha Trang",
-    "Vinh",
-    "Quy Nhơn",
-]
+import {cities} from "@/config/site";
+import {Slider} from "@/components/ui/slider";
 
 interface UserInfoProps {
     form: any
+    isEdit?: boolean
 }
 
-export default function UserInfo({form}: UserInfoProps) {
+export default function UserInfo({form, isEdit}: UserInfoProps) {
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -92,6 +82,7 @@ export default function UserInfo({form}: UserInfoProps) {
                                 <Input
                                     {...field}
                                     type="password"
+                                    disabled={isEdit}
                                     className="transition duration-200 ease-in-out focus:ring-2 focus:ring-blue-500"
                                 />
                             </FormControl>
@@ -124,17 +115,14 @@ export default function UserInfo({form}: UserInfoProps) {
                     name="userHeight"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel className="flex items-center space-x-2">
-                                <Ruler className="w-4 h-4"/>
-                                <span>Chiều cao (cm)</span>
-                            </FormLabel>
+                            <FormLabel>Chiều cao: {field.value} cm</FormLabel>
                             <FormControl>
-                                <Input
-                                    {...field}
-                                    type="number"
-                                    min="0"
-                                    step="0.1"
-                                    className="transition duration-200 ease-in-out focus:ring-2 focus:ring-blue-500"
+                                <Slider
+                                    min={100}
+                                    max={250}
+                                    step={1}
+                                    value={[field.value]}
+                                    onValueChange={(value) => field.onChange(value[0])}
                                 />
                             </FormControl>
                             <FormMessage/>
@@ -146,17 +134,14 @@ export default function UserInfo({form}: UserInfoProps) {
                     name="userWeight"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel className="flex items-center space-x-2">
-                                <Weight className="w-4 h-4"/>
-                                <span>Cân nặng (kg)</span>
-                            </FormLabel>
+                            <FormLabel>Cân nặng: {field.value} kg</FormLabel>
                             <FormControl>
-                                <Input
-                                    {...field}
-                                    type="number"
-                                    min="0"
-                                    step="0.1"
-                                    className="transition duration-200 ease-in-out focus:ring-2 focus:ring-blue-500"
+                                <Slider
+                                    min={30}
+                                    max={200}
+                                    step={1}
+                                    value={[field.value]}
+                                    onValueChange={(value) => field.onChange(value[0])}
                                 />
                             </FormControl>
                             <FormMessage/>

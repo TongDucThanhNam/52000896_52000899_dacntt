@@ -20,4 +20,3 @@ npm run dev
 ```
 
 - Truy cập vào địa chỉ: http://localhost:3000
- 

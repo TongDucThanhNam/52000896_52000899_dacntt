@@ -5,7 +5,7 @@ import type {IUserRepository} from "../../../Application/Persistences/IRepositor
 class UserRepository implements IUserRepository {
     async createUser(userData: any, session: ClientSession): Promise<typeof UserWithBase> {
         try {
-            const user = await UserWithBase.create([userData], { session });
+            const user = await UserWithBase.create([userData], {session});
             return user[0];
         } catch (error) {
             throw new Error("Error at UserRepository: " + error);

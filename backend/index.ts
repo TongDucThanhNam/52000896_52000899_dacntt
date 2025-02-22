@@ -24,7 +24,7 @@ const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Allow cookies to be sent back and forth
     optionsSuccessStatus: 204, // Some legacy browsers choke on 204
-  };
+};
 app.use(cors(corsOptions));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 //------------------Routes------------------//

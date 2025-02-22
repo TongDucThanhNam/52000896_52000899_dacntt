@@ -6,6 +6,7 @@ import type {IUnitOfWork} from "../../Persistences/IRepositories/IUnitOfWork.ts"
 import {UnitOfWork} from "../../../Infrastructure/Persistences/Respositories/UnitOfWork.ts";
 import {type UserWithBase} from "../../../Domain/Entities/UserEntities.ts";
 import {type PreferenceWithBase} from "../../../Domain/Entities/PreferenceEntities.ts";
+import {CoreException} from "../../Common/Exceptions/CoreException.ts";
 
 function parseDate(dateStr: string): Date {
     const [day, month, year] = dateStr.split("/");
@@ -38,9 +39,28 @@ function encodeJwtToken(user: any): { accessToken: string, refreshToken: string 
 class UserServices implements IUserServices {
     private unitOfWork: IUnitOfWork = new UnitOfWork();
 
-    async createUser(data: any): Promise<typeof UserWithBase> {
+    async createUser(data: any): Promise<typeof UserWithBase | CoreException> {
         try {
+            // Check if the user already exists
+            const existingUser = await this.unitOfWork.userRepository.getAllUsers(
+                {
+                    userEmail: data.userEmail,
+                    isDeleted: false,
+                    isActive: true,
+                }
+            )
+
+            if (existingUser && existingUser.length > 0) {
+                return new CoreException(
+                    400,
+                    "Người dùng đã tồn tại"
+                );
+            }
+
             const session = await this.unitOfWork.startTransaction();
+            const saltRounds = 12;
+            data.userPasswordHash = await bcrypt.hash(data.userPasswordHash, saltRounds);
+            console.log(data);
             const user = await this.unitOfWork.userRepository.createUser(data, session);
             await this.unitOfWork.commitTransaction();
             return user;
@@ -139,15 +159,15 @@ class UserServices implements IUserServices {
     async addUserPreference(data: any): Promise<typeof PreferenceWithBase | null> {
         try {
             const session = await this.unitOfWork.startTransaction();
-            const { userId, preferenceType, preferenceValue, preferenceScore } = data;
-            
+            const {userId, preferenceType, preferenceValue, preferenceScore} = data;
+
             // Check if the preference already exists for this user
             const queryData = {};
-            const existingPreferences:any = await this.unitOfWork.preferenceRepository.getPreferencesByUserId(
+            const existingPreferences: any = await this.unitOfWork.preferenceRepository.getPreferencesByUserId(
                 userId,
                 queryData
             );
-            
+
             let result;
             if (existingPreferences && existingPreferences.length > 0) {
                 // Use the first existing preference record
@@ -156,13 +176,13 @@ class UserServices implements IUserServices {
                 const newScore = existingPreference.preferenceScore + preferenceScore;
                 result = await this.unitOfWork.preferenceRepository.updatePreferenceById(
                     existingPreference._id,
-                    { preferenceScore: newScore },
+                    {preferenceScore: newScore},
                     session
                 );
             } else {
                 // Otherwise, create a new preference record
                 result = await this.unitOfWork.preferenceRepository.createPreference(
-                    { userId, preferenceType, preferenceValue, preferenceScore },
+                    {userId, preferenceType, preferenceValue, preferenceScore},
                     session
                 );
             }
@@ -177,7 +197,6 @@ class UserServices implements IUserServices {
     async forgotPassword(data: any): Promise<void> {
         try {
             //TODO: implement this
-
         } catch (error) {
             throw error;
         }
@@ -185,28 +204,28 @@ class UserServices implements IUserServices {
 
     async loginUser(data: any): Promise<any> {
         try {
-            const { userEmail, userPasswordHash } = data;
-    
+            const {userEmail, userPasswordHash} = data;
+
             const queryData = {
                 userEmail: userEmail,
                 isDeleted: false,
                 isActive: true,
             };
-    
+
             const users: any = await this.unitOfWork.userRepository.getAllUsers(queryData);
-    
+
             if (!users || users.length === 0) {
                 throw new Error('User not found');
             }
-    
+
             const user = users[0];
-    
+
             // Compare plain-text password with the hashed password using bcrypt
             const isValid = await bcrypt.compare(userPasswordHash, user.userPasswordHash);
             if (!isValid) {
                 throw new Error('Password is incorrect');
             }
-    
+
             const token = encodeJwtToken(user);
             return token;
         } catch (error) {
@@ -225,6 +244,22 @@ class UserServices implements IUserServices {
 
     async registerUser(data: any): Promise<any> {
         try {
+            // Check if the user already exists
+            const existingUser = await this.unitOfWork.userRepository.getAllUsers(
+                {
+                    userEmail: data.userEmail,
+                    isDeleted: false,
+                    isActive: true,
+                }
+            )
+
+            if (existingUser && existingUser.length > 0) {
+                return new CoreException(
+                    400,
+                    "Người dùng đã tồn tại"
+                );
+            }
+
             // Parse the userDateOfBirth if it's in "dd/mm/yyyy" format
             if (data.userDateOfBirth && typeof data.userDateOfBirth === "string") {
                 data.userDateOfBirth = parseDate(data.userDateOfBirth);

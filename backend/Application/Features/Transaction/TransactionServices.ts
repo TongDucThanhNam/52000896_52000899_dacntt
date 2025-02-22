@@ -9,33 +9,31 @@ class TransactionServices implements ITransactionService {
 
     async createTransaction(data: any): Promise<typeof TransactionWithBase> {
         try {
-            const { userId, orderStatus, totalValue, paymentMethod, items } = data;
-            if (
-                !userId ||
-                !orderStatus ||
-                totalValue == null ||
-                !paymentMethod ||
-                !Array.isArray(items) ||
-                items.length === 0
-            ) {
-                throw new Error("Missing required transaction or item fields.");
-            }
-
-            items.forEach((item: any, index: number) => {
-                if (!item.productId || !item.variantId || item.quantity == null || item.purchasePrice == null) {
-                    throw new Error(`Missing required fields for item at index ${index}.`);
-                }
-            });
+            const {userId, orderStatus, totalValue, paymentMethod, items} = data;
 
             const session = await this.unitOfWork.startTransaction();
-            const transaction:any = await this.unitOfWork.transactionRepository.createTransaction(data, session);
-
-            console.log("Transaction created: ", transaction);
+            // Create transaction
+            const transaction: any = await this.unitOfWork.transactionRepository.createTransaction({
+                userId,
+                orderStatus,
+                totalValue,
+                paymentMethod
+            }, session);
+            // Create transaction items
             for (const item of items) {
+                // console.log("Create transaction item", item);
                 item.transactionId = transaction._id;
                 await this.unitOfWork.transactionItemRepository.createTransactionItem(item, session);
+                // then track interaction
+                await this.unitOfWork.interactionRepository.createInteraction({
+                    userId,
+                    productId: item.productId,
+                    variantId: item.variantId,
+                    interactionType: "purchase",
+                    interactionContent: "Purchase the product",
+                    interactionScore: 1
+                }, session)
             }
-
             await this.unitOfWork.commitTransaction();
             return transaction;
         } catch (error) {
@@ -46,9 +44,7 @@ class TransactionServices implements ITransactionService {
 
     async getAllTransactions(data: any): Promise<typeof TransactionWithBase[] | null> {
         try {
-            const queryData = {
-
-            };
+            const queryData = {};
             const transactions = await this.unitOfWork.transactionRepository.getAllTransactions(queryData);
             return transactions;
         } catch (error) {
@@ -67,9 +63,7 @@ class TransactionServices implements ITransactionService {
 
     async getTransactionItems(data: any): Promise<typeof TransactionItemWithBase[] | null> {
         try {
-            const queryData = {
-
-            }
+            const queryData = {}
             const transactionItems = await this.unitOfWork.transactionItemRepository.getTransactionItemsByTransactionId(data, queryData);
             return transactionItems;
         } catch (error) {
@@ -79,9 +73,7 @@ class TransactionServices implements ITransactionService {
 
     async getUserTransactions(data: any): Promise<typeof TransactionWithBase[] | null> {
         try {
-            const queryData = {
-                
-            };
+            const queryData = {};
             const transactions = await this.unitOfWork.transactionRepository.getTransactionsByUserId(data, queryData);
             return transactions;
         } catch (error) {

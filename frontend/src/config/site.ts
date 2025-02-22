@@ -20,3 +20,15 @@ export const breadcrumbPages = [
     {name: "Thành viên", href: "/thanh-vien"},
     {name: "Liên hệ", href: "/lien-he"},
 ];
+
+export const cities = [
+    "Hà Nội",
+    "Hồ Chí Minh",
+    "Đà Nẵng",
+    "Hải Phòng",
+    "Cần Thơ",
+    "Huế",
+    "Nha Trang",
+    "Vinh",
+    "Quy Nhơn",
+]

@@ -180,6 +180,46 @@
         }
       }
     },
+    "/interactions/purchase": {
+      "post": {
+        "tags": [
+          "Interactions"
+        ],
+        "summary": "Lấy thông tin tương tác của của một user",
+        "description": "Endpoint để lấy thông tin tương tác của một user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                },
+                "productId": {
+                  "example": "any"
+                },
+                "interactionType": {
+                  "example": "any"
+                },
+                "interactionContent": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/users/{userId}/interactions": {
       "get": {
         "tags": [
@@ -254,6 +294,66 @@
         ],
         "summary": "Lấy tất cả sản phẩm",
         "description": "Endpoint để lấy tất cả sản phẩm",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Tạo sản phẩm",
+        "description": "Endpoint để tạo sản phẩm",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Product data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productName": {
+                  "type": "string",
+                  "example": "Product name"
+                },
+                "productDescription": {
+                  "type": "string",
+                  "example": "Product description"
+                },
+                "productBrand": {
+                  "type": "string",
+                  "example": "Product brand"
+                },
+                "imageUrls": {
+                  "type": "string",
+                  "example": "[]"
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "6765a3b549de95984148bf5b"
+                },
+                "productAvgRating": {
+                  "type": "string",
+                  "example": "0"
+                },
+                "productTotalViews": {
+                  "type": "string",
+                  "example": "0"
+                },
+                "productTag": {
+                  "type": "string",
+                  "example": "[]"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1216,8 +1316,11 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

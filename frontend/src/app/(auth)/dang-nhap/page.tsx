@@ -43,11 +43,6 @@ export default function LoginPage() {
     async function handleSubmit(values: z.infer<typeof loginSchema>) {
         try {
             await login(values.email, values.password)
-            toast({
-                title: "Đăng nhập",
-                description: "Đăng nhập thành công",
-                duration: 5000,
-            })
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Đăng nhập thất bại"
             toast({

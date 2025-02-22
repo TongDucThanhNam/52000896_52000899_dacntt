@@ -5,7 +5,7 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {z} from "zod"
 import {format} from "date-fns"
-import {CalendarIcon} from "lucide-react"
+import {Building, CalendarIcon} from "lucide-react"
 import Link from "next/link"
 import {useRouter} from "next/navigation"
 import {useToast} from "@/hooks/use-toast"
@@ -22,6 +22,8 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover"
 import AvatarUpload from "@/components/auth/AvatarUpload";
 import {register} from "@/app/actions";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {cities} from "@/config/site";
 
 const FormSchema = z
     .object({
@@ -29,7 +31,7 @@ const FormSchema = z
         userEmail: z.string().email("Email không hợp lệ"),
         userPasswordHash: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
         confirmPassword: z.string(),
-        userPhone: z.string().regex(/^\d{10}$/, "Số điện thoại phải có 10 chữ số"),
+        userPhone: z.string().regex(/^\d{9,}$/, "Số điện thoại phải có ít nhất 9 chữ số"),
         userAddress: z.string().min(5, "Địa chỉ phải có ít nhất 5 ký tự"),
         userHeight: z.number().min(100).max(250),
         userWeight: z.number().min(30).max(200),
@@ -40,6 +42,7 @@ const FormSchema = z
             .optional(),
         userGender: z.enum(["Male", "Female"]).optional(),
         userJob: z.string().min(2, "Nghề nghiệp phải có ít nhất 2 ký tự"),
+        userCity: z.string()
     })
     .refine((data) => data.userPasswordHash === data.confirmPassword, {
         message: "Mật khẩu không khớp",
@@ -62,9 +65,10 @@ export default function RegisterPage() {
             userAddress: "",
             userHeight: 170,
             userWeight: 60,
-            userDateOfBirth: undefined,
-            userGender: undefined,
+            userDateOfBirth: new Date("2000-01-01"),
+            userGender: "Male",
             userJob: "",
+            userCity: "Hồ Chí Minh"
         },
     })
 
@@ -78,6 +82,8 @@ export default function RegisterPage() {
             }
         })
         formData.append("userImageUrl", avatarUrl)
+
+        console.log("Register data:", formData)
 
         const result = await register(formData)
 
@@ -259,7 +265,6 @@ export default function RegisterPage() {
                                                         mode="single"
                                                         selected={field.value}
                                                         onSelect={field.onChange}
-                                                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
                                                     />
                                                 </PopoverContent>
                                             </Popover>
@@ -291,12 +296,6 @@ export default function RegisterPage() {
                                                         </FormControl>
                                                         <FormLabel className="font-normal">Nữ</FormLabel>
                                                     </FormItem>
-                                                    <FormItem className="flex items-center space-x-3 space-y-0">
-                                                        <FormControl>
-                                                            <RadioGroupItem value="Other"/>
-                                                        </FormControl>
-                                                        <FormLabel className="font-normal">Khác</FormLabel>
-                                                    </FormItem>
                                                 </RadioGroup>
                                             </FormControl>
                                             <FormMessage/>
@@ -312,6 +311,35 @@ export default function RegisterPage() {
                                             <FormControl>
                                                 <Input {...field} />
                                             </FormControl>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    control={form.control}
+                                    name="userCity"
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <FormLabel className="flex items-center space-x-2">
+                                                <Building className="w-4 h-4"/>
+                                                <span>Thành phố sinh sống</span>
+                                            </FormLabel>
+                                            <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                                                <FormControl>
+                                                    <SelectTrigger
+                                                        className="transition duration-200 ease-in-out focus:ring-2 focus:ring-blue-500">
+                                                        <SelectValue placeholder="Lựa chọn thành phố"/>
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    {cities.map((city) => (
+                                                        <SelectItem key={city} value={city}>
+                                                            {city}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
                                             <FormMessage/>
                                         </FormItem>
                                     )}

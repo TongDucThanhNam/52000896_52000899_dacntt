@@ -1,12 +1,12 @@
 import {UnitOfWork} from "../../../Infrastructure/Persistences/Respositories/UnitOfWork.ts";
 import type {IProductServices} from "../../Persistences/IServices/IProductServices.ts";
 import type {IUnitOfWork} from "../../Persistences/IRepositories/IUnitOfWork.ts";
-import  {type ProductTagWithBase} from "../../../Domain/Entities/ProductTagEntities.ts";
-import  {type CategoryWithBase} from "../../../Domain/Entities/CategoryEntities.ts";
-import  {type ProductWithBase} from "../../../Domain/Entities/ProductEntities.ts";
-import  {type VariantWithBase} from "../../../Domain/Entities/VariantEntities.ts";
+import {type ProductTagWithBase} from "../../../Domain/Entities/ProductTagEntities.ts";
+import {type CategoryWithBase} from "../../../Domain/Entities/CategoryEntities.ts";
+import {type ProductWithBase} from "../../../Domain/Entities/ProductEntities.ts";
+import {type VariantWithBase} from "../../../Domain/Entities/VariantEntities.ts";
 
-export class ProductServices implements IProductServices {
+class ProductServices implements IProductServices {
     private unitOfWork: IUnitOfWork = new UnitOfWork();
 
     async addTagToProduct(data: any): Promise<typeof ProductTagWithBase> {
@@ -39,7 +39,7 @@ export class ProductServices implements IProductServices {
             const session = await this.unitOfWork.startTransaction();
             const product = await this.unitOfWork.productRepository.createProduct(data, session);
             await this.unitOfWork.commitTransaction();
-            return product;
+            return product[0];
         } catch (error) {
             await this.unitOfWork.abortTransaction();
             throw error;
@@ -129,7 +129,7 @@ export class ProductServices implements IProductServices {
                 isDeleted: false,
                 isActive: true
             }
-            const variant:any = await this.unitOfWork.variantRepository.getVariantById(data, queryData);
+            const variant: any = await this.unitOfWork.variantRepository.getVariantById(data, queryData);
             if (!variant) {
                 return null;
             }
@@ -257,7 +257,7 @@ export class ProductServices implements IProductServices {
             // console.log('productData', productData)
             // console.log('variants', variants)
 
-            const product:any = await this.unitOfWork.productRepository.createProduct(productData, session);
+            const product: any = await this.unitOfWork.productRepository.createProduct(productData, session);
             // console.log('product', product)
             const resultProduct = product[0];
 

@@ -6,7 +6,7 @@ const productController = new ProductController();
 
 // Product routes
 router.get('/products', productController.getAllProducts);
-// router.post('/products', productController.createProduct);
+router.post('/products', productController.createProduct);
 router.get('/products/:productId', productController.getProductById);
 // Get products by variantId
 router.get('/product/variant/:variantId', productController.getProductByVariantId);

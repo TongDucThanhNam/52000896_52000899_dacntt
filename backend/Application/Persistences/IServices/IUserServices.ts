@@ -1,9 +1,10 @@
 import type {UserWithBase} from "../../../Domain/Entities/UserEntities.ts";
 import type {PreferenceWithBase} from "../../../Domain/Entities/PreferenceEntities.ts";
+import type {CoreException} from "../../Common/Exceptions/CoreException.ts";
 
 export interface IUserServices {
     // User CRUD Operations
-    createUser(data: any): Promise<typeof UserWithBase>;
+    createUser(data: any): Promise<typeof UserWithBase | CoreException>;
 
     getUserById(data: any): Promise<typeof UserWithBase | null>;
 
@@ -23,7 +24,7 @@ export interface IUserServices {
     removeUserPreference(data: any): Promise<boolean>;
 
     // Authentication Services
-    registerUser(data: any): Promise<typeof UserWithBase>;
+    registerUser(data: any): Promise<typeof UserWithBase | CoreException>;
 
     loginUser(data: any): Promise<any>;
 

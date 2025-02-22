@@ -1,5 +1,4 @@
 "use client"
-
 import {Button} from "@/components/ui/button";
 import {ArrowUpIcon, ChevronLeft} from "lucide-react";
 import React, {useCallback, useState} from "react";
@@ -8,6 +7,7 @@ import ProductDetailsForm from "@/components/admin/products/ProductDetailsForm";
 import VariantsForm from "@/components/admin/products/VariantsForm";
 import {useToast} from "@/hooks/use-toast";
 import {useRouter} from "next/navigation";
+import {createProduct} from "@/app/actions";
 
 export default function AddProductPage() {
     const {toast} = useToast()
@@ -25,9 +25,10 @@ export default function AddProductPage() {
         productDescription: '',
         productBrand: '',
         imageUrls: [],
-        categoryId: '675ef491210adaed736cea7e',
+        categoryId: '676fc404aef26543aa192da5',
         productAvgRating: 0,
         productTotalViews: 0,
+        productTag: []
     })
 
     // variants
@@ -35,40 +36,30 @@ export default function AddProductPage() {
 
     // Submit create product
     const handleSubmit = async () => {
-        const productData = {
-            ...productAttributes,
-            variants: variants
-        };
-
-        // console.log('Product Data:', JSON.stringify(productData, null, 2));
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/variants`, {  // Changed this line
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(productData),
-            });
+            const productData = {
+                ...productAttributes,
+                productTag: productAttributes.productTag || [],
+                variants
+            };
 
-            if (!response.ok) {
-                throw new Error(`Lỗi: ${response.status}`);
-            }
+            const response = await createProduct(productData);
+            if (!response.success)
+                throw new Error("Failed to create product");
 
             toast({
                 variant: "default",
                 title: "Thêm sản phẩm thành công",
-                description: `Sản phẩm ${productAttributes.productName} đã được thêm thành công`,
-            })
+                description: `Sản phẩm ${productAttributes.productName} đã được thêm thành công`
+            });
         } catch (error) {
-            toast(
-                {
-                    variant: "destructive",
-                    title: "Thêm sản phẩm thất bại",
-                    description: `Sản phẩm ${productAttributes.productName} đã được thêm thất bại, ${error}`,
-                }
-            )
+            toast({
+                variant: "destructive",
+                title: "Thêm sản phẩm thất bại",
+                description: `Sản phẩm ${productAttributes.productName} đã được thêm thất bại, ${error}`
+            });
         }
-    }
+    };
 
     return (
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">

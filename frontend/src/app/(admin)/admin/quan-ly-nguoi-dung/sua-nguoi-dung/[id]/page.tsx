@@ -20,7 +20,7 @@ export default async function EditUserPage(
     const userData = await getUserData(userId)
 
     return (
-        <Card className="w-full shadow-lg">
+        <Card className="w-3/4 mx-auto shadow-lg">
             <CardHeader className="bg-gray-50 border-b">
                 <CardTitle className="text-2xl font-semibold text-gray-700">Sửa thông tin ngừoi dùng</CardTitle>
             </CardHeader>

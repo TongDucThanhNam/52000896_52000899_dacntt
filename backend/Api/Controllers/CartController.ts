@@ -1,11 +1,10 @@
 import CartServices from "../../Application/Features/Cart/CartServices.ts";
 import type {Request, Response,} from 'express';
 
-
 export default class CartController {
     private cartServices: any = new CartServices();
 
-    //CRUD
+    // CRUD
     getCartByUserId = async (
         req: Request,
         res: Response

@@ -9,12 +9,12 @@ export async function getProduct(id: string): Promise<Product> {
             headers: {
                 Accept: "application/json",
             },
-            cache: "no-store",
         })
 
         if (!res.ok) {
+            console.error("Lỗi khi tải thông tin sản phẩm:", res.statusText)
             if (res.status === 500) {
-                throw new Error("Lỗi máy chủ nội bộ. Vui lòng thử lại sau.")
+                throw new Error("Lỗi Server")
             }
             throw new Error(`Lỗi: ${res.status}`)
         }
@@ -28,11 +28,41 @@ export async function getProduct(id: string): Promise<Product> {
     }
 }
 
+
+export async function createProduct(productData: Omit<Product, '_id' | 'productId'>) {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/variants`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(productData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to create product: ${response.status} - ${response.statusText}`);
+        }
+
+        const createdProduct = await response.json();
+
+        return {
+            success: true,
+            productId: createdProduct.productId,
+            message: 'Product and variants created successfully'
+        };
+
+    } catch (error) {
+        console.error('Error creating product:', error);
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Failed to create product'
+        };
+    }
+}
+
 export async function updateProduct(productData: Product) {
     try {
         // console.log('Updating product:', productData)
-
-        // // Update product details
         await updateProductDetails(productData.productId, {
             productName: productData.productName,
             productSlug: "",
@@ -40,11 +70,11 @@ export async function updateProduct(productData: Product) {
             productBrand: productData.productBrand,
             imageUrls: productData.imageUrls,
             categoryId: productData.categoryId,
+            productTag: productData.productTag,
             productAvgRating: 0,
             productTotalViews: 0,
         })
-        //
-        // // Update variants
+        // Update variants
         if (!productData.variants) {
             return {
                 success: false,
@@ -61,14 +91,6 @@ export async function updateProduct(productData: Product) {
                 await createVariant(productData.productId, variant)
             }
         }
-
-        // If you need to delete variants that were removed from the form,
-        // you'd need to compare the submitted variants with the original ones
-        // and delete the ones that are no longer present.
-
-        // Revalidate the product page to reflect the changes
-        // revalidatePath(`/products/${productData.productId}`)
-
         return {success: true}
     } catch (error) {
         console.error('Error updating product:', error)
@@ -76,15 +98,8 @@ export async function updateProduct(productData: Product) {
     }
 }
 
-// These functions would be implemented to interact with your database or API
 async function updateProductDetails(id: string, productData: ProductAttributes) {
-    // Implementation to update product details
-    console.log(`This is updated product ${id}`, productData)
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
-    if (!backendUrl) {
-        throw new Error('NEXT_PUBLIC_BACKEND_URL is not defined')
-    }
-    const res = await fetch(`${backendUrl}/api/products/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -109,14 +124,7 @@ async function updateProductDetails(id: string, productData: ProductAttributes) 
 }
 
 async function updateVariant(variantId: string, variantData: Variant) {
-    // Implementation to update a variant
-    console.log("This is updated variant", variantData)
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
-    if (!backendUrl) {
-        throw new Error('NEXT_PUBLIC_BACKEND_URL is not defined')
-    }
-
-    const res = await fetch(`${backendUrl}/api/variants/${variantId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/variants/${variantId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -145,15 +153,8 @@ async function updateVariant(variantId: string, variantData: Variant) {
 }
 
 async function createVariant(productId: string, variantData: Variant) {
-    // Implementation to create a new variant
-    console.log(`This is new variant for productId: ${productId}`, variantData)
-
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
-    if (!backendUrl) {
-        throw new Error('NEXT_PUBLIC_BACKEND_URL is not defined')
-    }
-
-    const res = await fetch(`${backendUrl}/api/products/${productId}/variants`, {
+    console.log('Creating variant:', productId, variantData)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/${productId}/variants`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -182,14 +183,11 @@ async function createVariant(productId: string, variantData: Variant) {
 }
 
 export async function fetchProducts(): Promise<Product[]> {
-    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL
-    if (!baseUrl) {
-        throw new Error("Backend URL is not configured")
-    }
-
     try {
-        const res = await fetch(`${baseUrl}/api/products`, {
-            cache: "no-store",
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`, {
+            headers: {
+                Accept: "application/json",
+            },
         })
 
         if (!res.ok) {
@@ -210,7 +208,6 @@ export async function getVariantsOfProduct(productId: string): Promise<Variant[]
             headers: {
                 Accept: "application/json",
             },
-            cache: "no-store",
         })
 
         if (!res.ok) {
@@ -228,8 +225,6 @@ export async function getVariantsOfProduct(productId: string): Promise<Variant[]
 }
 
 //------------------------------------------------------------------------------
-
-
 export async function register(formData: FormData) {
     const data = {
         userName: formData.get("userName"),
@@ -243,7 +238,10 @@ export async function register(formData: FormData) {
         userImageUrl: formData.get("userImageUrl"),
         userGender: formData.get("userGender"),
         userJob: formData.get("userJob"),
+        userCity: formData.get("userCity"),
     }
+
+    console.log('Registering user:', data)
 
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/register`, {
@@ -313,9 +311,7 @@ export async function logout() {
 
 //------------------------------------------------------------------------------
 export async function fetchUsers(): Promise<UserProfile[]> {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`, {
-        cache: 'no-store'
-    })
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`, {})
     if (!response.ok) throw new Error('Failed to fetch users')
     return response.json()
 }
@@ -361,7 +357,7 @@ export async function getUserProfile(token: string): Promise<UserProfile | null>
     }
 }
 
-export async function createUser(userData: any): Promise<UserProfile> {
+export async function createUser(userData: any) {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`, {
         method: "POST",
         headers: {
@@ -371,7 +367,8 @@ export async function createUser(userData: any): Promise<UserProfile> {
     })
 
     if (!response.ok) {
-        throw new Error("Failed to create user")
+        const errorData = await response.json()
+        return {error: errorData.message || "Đăng ký thất bại"}
     }
 
     return await response.json()
@@ -440,20 +437,15 @@ export async function fetchTransactions(): Promise<Transaction[]> {
 }
 
 export async function fetchUserTransactions(key: string): Promise<Transaction[]> {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${key}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${key}`, {
         cache: 'no-store'
     })
     if (!response.ok) throw new Error('Failed to fetch user transactions')
     return response.json()
 }
 
-// const fetcher = async (url: string) => {
-//     const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL
-//     const res = await fetch(`${baseUrl}${url}`)
-//     return await res.json()
-// }
 export async function fetchTransactionItems(url: string): Promise<any> {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${url}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`, {
         cache: 'no-store'
     })
     if (!response.ok) throw new Error('Failed to fetch transaction items')
@@ -462,9 +454,7 @@ export async function fetchTransactionItems(url: string): Promise<any> {
 
 //------------------------------------------------------------------------------
 export async function fetchRecommendations(url: string): Promise<any> {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_AI_URL}${url}`, {
-        cache: 'no-store'
-    })
+    const response = await fetch(`${process.env.NEXT_PUBLIC_AI_URL}${url}`, {})
     if (!response.ok) throw new Error('Failed to fetch recommendations')
     return response.json()
 }
@@ -472,12 +462,20 @@ export async function fetchRecommendations(url: string): Promise<any> {
 //------------------------------------------------------------------------------
 export async function trackInteractionAction(interaction: Interaction) {
     try {
+        // console.log("##Tracking interaction:", interaction)
         const response = await fetch(`${process.env.BACKEND_URL}/api/interactions`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(interaction),
+            body: JSON.stringify({
+                userId: interaction.userId,
+                productId: interaction.productId,
+                variantId: interaction.variantId,
+                interactionType: interaction.interactionType,
+                interactionScore: interaction.interactionScore,
+                interactionContent: interaction.interactionContent,
+            })
         })
 
         if (!response.ok) {

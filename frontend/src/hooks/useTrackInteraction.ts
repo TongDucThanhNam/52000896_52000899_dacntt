@@ -22,6 +22,7 @@ export function useTrackInteraction() {
         setError(null)
 
         try {
+            // console.log("@@Tracking interaction:", interaction)
             const result = await trackInteractionAction({
                 ...interaction,
                 userId: user._id,

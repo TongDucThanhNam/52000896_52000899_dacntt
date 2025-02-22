@@ -53,17 +53,6 @@ export default function CartPage() {
             const result = await checkoutCart(items, total, userId, paymentMethod || "cash")
 
             if (result.success) {
-                // trackInteraction
-                items.forEach(item => {
-                    console.log("trackPurchaseInteraction", item)
-                    trackPurchaseInteraction({
-                        productId: item.productId,
-                        variantId: item.variantId,
-                        interactionScore: 1,
-                        interactionContent: "Purchase product",
-                    })
-                });
-
                 toast({
                     title: "Thanh toán thành công",
                     description: "Cảm ơn bạn đã mua hàng!",
