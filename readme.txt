@@ -25,7 +25,10 @@
 
 # 2. Cài đặt và chạy local ở chế độ development
 - Tôi sử dụng ubuntu nên câu lệnh có thể sẽ khác so với môi trường khác.
-- Yêu cầu có mạng để sử dụng (Do sử dụng MongoDB Atlas nên có thể sẽ cần bỏ lọc IP)
+- Yêu cầu có mạng để sử dụng (Do sử dụng MongoDB Atlas nên có thể sẽ cần bỏ lọc IP), thay đổi env dựa vào connection_string này, chọn database fashionAI:
+```bash
+mongodb+srv://admin:admin123@fasionai.3y1ew.mongodb.net/
+```
 - Đầu tiên chúng ta cần thêm các biến môi trường:
     - `.env` cho backend (điền các biến từ `.env.example`)
     - `.env.local` cho frontend (điền các biến từ `.env.example`)

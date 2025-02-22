@@ -205,7 +205,9 @@
 │  │  │  │  ├── dang-nhap
 │  │  │  │  │  └── page.tsx
 │  │  │  │  ├── layout.tsx
-│  │  │  │  └── trang-ca-nhan
+│  │  │  │  ├── trang-ca-nhan
+│  │  │  │  │  └── page.tsx
+│  │  │  │  └── unauthorized
 │  │  │  │     └── page.tsx
 │  │  │  ├── (ecommerce)
 │  │  │  │  ├── chi-tiet-san-pham
@@ -313,6 +315,7 @@
 │  │  │     ├── slider.tsx
 │  │  │     ├── table.tsx
 │  │  │     ├── tabs.tsx
+│  │  │     ├── tag-input.tsx
 │  │  │     ├── textarea.tsx
 │  │  │     ├── toast.tsx
 │  │  │     ├── toaster.tsx
