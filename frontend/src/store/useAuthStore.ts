@@ -8,7 +8,7 @@ interface AuthState {
     user: UserProfile | null
     error: Error | null
     setUser: (user: UserProfile | null) => void
-    login: (email: string, password: string) => Promise<void>
+    login: (email: string, password: string) => any
     signOut: () => Promise<void>
     refreshUser: () => Promise<void>
 }
@@ -31,11 +31,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
                 localStorage.setItem("token", result.token)
                 const user = await getUserProfile(result.token)
                 set({ user, isSignedIn: true, isLoaded: true, error: null })
+                return result
             } else {
-                throw new Error(result.error || "Login failed")
+                // throw new Error(result.error || "Login failed")
+                return result
             }
         } catch (error) {
             set({ error: error as Error, isLoaded: true })
+            return { success: false, error: (error as Error).message }
         }
     },
     signOut: async () => {

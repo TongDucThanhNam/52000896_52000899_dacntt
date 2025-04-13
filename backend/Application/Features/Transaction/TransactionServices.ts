@@ -54,7 +54,11 @@ class TransactionServices implements ITransactionService {
 
     async getTransactionById(data: any): Promise<typeof TransactionWithBase | null> {
         try {
-            const transaction = await this.unitOfWork.transactionRepository.getTransactionById(data.transactionId, data);
+            const {
+                transactionId
+            } = data;
+            const queryData = {};
+            const transaction = await this.unitOfWork.transactionRepository.getTransactionById(transactionId,queryData );
             return transaction;
         } catch (error) {
             throw error;

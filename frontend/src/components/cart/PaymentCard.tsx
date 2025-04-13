@@ -6,7 +6,8 @@ import {Label} from "@/components/ui/label"
 import {Input} from "@/components/ui/input"
 import {Button} from "@/components/ui/button"
 import {IconCash} from "@tabler/icons-react"
-import {CreditCard} from "lucide-react"
+import {CreditCard, QrCodeIcon} from "lucide-react"
+import NextImage from "next/image";
 
 interface PaymentCardProps {
     paymentMethod: string
@@ -31,10 +32,13 @@ export default function PaymentCard(
                 <CardDescription>Thêm phương thức thanh toán mới vào tài khoản của bạn.</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-6">
-                <RadioGroup defaultValue={paymentMethod} className="grid grid-cols-2 gap-4"
+                <RadioGroup
+                    defaultValue={paymentMethod} className="grid grid-cols-3 gap-4"
                             onValueChange={handlePaymentMethodChange}>
                     <div>
-                        <RadioGroupItem value="card" id="card" className="peer sr-only" aria-label="Thẻ"/>
+                        <RadioGroupItem
+                            disabled={true}
+                            value="card" id="card" className="peer sr-only" aria-label="Thẻ"/>
                         <Label
                             htmlFor="card"
                             className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -43,6 +47,20 @@ export default function PaymentCard(
                                 <CreditCard/>
                             </div>
                             Thẻ Visa / Mastercard
+                        </Label>
+                    </div>
+
+                    <div>
+                        <RadioGroupItem value="qr" id="qr" className="peer sr-only" aria-label="QR"
+                        />
+                        <Label
+                            htmlFor="qr"
+                            className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                        >
+                            <div className="mb-3 h-6 w-6">
+                                <QrCodeIcon/>
+                            </div>
+                            QR code
                         </Label>
                     </div>
 
@@ -58,6 +76,8 @@ export default function PaymentCard(
                             Thanh toán khi nhận hàng
                         </Label>
                     </div>
+
+
                 </RadioGroup>
 
                 {paymentMethod === "card" && (
@@ -92,10 +112,11 @@ export default function PaymentCard(
                         </div>
                     </>
                 )}
+
             </CardContent>
             <CardFooter>
                 <Button className="w-full">
-                    {paymentMethod === "card" ? "Tiếp tục" : "Xác nhận thanh toán khi nhận hàng"}
+                    {paymentMethod === "qr" ? "Bấm thanh toán sẽ có mã QR" : "Xác nhận thanh toán khi nhận hàng"}
                 </Button>
             </CardFooter>
         </Card>

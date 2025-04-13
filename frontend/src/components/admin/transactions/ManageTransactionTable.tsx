@@ -13,8 +13,7 @@ import {
     useReactTable,
     type VisibilityState,
 } from "@tanstack/react-table"
-import {ArrowUpDown, ChevronDown, MoreHorizontal} from 'lucide-react'
-import NextImage from "next/image"
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react'
 
 import {Button} from "@/components/ui/button"
 import {Checkbox} from "@/components/ui/checkbox"
@@ -30,34 +29,31 @@ import {
 import {Input} from "@/components/ui/input"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
 import {useRouter} from "next/navigation"
-import {UserProfile} from "@/types";
-import {deleteUser} from "@/app/actions";
+import {Transaction} from "@/types";
 
-interface UserTableProps {
-    users: UserProfile[]
+interface TransactionTableProps {
+    transactions: Transaction[]
 }
 
-export default function ManageUserTable({users}: UserTableProps) {
+export default function ManageTransactionTable({transactions}: TransactionTableProps) {
     const router = useRouter()
 
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
         select: true,
-        userImageUrl: true,
-        userName: true,
-        userEmail: true,
-        userPhone: true,
-        userDateOfBirth: true,
-        userGender: true,
-        userJob: true,
-        userCity: true,
-        userRole: true,
+        _id: true,
+        userId: true,
+        orderStatus: true,
+        totalValue: true,
+        paymentMethod: true,
+        isActive: true,
+        createdAt: true,
         actions: true,
     })
     const [rowSelection, setRowSelection] = React.useState({})
 
-    const columns: ColumnDef<UserProfile>[] = [
+    const columns: ColumnDef<Transaction>[] = [
         {
             id: "select",
             header: ({table}) => (
@@ -78,79 +74,96 @@ export default function ManageUserTable({users}: UserTableProps) {
             enableHiding: false,
         },
         {
-            accessorKey: "userImageUrl",
-            header: "Avatar",
-            cell: ({row}) => {
-                const imageUrl = row.getValue("userImageUrl") as string
-
-                if (!imageUrl) {
-                    return <div className="w-10 h-10 rounded-full bg-gray-200"/>
-                }
-
-                return (
-                    <NextImage
-                        unoptimized={true}
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                        src={imageUrl}
-                        alt={row.getValue("userName")}
-                    />
-                )
-            },
+            accessorKey: "_id",
+            header: "Mã giao dịch",
+            cell: ({row}) => <div className="font-medium">{row.getValue("_id")}</div>,
         },
         {
-            accessorKey: "userName",
+            accessorKey: "userId",
+            header: "Mã người dùng",
+            cell: ({row}) => <div>{row.getValue("userId")}</div>,
+        },
+        {
+            accessorKey: "orderStatus",
             header: ({column}) => {
                 return (
                     <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                        Tên
+                        Trạng thái
                         <ArrowUpDown className="ml-2 h-4 w-4"/>
                     </Button>
                 )
             },
-            cell: ({row}) => <div className="font-medium">{row.getValue("userName")}</div>,
+            cell: ({row}) => {
+                const status = row.getValue("orderStatus") as string
+                return (
+                    <div className={`font-medium ${
+                        status === "completed" ? "text-green-600" : 
+                        status === "pending" ? "text-yellow-600" : 
+                        status === "cancelled" ? "text-red-600" : ""
+                    }`}>
+                        {status === "completed" ? "Hoàn thành" :
+                         status === "pending" ? "Đang xử lý" :
+                         status === "cancelled" ? "Đã hủy" : status}
+                    </div>
+                )
+            },
         },
         {
-            accessorKey: "userEmail",
-            header: "Email",
-            cell: ({row}) => <div>{row.getValue("userEmail")}</div>,
+            accessorKey: "totalValue",
+            header: ({column}) => {
+                return (
+                    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        Tổng giá trị
+                        <ArrowUpDown className="ml-2 h-4 w-4"/>
+                    </Button>
+                )
+            },
+            cell: ({row}) => {
+                const amount = parseFloat(row.getValue("totalValue"))
+                const formatted = new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                }).format(amount)
+
+                return <div>{formatted}</div>
+            },
         },
         {
-            accessorKey: "userPhone",
-            header: "Số điện thoại",
-            cell: ({row}) => <div>{row.getValue("userPhone")}</div>,
+            accessorKey: "paymentMethod",
+            header: "Phương thức thanh toán",
+            cell: ({row}) =>
+            {
+                const method = row.getValue("paymentMethod") as string
+                return (
+                    <div className={`font-medium`}>
+                        {
+                            method === "card" ? "Chuyển khoản ngân hàng" :
+                            method === "cash" ? "Thanh toán khi nhận hàng" :
+                            method
+                        }
+                    </div>
+                )
+            }
         },
         {
-            accessorKey: "userDateOfBirth",
-            header: "Ngày tháng năm sinh.",
-            cell: ({row}) => <div>{new Date(row.getValue("userDateOfBirth")).toLocaleDateString("vi-VN")}</div>,
+            accessorKey: "isActive",
+            header: "Trạng thái hoạt động",
+            cell: ({row}) => (
+                <div className={`font-medium ${row.getValue("isActive") ? "text-green-600" : "text-red-600"}`}>
+                    {row.getValue("isActive") ? "Hoạt động" : "Không hoạt động"}
+                </div>
+            ),
         },
         {
-            accessorKey: "userGender",
-            header: "Giới tính",
-            cell: ({row}) => <div>{row.getValue("userGender")}</div>,
-        },
-        {
-            accessorKey: "userJob",
-            header: "Nghề nghiệp",
-            cell: ({row}) => <div>{row.getValue("userJob")}</div>,
-        },
-        {
-            accessorKey: "userCity",
-            header: "Thành phô",
-            cell: ({row}) => <div>{row.getValue("userCity")}</div>,
-        },
-        {
-            accessorKey: "userRole",
-            header: "Role",
-            cell: ({row}) => <div>{row.getValue("userRole")}</div>,
+            accessorKey: "createdAt",
+            header: "Ngày tạo",
+            cell: ({row}) => <div>{new Date(row.getValue("createdAt")).toLocaleDateString("vi-VN")}</div>,
         },
         {
             id: "actions",
             enableHiding: false,
             cell: ({row}) => {
-                const user = row.original
+                const transaction = row.original
 
                 return (
                     <DropdownMenu>
@@ -161,31 +174,15 @@ export default function ManageUserTable({users}: UserTableProps) {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onSelect={() => navigator.clipboard.writeText(user._id)}>Sao chép
-                                UserId</DropdownMenuItem>
+                            <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
+                            <DropdownMenuItem onSelect={() => navigator.clipboard.writeText(transaction._id)}>
+                                Sao chép mã giao dịch
+                            </DropdownMenuItem>
                             <DropdownMenuItem
-                                onSelect={() => router.push(`/admin/quan-ly-nguoi-dung/xem-giao-dich/${user._id}`)}>
-                                Xem giao dịch của người dùng
+                                onSelect={() => router.push(`/admin/quan-ly-giao-dich/chi-tiet-giao-dich/${transaction._id}`)}>
+                                Xem chi tiết giao dịch
                             </DropdownMenuItem>
                             <DropdownMenuSeparator/>
-                            <DropdownMenuItem
-                                onSelect={() => router.push(`/admin/quan-ly-nguoi-dung/sua-nguoi-dung/${user._id}`)}>
-                                Sửa thông tin người dùng
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                                onSelect={() => {
-                                    // TODO: Xóa người dùng
-                                    deleteUser(user._id).then(
-                                        (res) => {
-                                            //toast
-                                            alert("Xóa người dùng thành công")
-                                        }
-                                    )
-
-                                }}>
-                                Xóa người dùng
-                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -194,7 +191,7 @@ export default function ManageUserTable({users}: UserTableProps) {
     ]
 
     const table = useReactTable({
-        data: users,
+        data: transactions,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -214,17 +211,11 @@ export default function ManageUserTable({users}: UserTableProps) {
 
     return (
         <div className="w-full">
-            <Button
-                className="bg-primary text-white mb-4"
-                onClick={() => router.push("/admin/quan-ly-nguoi-dung/them-nguoi-dung")}
-            >
-                Thêm người dùng
-            </Button>
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Tìm theo tên..."
-                    value={(table.getColumn("userName")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) => table.getColumn("userName")?.setFilterValue(event.target.value)}
+                    placeholder="Tìm theo mã giao dịch..."
+                    value={(table.getColumn("_id")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) => table.getColumn("_id")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
                 />
                 <DropdownMenu>
@@ -281,7 +272,7 @@ export default function ManageUserTable({users}: UserTableProps) {
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                    Không có kết quả.
                                 </TableCell>
                             </TableRow>
                         )}
@@ -290,8 +281,7 @@ export default function ManageUserTable({users}: UserTableProps) {
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                    {table.getFilteredSelectedRowModel().rows.length} trên {table.getFilteredRowModel().rows.length} người
-                    dùng đã chọn.
+                    {table.getFilteredSelectedRowModel().rows.length} trên {table.getFilteredRowModel().rows.length} giao dịch đã chọn.
                 </div>
                 <div className="space-x-2">
                     <Button

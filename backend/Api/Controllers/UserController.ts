@@ -399,6 +399,9 @@ export default class UserController {
                 userPasswordHash,
             };
             const result = await this.userServices.loginUser(data);
+            if (result.statusCode != undefined)
+                return res.status(result.statusCode).json({ message: result.message });
+
             // console.log(result);
             // save resule to cookie
             res.cookie("accessToken", result.data?.accessToken, {

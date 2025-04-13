@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
             {
                 hostname: "down-vn.img.susercontent.com",
             },
+            {
+                hostname: "qr.sepay.vn"
+            }
         ],
 
     }

@@ -84,8 +84,13 @@ export default class TransactionController {
               #swagger.summary = 'Lấy thông tin giao dịch'
               #swagger.description = 'Endpoint để lấy thông tin giao dịch theo Id'
             */
+            // console.log("transactionId", transactionId);
+            const data = {
+                transactionId,
+            }
+
             const result =
-                await this.transactionServices.getTransactionById(transactionId);
+                await this.transactionServices.getTransactionById(data);
             return res.status(200).json(result);
         } catch (error: any) {
             return res.status(500).json({message: error.message});
@@ -134,7 +139,6 @@ export default class TransactionController {
         res: Response,
     ): Promise<Response> => {
         try {
-            const {transactionId, orderStatus} = req.body;
             /*
               #swagger.tags = ['Transactions']
               #swagger.summary = 'Cập nhật trạng thái giao dịch'
@@ -144,11 +148,15 @@ export default class TransactionController {
                   description: 'Transaction status update data',
                   required: true,
                   schema: {
-                    transactionId: "609c0b1f531123456789abcd",
-                    orderStatus: "completed"
+                    orderStatus: "shipping"
                   }
               }
             */
+            const transactionId = req.params.transactionId;
+            const {
+                orderStatus,
+            } = req.body;
+
             const updatedTransaction =
                 await this.transactionServices.updateTransactionStatus({
                     transactionId,

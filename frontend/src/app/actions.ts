@@ -293,7 +293,8 @@ export async function login(formData: FormData) {
 
                 return {success: true, token: data.accessToken}
             } else {
-                throw new Error("Token not received from server")
+                return {error: "Token not received from server"}
+                // throw new Error("Token not received from server")
             }
         } else {
             const errorData = await res.json()
@@ -390,6 +391,16 @@ export async function updateUser(userId: string, userData: any): Promise<UserPro
     return await response.json()
 }
 
+export async function deleteUser(userId: string): Promise<void> {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/${userId}`, {
+        method: "DELETE",
+    })
+
+    if (!response.ok) {
+        throw new Error("Failed to delete user")
+    }
+}
+
 //------------------------------------------------------------------------------
 export async function checkoutCart(items: any[], total: number, userId: string, paymentMethod: string = "cash") {
     try {
@@ -428,6 +439,13 @@ export async function checkoutCart(items: any[], total: number, userId: string, 
     }
 }
 
+export default async function fetchTransactionById(id: string): Promise<Transaction> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transactions/${id}`, {
+        cache: 'no-store'
+    });
+    return await res.json();
+}
+
 export async function fetchTransactions(): Promise<Transaction[]> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transactions`, {
         cache: 'no-store'
@@ -449,6 +467,17 @@ export async function fetchTransactionItems(url: string): Promise<any> {
         cache: 'no-store'
     })
     if (!response.ok) throw new Error('Failed to fetch transaction items')
+    return response.json()
+}
+
+export async function updateTransactionStatus(transactionId: string, status: string): Promise<any> {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transactions/${transactionId}/status`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({orderStatus: status})
+    })
     return response.json()
 }
 

@@ -161,7 +161,7 @@ export default function UserInfo({form, isEdit}: UserInfoProps) {
                                 <PopoverTrigger asChild>
                                     <FormControl>
                                         <Button
-                                            variant={"outline"}
+                                            variant={"noShadow"}
                                             className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
                                         >
                                             {field.value ? format(field.value, "dd/MM/yyyy") :

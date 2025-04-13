@@ -59,11 +59,15 @@ export default async function ViewUserTransactionsPage(
                 </Button>
             </div>
             <h1 className="mb-6 text-3xl font-bold">Lịch sử giao dịch của người dùng </h1>
-            <Suspense fallback={<TransactionDetailsSkeleton/>}>
-                {transactions.map((transaction: Transaction) => (
-                    <TransactionDetails key={transaction._id} transaction={transaction}/>
-                ))}
-            </Suspense>
+
+            <div className={"grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"}>
+                <Suspense fallback={<TransactionDetailsSkeleton/>}>
+                    {transactions.map((transaction: Transaction) => (
+                        <TransactionDetails key={transaction._id} transaction={transaction}/>
+                    ))}
+                </Suspense>
+            </div>
+
         </div>
     )
 }

@@ -8,8 +8,11 @@ import {
 } from "@/components/ui/dialog"
 import {Button} from "@/components/ui/button"
 import {priceVietNamDongformetter} from "@/lib/utils"
+import NextImage from "next/image";
+import {useAuthStore} from "@/store/useAuthStore"
 
 interface CheckoutModalProps {
+    paymentMethod: string
     isOpen: boolean
     onClose: () => void
     onConfirm: () => void
@@ -17,7 +20,12 @@ interface CheckoutModalProps {
     total: number
 }
 
-export function CheckoutModal({isOpen, onClose, onConfirm, items, total}: CheckoutModalProps) {
+export function CheckoutModal({isOpen, onClose, onConfirm, items, total, paymentMethod}: CheckoutModalProps) {
+    // Get User Profile
+    const {isLoaded, isSignedIn, user} = useAuthStore()
+
+    const description = `FASHIONAI ${user?._id}`
+
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent>
@@ -41,6 +49,16 @@ export function CheckoutModal({isOpen, onClose, onConfirm, items, total}: Checko
                         <span>{priceVietNamDongformetter(total.toString())}</span>
                     </div>
                 </div>
+
+                {paymentMethod === "qr" && (
+                    <div className="flex flex-row items-center justify-center">
+                        <NextImage
+                            width={300}
+                            height={300}
+                            src={`https://qr.sepay.vn/img?acc=10001011812&bank=TPBank&amount=${total.toString()}&des=${description}`}
+                            alt={"Purchase vie Sepay"}/>
+                    </div>
+                )}
                 <DialogFooter>
                     <Button variant="outline" onClick={onClose}>
                         Hủy

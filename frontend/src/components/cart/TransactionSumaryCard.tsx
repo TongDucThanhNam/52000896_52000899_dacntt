@@ -10,6 +10,7 @@ import {CheckoutModal} from "@/components/cart/CheckoutModal"
 import {Fragment} from "react";
 
 interface TransactionSumaryCardProps {
+    paymentMethod:string
     items: any[]
     removeItem: (variantId: string, productId: string) => void
     subtotal: number
@@ -26,6 +27,7 @@ interface TransactionSumaryCardProps {
 
 export default function TransactionSumaryCard(
     {
+        paymentMethod,
         items,
         removeItem,
         subtotal,
@@ -123,6 +125,7 @@ export default function TransactionSumaryCard(
                 </CardContent>
             </Card>
             <CheckoutModal
+                paymentMethod={paymentMethod}
                 isOpen={isCheckoutModalOpen}
                 onClose={() => setIsCheckoutModalOpen(false)}
                 onConfirm={handleConfirmCheckout}

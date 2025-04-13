@@ -215,7 +215,11 @@ class UserServices implements IUserServices {
             const users: any = await this.unitOfWork.userRepository.getAllUsers(queryData);
 
             if (!users || users.length === 0) {
-                throw new Error('User not found');
+                // throw new Error('User not found');
+                return new CoreException(
+                    401,
+                    "Người dùng không tồn tại"
+                );
             }
 
             const user = users[0];
@@ -223,7 +227,11 @@ class UserServices implements IUserServices {
             // Compare plain-text password with the hashed password using bcrypt
             const isValid = await bcrypt.compare(userPasswordHash, user.userPasswordHash);
             if (!isValid) {
-                throw new Error('Password is incorrect');
+                // throw new Error('Password is incorrect');
+                return new CoreException(
+                    401,
+                    "Mật khẩu không chính xác"
+                );
             }
 
             const token = encodeJwtToken(user);

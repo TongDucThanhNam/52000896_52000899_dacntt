@@ -235,11 +235,9 @@ export default function ManageProductTable(
                                 Sửa sản phẩm
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                                // onClick={() =>
-                                //     router.push(`/admin/quan-ly-san-pham/xoa-san-pham/${Product._id}`)
-                                // }
+
                                 onSelect={() =>
-                                    router.push(`/admin/quan-ly-san-pham/xoa-san-pham/${Product._id}`)
+                                    alert("Chưa hỗ trợ xóa sản phẩm")
                                 }
                             >Xoá sản phẩm</DropdownMenuItem>
                         </DropdownMenuContent>

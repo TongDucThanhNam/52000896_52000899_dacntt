@@ -27,7 +27,7 @@
 - Tôi sử dụng ubuntu nên câu lệnh có thể sẽ khác so với môi trường khác.
 - Yêu cầu có mạng để sử dụng (Do sử dụng MongoDB Atlas nên có thể sẽ cần bỏ lọc IP), thay đổi env dựa vào connection_string này, chọn database fashionAI:
 ```bash
-mongodb+srv://admin:admin123@fasionai.3y1ew.mongodb.net/
+# MongoDB Atlas connection string
 ```
 - Đầu tiên chúng ta cần thêm các biến môi trường:
     - `.env` cho backend (điền các biến từ `.env.example`)
@@ -53,8 +53,8 @@ npm install
 - Chạy backend:
 
 ```bash
-npm run start
-# hoặc
+npm run start 
+# hoặc 
 npm run dev
 ```
 
@@ -89,23 +89,21 @@ pip install -r requirements.txt
 - Chạy AI service:
 
 ```bash
-uvicorn src.main:app
+uvicorn src.main:app 
 ```
 - AI services chạy ở url http://localhost:8000
 ### 2.4 Docker hóa dự án (Ưu tiên):
 
 - Build docker compose:
 
-```bash
+```bash  
 docker compose build # verson 2
 ```
 
 - Push docker images (chỉ khi cần deploy trên cloud):
 
 ```bash
-docker push tongducthanhnam/fashion-ai-be:latest
-docker push tongducthanhnam/fashion-ai-fe:latest
-docker push tongducthanhnam/fashion-ai-ai:latest
+docker push <docker_image_name>:<docker_image_tag>
 ```
 
 ## 3. Triển khai (Ưu tiên sử dụng Docker):

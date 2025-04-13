@@ -9,7 +9,6 @@ import {useState} from "react";
 import {useAuthStore} from "@/store/useAuthStore";
 import {toast} from "@/hooks/use-toast";
 import {useCartStore} from "@/store/useCartStore";
-import {useTrackInteraction} from "@/hooks/useTrackInteraction";
 
 
 export default function CartPage() {
@@ -17,7 +16,6 @@ export default function CartPage() {
     const {items, removeItem, clearCart} = useCartStore()
     const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
     const [paymentMethod, setPaymentMethod] = useState("cash")
-    const {trackPurchaseInteraction} = useTrackInteraction()
     const handleCheckout = () => {
         setIsCheckoutModalOpen(true)
     }
@@ -97,6 +95,7 @@ export default function CartPage() {
                             {/* Transaction Summary */}
                             <div className="lg:col-span-1">
                                 <TransactionSumartCard
+                                    paymentMethod={paymentMethod}
                                     items={items}
                                     subtotal={subtotal}
                                     shippingFee={shippingFee}

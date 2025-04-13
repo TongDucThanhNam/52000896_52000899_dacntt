@@ -15,6 +15,7 @@ export const items = [
                 title: "Danh sách người dùng",
                 url: "/admin/quan-ly-nguoi-dung",
             },
+
         ],
     },
     {
@@ -31,6 +32,11 @@ export const items = [
                 url: "/admin/quan-ly-san-pham",
             }
         ],
+    },
+    {
+        title: "Quản lý giao dịch",
+        url: "/admin/quan-ly-giao-dich",
+        icon: LayoutDashboardIcon,
     },
     {
         title: "Thống kê",

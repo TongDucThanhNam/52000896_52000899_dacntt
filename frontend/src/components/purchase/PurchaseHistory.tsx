@@ -47,13 +47,11 @@ export default function PurchaseHistory() {
             </div>
 
             <Tabs defaultValue="all" onValueChange={setCurrentTab}>
-                <TabsList className="grid grid-cols-3 sm:grid-cols-6 h-auto">
+                <TabsList className="grid grid-cols-3 sm:grid-cols-4 h-auto">
                     <TabsTrigger value="all">Tất cả</TabsTrigger>
                     <TabsTrigger value="pending">Chưa thanh toán</TabsTrigger>
                     <TabsTrigger value="shipping">Đang giao hàng</TabsTrigger>
-                    <TabsTrigger value="delivered">Đã giao</TabsTrigger>
-                    <TabsTrigger value="completed">Đã hoàn thành</TabsTrigger>
-                    <TabsTrigger value="cancelled">Đã hủy</TabsTrigger>
+                    <TabsTrigger value="done">Đã giao</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value={currentTab} className="space-y-4 mt-4">

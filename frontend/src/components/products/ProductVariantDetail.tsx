@@ -31,46 +31,42 @@ export default function ProductVariantDetail({
     const [selectedSize, setSelectedSize] = useState<string>("")
     const [selectedMaterial, setSelectedMaterial] = useState<string>("")
 
-    // Group variants by their distinguishing attributes
+    // Group variants
     const variantGroups = useMemo(() => {
-        if (!variants) return null
-
-        const hasColorDifference = variants.some((v) => v.variantColor !== variants[0].variantColor)
-        const hasSizeDifference = variants.some((v) => v.variantSize !== variants[0].variantSize)
-        const hasMaterialDifference = variants.some((v) => v.variantMaterial !== variants[0].variantMaterial)
+        if (!variants)
+            return null
 
         const uniqueColors = [...new Set(variants.map((v) => v.variantColor))]
         const uniqueSizes = [...new Set(variants.map((v) => v.variantSize))]
         const uniqueMaterials = [...new Set(variants.map((v) => v.variantMaterial))]
 
         return {
-            colors: hasColorDifference ? uniqueColors : null,
-            sizes: hasSizeDifference ? uniqueSizes : null,
-            materials: hasMaterialDifference ? uniqueMaterials : null,
+            colors: uniqueColors.length > 1 ? uniqueColors : null,
+            sizes: uniqueSizes.length > 1 ? uniqueSizes : null,
+            materials: uniqueMaterials.length > 1 ? uniqueMaterials : null,
         }
     }, [variants])
 
-    // Set initial selections when variants are loaded
+    // Set initial selections
     useEffect(() => {
         if (variants && variants.length > 0) {
-            if (!selectedColor && variantGroups?.colors) {
-                setSelectedColor(variantGroups.colors[0])
-            }
-            if (!selectedSize && variantGroups?.sizes) {
-                setSelectedSize(variantGroups.sizes[0])
-            }
-            if (!selectedMaterial && variantGroups?.materials) {
-                setSelectedMaterial(variantGroups.materials[0])
-            }
-        }
-    }, [variants, variantGroups, selectedColor, selectedSize, selectedMaterial])
+            // Set init value
+            const uniqueColors = [...new Set(variants.map((v) => v.variantColor))]
+            const uniqueSizes = [...new Set(variants.map((v) => v.variantSize))]
+            const uniqueMaterials = [...new Set(variants.map((v) => v.variantMaterial))]
 
-    // Update product price and chosen variant when all variant types are selected
+            setSelectedColor(uniqueColors[0])
+            setSelectedSize(uniqueSizes[0])
+            setSelectedMaterial(uniqueMaterials[0])
+        }
+    }, [variants])
+
+    // Update product price and chosen variant when selections change
     useEffect(() => {
-        if (variants && selectedColor && selectedSize && (!variantGroups?.materials || selectedMaterial)) {
+        if (variants && selectedColor && selectedSize && selectedMaterial) {
             const matchingVariant = variants.find(
                 (v) =>
-                    v.variantColor === selectedColor && v.variantSize === selectedSize && (!variantGroups?.materials || v.variantMaterial === selectedMaterial),
+                    v.variantColor === selectedColor && v.variantSize === selectedSize && v.variantMaterial === selectedMaterial,
             )
 
             if (matchingVariant) {
@@ -78,7 +74,7 @@ export default function ProductVariantDetail({
                 setVariantChosen(matchingVariant)
             }
         }
-    }, [variants, selectedColor, selectedSize, selectedMaterial, setProductPrice, setVariantChosen, variantGroups])
+    }, [variants, selectedColor, selectedSize, selectedMaterial, setProductPrice, setVariantChosen])
 
     if (isLoading) {
         return <Skeleton className="w-full h-[200px]" />
@@ -102,6 +98,20 @@ export default function ProductVariantDetail({
                 <AlertDescription>Sản phẩm này chưa cập nhật biến thể hoặc đã hết hàng.</AlertDescription>
             </Alert>
         )
+    }
+
+    // If there's only one variant
+    if (variants.length === 1) {
+        if (
+            selectedColor !== variants[0].variantColor ||
+            selectedSize !== variants[0].variantSize ||
+            selectedMaterial !== variants[0].variantMaterial
+        ) {
+            setSelectedColor(variants[0].variantColor)
+            setSelectedSize(variants[0].variantSize)
+            setSelectedMaterial(variants[0].variantMaterial)
+        }
+        return null
     }
 
     return (

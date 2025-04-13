@@ -14,6 +14,7 @@ class TransactionRepository implements ITransactionRepository {
 
     async getTransactionById(transactionId: string, queryData: any): Promise<typeof TransactionWithBase | null> {
         try {
+            console.log("transactionId", transactionId)
             const transaction: any = await TransactionWithBase.findById(transactionId)
             return transaction;
         } catch (error) {

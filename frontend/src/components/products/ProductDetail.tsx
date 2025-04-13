@@ -45,12 +45,12 @@ export default function ProductDetail({product}: ProductDetailProps) {
         setQuantity(Math.max(1, quantity + change))
     }
 
-
     const isInCart =
         variantChosen && items.some((item) => item.productId === product._id && item.variantId === variantChosen._id)
 
     useEffect(() => {
         if (variantChosen) {
+            console.log("variantChosen", variantChosen)
             setProductPrice(variantChosen.variantPromotionPrice.toString())
         }
     }, [variantChosen])
@@ -164,12 +164,15 @@ export default function ProductDetail({product}: ProductDetailProps) {
 
                     {/* Action Buttons */}
                     <div className="flex space-x-4">
-                        <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg"
+                        <Button
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg"
                                 onClick={handleAddToCart}>
                             <ShoppingCart className="mr-2 h-5 w-5"/>
                             {isInCart ? "Đã thêm vào giỏ" : "Thêm vào giỏ hàng"}
                         </Button>
-                        <Button className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 text-lg">Mua ngay</Button>
+                        <Button
+                            disabled={true}
+                            className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 text-lg">Mua ngay</Button>
                         <Button
                             variant={isFavorite ? "default" : "outline"}
                             size="icon"
@@ -183,8 +186,9 @@ export default function ProductDetail({product}: ProductDetailProps) {
                     {/* Accordion */}
                     <Accordion type="multiple" className="space-y-4">
                         <AccordionItem value="delivery" className="border rounded-lg">
-                            <AccordionTrigger className="px-4 py-3 hover:bg-gray-50">Thời gian giao hàng
-                                ?</AccordionTrigger>
+                            <AccordionTrigger className="px-4 py-3 hover:bg-gray-50">
+                                Thời gian giao hàng ?
+                            </AccordionTrigger>
                             <AccordionContent className="px-4 py-3 bg-gray-50">
                                 <p className="text-gray-700">Thời gian giao hàng dự kiến từ 3-5 ngày.</p>
                             </AccordionContent>
