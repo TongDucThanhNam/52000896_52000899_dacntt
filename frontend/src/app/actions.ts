@@ -29,7 +29,7 @@ export async function getProduct(id: string): Promise<Product> {
 }
 
 
-export async function createProduct(productData: Omit<Product, '_id' | 'productId'>) {
+export async function createProduct(productData: Omit<Product, 'id' | 'productId'>) {
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/variants`, {
             method: 'POST',
@@ -83,9 +83,9 @@ export async function updateProduct(productData: Product) {
         }
 
         for (const variant of productData.variants) {
-            if (variant._id) {
+            if (variant.id) {
                 // Existing variant, update it
-                await updateVariant(variant._id, variant)
+                await updateVariant(variant.id, variant)
             } else {
                 // New variant, create it
                 await createVariant(productData.productId, variant)
@@ -337,7 +337,7 @@ export async function getUserProfile(token: string): Promise<UserProfile | null>
 
         const data = await res.json()
         return {
-            _id: data._id,
+            id: data.id,
             userCity: data.userCity,
             userRole: data.userRole,
             userName: data.userName,

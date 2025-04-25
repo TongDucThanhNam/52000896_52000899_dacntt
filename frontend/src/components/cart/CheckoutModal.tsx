@@ -24,7 +24,7 @@ export function CheckoutModal({isOpen, onClose, onConfirm, items, total, payment
     // Get User Profile
     const {isLoaded, isSignedIn, user} = useAuthStore()
 
-    const description = `FASHIONAI ${user?._id}`
+    const description = `FASHIONAI ${user?.id}`
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>

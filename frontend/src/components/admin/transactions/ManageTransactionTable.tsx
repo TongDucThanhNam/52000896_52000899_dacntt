@@ -42,7 +42,7 @@ export default function ManageTransactionTable({transactions}: TransactionTableP
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
         select: true,
-        _id: true,
+        id: true,
         userId: true,
         orderStatus: true,
         totalValue: true,
@@ -74,9 +74,9 @@ export default function ManageTransactionTable({transactions}: TransactionTableP
             enableHiding: false,
         },
         {
-            accessorKey: "_id",
+            accessorKey: "id",
             header: "Mã giao dịch",
-            cell: ({row}) => <div className="font-medium">{row.getValue("_id")}</div>,
+            cell: ({row}) => <div className="font-medium">{row.getValue("id")}</div>,
         },
         {
             accessorKey: "userId",
@@ -175,11 +175,11 @@ export default function ManageTransactionTable({transactions}: TransactionTableP
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Thao tác</DropdownMenuLabel>
-                            <DropdownMenuItem onSelect={() => navigator.clipboard.writeText(transaction._id)}>
+                            <DropdownMenuItem onSelect={() => navigator.clipboard.writeText(transaction.id)}>
                                 Sao chép mã giao dịch
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                                onSelect={() => router.push(`/admin/quan-ly-giao-dich/chi-tiet-giao-dich/${transaction._id}`)}>
+                                onSelect={() => router.push(`/admin/quan-ly-giao-dich/chi-tiet-giao-dich/${transaction.id}`)}>
                                 Xem chi tiết giao dịch
                             </DropdownMenuItem>
                             <DropdownMenuSeparator/>
@@ -214,8 +214,8 @@ export default function ManageTransactionTable({transactions}: TransactionTableP
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Tìm theo mã giao dịch..."
-                    value={(table.getColumn("_id")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) => table.getColumn("_id")?.setFilterValue(event.target.value)}
+                    value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) => table.getColumn("id")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
                 />
                 <DropdownMenu>

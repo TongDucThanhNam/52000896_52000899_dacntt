@@ -20,7 +20,7 @@ export function TransactionCard({transaction}: TransactionCardProps) {
     const [isExpanded, setIsExpanded] = useState(false)
 
     const {data: transactionItems, error} = useSWR<TransactionItem[]>(
-        isExpanded ? `/api/transactions/${transaction._id}/items` : null,
+        isExpanded ? `/api/transactions/${transaction.id}/items` : null,
         fetchTransactionItems
     )
 
@@ -45,7 +45,7 @@ export function TransactionCard({transaction}: TransactionCardProps) {
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                         <Store className="h-5 w-5"/>
-                        <span className="font-semibold">Đơn hàng #{transaction._id}</span>
+                        <span className="font-semibold">Đơn hàng #{transaction.id}</span>
                     </div>
                     <Badge variant="default" className={getStatusBadge(transaction.orderStatus)}>
                         {transaction.orderStatus.charAt(0).toUpperCase() + transaction.orderStatus.slice(1)}
@@ -97,7 +97,7 @@ export function TransactionCard({transaction}: TransactionCardProps) {
                         )}
                         {transactionItems &&
                             transactionItems.map((item: TransactionItem) => (
-                                <TransactionItemCard key={item._id} item={item}/>
+                                <TransactionItemCard key={item.id} item={item}/>
                             ))}
                     </div>
                 )}

@@ -63,11 +63,10 @@ export default async function ViewUserTransactionsPage(
             <div className={"grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"}>
                 <Suspense fallback={<TransactionDetailsSkeleton/>}>
                     {transactions.map((transaction: Transaction) => (
-                        <TransactionDetails key={transaction._id} transaction={transaction}/>
+                        <TransactionDetails key={transaction.id} transaction={transaction}/>
                     ))}
                 </Suspense>
             </div>
-
         </div>
     )
 }

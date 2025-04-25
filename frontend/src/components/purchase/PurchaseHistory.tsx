@@ -16,7 +16,7 @@ export default function PurchaseHistory() {
     const { isLoaded, isSignedIn, user } = useAuthStore()
 
     const { data: transactions, error } = useSWR<Transaction[]>(
-        isLoaded && isSignedIn && user ? `/api/users/${user._id}/transactions` : null,
+        isLoaded && isSignedIn && user ? `/api/users/${user.id}/transactions` : null,
         fetchUserTransactions,
     )
 
@@ -26,7 +26,7 @@ export default function PurchaseHistory() {
     if (!transactions) return <div>Đang tải các giao dịch...</div>
 
     const filteredTransactions = transactions.filter((transaction) => {
-        const matchesSearch = transaction._id.toLowerCase().includes(searchQuery.toLowerCase())
+        const matchesSearch = transaction.id.toLowerCase().includes(searchQuery.toLowerCase())
 
         if (currentTab === "all") return matchesSearch
         return transaction.orderStatus === currentTab && matchesSearch
@@ -56,7 +56,7 @@ export default function PurchaseHistory() {
 
                 <TabsContent value={currentTab} className="space-y-4 mt-4">
                     {filteredTransactions.map((transaction) => (
-                        <TransactionCard key={transaction._id} transaction={transaction} />
+                        <TransactionCard key={transaction.id} transaction={transaction} />
                     ))}
 
                     {filteredTransactions.length === 0 && (

@@ -162,21 +162,21 @@ export default function ManageUserTable({users}: UserTableProps) {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onSelect={() => navigator.clipboard.writeText(user._id)}>Sao chép
+                            <DropdownMenuItem onSelect={() => navigator.clipboard.writeText(user.id)}>Sao chép
                                 UserId</DropdownMenuItem>
                             <DropdownMenuItem
-                                onSelect={() => router.push(`/admin/quan-ly-nguoi-dung/xem-giao-dich/${user._id}`)}>
+                                onSelect={() => router.push(`/admin/quan-ly-nguoi-dung/xem-giao-dich/${user.id}`)}>
                                 Xem giao dịch của người dùng
                             </DropdownMenuItem>
                             <DropdownMenuSeparator/>
                             <DropdownMenuItem
-                                onSelect={() => router.push(`/admin/quan-ly-nguoi-dung/sua-nguoi-dung/${user._id}`)}>
+                                onSelect={() => router.push(`/admin/quan-ly-nguoi-dung/sua-nguoi-dung/${user.id}`)}>
                                 Sửa thông tin người dùng
                             </DropdownMenuItem>
                             <DropdownMenuItem
                                 onSelect={() => {
                                     // TODO: Xóa người dùng
-                                    deleteUser(user._id).then(
+                                    deleteUser(user.id).then(
                                         (res) => {
                                             //toast
                                             alert("Xóa người dùng thành công")

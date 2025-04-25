@@ -46,6 +46,33 @@ export default function ProductListPage() {
     // Use SWR with the server action
     const {data: products, error, isLoading} = useSWR<Product[]>("products", fetchProducts)
 
+    // parse image from text to array image
+    const parsedProducts = useMemo(() => {
+        if (!products) return []
+
+        return products.map(product => {
+            let parsedImageUrls = [];
+
+            if (typeof product.imageUrls === 'string') {
+                try {
+                    // product.imageUrls = "['https://i.imgur.com/123.jpg', 'https://i.imgur.com/456.jpg']"
+                    // parse from string to array
+                    parsedImageUrls = JSON.parse(product.imageUrls);
+                } catch (error) {
+                    console.error(`Error parsing imageUrls for product ${product.productId}:`, error);
+                    parsedImageUrls = [];
+                }
+            } else {
+                parsedImageUrls = product.imageUrls;
+            }
+
+            return {
+                ...product,
+                imageUrls: parsedImageUrls
+            };
+        });
+    }, [products])
+
     // Memoized handlers to prevent unnecessary re-renders
     const handlePageChange = useCallback((page: number) => {
         setCurrentPage(page)
@@ -67,9 +94,9 @@ export default function ProductListPage() {
 
     // Memoized filtered and sorted products
     const filteredAndSortedProducts = useMemo(() => {
-        if (!products) return []
+        if (!parsedProducts.length) return []
 
-        let result = [...products]
+        let result = [...parsedProducts]
 
         // Apply filters
         if (activeFilters.length > 0) {
@@ -106,7 +133,7 @@ export default function ProductListPage() {
         }
 
         return result
-    }, [products, activeFilters, sortBy])
+    }, [parsedProducts, activeFilters, sortBy])
 
     // Loading state
     if (isLoading) {

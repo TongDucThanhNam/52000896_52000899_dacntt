@@ -37,7 +37,7 @@ export default function CartPage() {
                 return
             }
 
-            if (!user?._id) {
+            if (!user?.id) {
                 toast({
                     title: "Không lấy được thông tin người dùng",
                     description: "Bạn chờ một lát hoặc đăng nhập lại",
@@ -46,7 +46,7 @@ export default function CartPage() {
                 return
             }
 
-            const userId = user?._id
+            const userId = user?.id
 
             const result = await checkoutCart(items, total, userId, paymentMethod || "cash")
 

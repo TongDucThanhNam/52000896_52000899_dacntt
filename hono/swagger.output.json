@@ -1,0 +1,1796 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "fashionAI API",
+    "description": "API documentation for fashionAI"
+  },
+  "host": "localhost:3001/api",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Các endpoints liên quan đến người dùng"
+    },
+    {
+      "name": "Carts",
+      "description": "Các endpoints liên quan đến giỏ hàng"
+    },
+    {
+      "name": "Products",
+      "description": "Các endpoints liên quan đến sản phẩm"
+    },
+    {
+      "name": "Interactions",
+      "description": "Các endpoints liên quan đến tương tác"
+    },
+    {
+      "name": "Transactions",
+      "description": "Các endpoints liên quan đến mua hàng"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {},
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users/{userId}/cart": {
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Lấy thông tin giỏ hàng",
+        "description": "Endpoint để lấy thông tin giỏ hàng của user theo Id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/cart/items/{itemId}": {
+      "put": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Cập nhật giỏ hàng",
+        "description": "Endpoint để cập nhật giỏ hàng của user theo Id",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Cart data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Xóa sản phẩm khỏi giỏ hàng",
+        "description": "Endpoint để xóa sản phẩm khỏi giỏ hàng của user theo Id",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/interactions": {
+      "post": {
+        "tags": [
+          "Interactions"
+        ],
+        "summary": "Theo dõi tương tác",
+        "description": "Endpoint để theo dõi tương tác của ngừoi dùng",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Thông tin tương tác",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "6765a28b018fe8cf713c0af0"
+                },
+                "productId": {
+                  "type": "string",
+                  "example": "6765a809c044f8a8dc24ef08"
+                },
+                "variantId": {
+                  "type": "string",
+                  "example": "6765abd0691e5aba6cf04f6e"
+                },
+                "interactionType": {
+                  "type": "string",
+                  "example": "view"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/interactions/purchase": {
+      "post": {
+        "tags": [
+          "Interactions"
+        ],
+        "summary": "Lấy thông tin tương tác của của một user",
+        "description": "Endpoint để lấy thông tin tương tác của một user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                },
+                "productId": {
+                  "example": "any"
+                },
+                "interactionType": {
+                  "example": "any"
+                },
+                "interactionContent": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{userId}/interactions": {
+      "get": {
+        "tags": [
+          "Interactions"
+        ],
+        "summary": "Lấy thông tin tương tác của của một user",
+        "description": "Endpoint để lấy thông tin tương tác của một user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/{productId}/interactions": {
+      "get": {
+        "tags": [
+          "Interactions"
+        ],
+        "summary": "Lấy thông tin tương tác của một sản phẩm",
+        "description": "Endpoint để lấy thông tin tương tác của một sản phẩm",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/logs": {
+      "post": {
+        "tags": [
+          "Interactions"
+        ],
+        "summary": "Tạo log",
+        "description": "Endpoint để tạo log",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Lấy tất cả sản phẩm",
+        "description": "Endpoint để lấy tất cả sản phẩm",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Tạo sản phẩm",
+        "description": "Endpoint để tạo sản phẩm",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Product data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productName": {
+                  "type": "string",
+                  "example": "Product name"
+                },
+                "productDescription": {
+                  "type": "string",
+                  "example": "Product description"
+                },
+                "productBrand": {
+                  "type": "string",
+                  "example": "Product brand"
+                },
+                "imageUrls": {
+                  "type": "string",
+                  "example": "[]"
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "6765a3b549de95984148bf5b"
+                },
+                "productAvgRating": {
+                  "type": "string",
+                  "example": "0"
+                },
+                "productTotalViews": {
+                  "type": "string",
+                  "example": "0"
+                },
+                "productTag": {
+                  "type": "string",
+                  "example": "[]"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/{productId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Lấy sản phẩm theo [id]",
+        "description": "Endpoint để lấy sản phẩm theo [id]",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Cập nhật sản phẩm",
+        "description": "Endpoint để cập nhật thông tin sản phẩm",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Product data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productName": {
+                  "type": "string",
+                  "example": "Product name (optional)"
+                },
+                "productDescription": {
+                  "type": "string",
+                  "example": "Product description"
+                },
+                "productBrand": {
+                  "type": "string",
+                  "example": "Product brand"
+                },
+                "imageUrls": {
+                  "type": "string",
+                  "example": "[]"
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "6765a3b549de95984148bf5b"
+                },
+                "productAvgRating": {
+                  "type": "string",
+                  "example": "0"
+                },
+                "productTotalViews": {
+                  "type": "string",
+                  "example": "0"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Xóa sản phẩm",
+        "description": "Endpoint để xóa sản phẩm",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/variant/{variantId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Lấy sản phẩm theo variantId",
+        "description": "Endpoint để lấy sản phẩm theo variantId",
+        "parameters": [
+          {
+            "name": "variantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/variants": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Tạo sản phẩm với biến thể",
+        "description": "Endpoint để tạo sản phẩm với biến thể",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Product data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productName": {
+                  "type": "string",
+                  "example": "Tên sản phẩm"
+                },
+                "productSlug": {
+                  "type": "string",
+                  "example": "ten-san-pham"
+                },
+                "productDescription": {
+                  "type": "string",
+                  "example": "Mô tả sản phẩm"
+                },
+                "productBrand": {
+                  "type": "string",
+                  "example": "Thương hiệu"
+                },
+                "imageUrls": {
+                  "type": "array",
+                  "example": [
+                    "url1",
+                    "url2"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "categoryId": {
+                  "type": "string",
+                  "example": "60d21b4667d0d8992e610c85"
+                },
+                "productAvgRating": {
+                  "type": "number",
+                  "example": 4.5
+                },
+                "productTotalViews": {
+                  "type": "number",
+                  "example": 100
+                },
+                "variants": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "variantSku": {
+                        "type": "string",
+                        "example": "SKU002"
+                      },
+                      "variantName": {
+                        "type": "string",
+                        "example": "Màu Xanh - Size L"
+                      },
+                      "variantSlug": {
+                        "type": "string",
+                        "example": "mauxanh-size-l"
+                      },
+                      "variantKeyIndex": {
+                        "type": "number",
+                        "example": 2
+                      },
+                      "variantImageUrl": {
+                        "type": "string",
+                        "example": "url-avatar2"
+                      },
+                      "variantSize": {
+                        "type": "string",
+                        "example": "L"
+                      },
+                      "variantColor": {
+                        "type": "string",
+                        "example": "Xanh"
+                      },
+                      "variantStyle": {
+                        "type": "string",
+                        "example": "X Formal"
+                      },
+                      "variantMaterial": {
+                        "type": "string",
+                        "example": "Polyester"
+                      },
+                      "variantSeason": {
+                        "type": "string",
+                        "example": "Winter"
+                      },
+                      "variantPrice": {
+                        "type": "number",
+                        "example": 220000
+                      },
+                      "variantPromotionPrice": {
+                        "type": "number",
+                        "example": 200000
+                      },
+                      "variantStockQuantity": {
+                        "type": "number",
+                        "example": 30
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/variants/product/{productId}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Lấy sản phẩm và biến thể",
+        "description": "Endpoint để lấy sản phẩm và biến thể",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/{productId}/variants": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Thêm biến thể cho sản phẩm",
+        "description": "Endpoint để thêm biến thể",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Variant data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "variantSku": {
+                  "type": "string",
+                  "example": "variant-sku"
+                },
+                "variantName": {
+                  "type": "string",
+                  "example": "variant name"
+                },
+                "variantKeyIndex": {
+                  "type": "string",
+                  "example": "0"
+                },
+                "variantImageUrl": {
+                  "type": "string",
+                  "example": "variant-image-url"
+                },
+                "variantSize": {
+                  "type": "string",
+                  "example": "variant-size"
+                },
+                "variantColor": {
+                  "type": "string",
+                  "example": "variant-color"
+                },
+                "variantStyle": {
+                  "type": "string",
+                  "example": "variant-style"
+                },
+                "variantMaterial": {
+                  "type": "string",
+                  "example": "variant-material"
+                },
+                "variantSeason": {
+                  "type": "string",
+                  "example": "variant-season"
+                },
+                "variantPrice": {
+                  "type": "string",
+                  "example": "100000"
+                },
+                "variantPromotionPrice": {
+                  "type": "string",
+                  "example": "90000"
+                },
+                "variantStockQuantity": {
+                  "type": "string",
+                  "example": "100"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Lấy biến thể theo sản phẩm",
+        "description": "Endpoint để lấy biến thể theo sản phẩm",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/variants/{variantId}": {
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Cập nhật biến thể",
+        "description": "Endpoint để cập nhật thông tin biến thể",
+        "parameters": [
+          {
+            "name": "variantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Variant data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "variantSku": {
+                  "type": "string",
+                  "example": "variant-sku"
+                },
+                "variantName": {
+                  "type": "string",
+                  "example": "variant name"
+                },
+                "variantKeyIndex": {
+                  "type": "string",
+                  "example": "0"
+                },
+                "variantImageUrl": {
+                  "type": "string",
+                  "example": "variant-image-url"
+                },
+                "variantSize": {
+                  "type": "string",
+                  "example": "variant-size"
+                },
+                "variantColor": {
+                  "type": "string",
+                  "example": "variant-color"
+                },
+                "variantStyle": {
+                  "type": "string",
+                  "example": "variant-style"
+                },
+                "variantMaterial": {
+                  "type": "string",
+                  "example": "variant-material"
+                },
+                "variantSeason": {
+                  "type": "string",
+                  "example": "variant-season"
+                },
+                "variantPrice": {
+                  "type": "string",
+                  "example": "100000"
+                },
+                "variantPromotionPrice": {
+                  "type": "string",
+                  "example": "90000"
+                },
+                "variantStockQuantity": {
+                  "type": "string",
+                  "example": "100"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Xóa biến thể",
+        "description": "Endpoint để xóa biến thể",
+        "parameters": [
+          {
+            "name": "variantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Thêm danh mục",
+        "description": "Endpoint để thêm danh mục",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Category data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categoryName": {
+                  "type": "string",
+                  "example": "Category name"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Lấy danh mục",
+        "description": "Endpoint để lấy danh mục",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories/{categoryId}": {
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Cập nhật danh mục",
+        "description": "Endpoint để cập nhật thông tin danh mục",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Category data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categoryName": {
+                  "type": "string",
+                  "example": "Category name"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/add-tag": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Thêm tag vào sản phẩm",
+        "description": "Endpoint để thêm tag vào sản phẩm",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Product [id] and tag [id]",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productId": {
+                  "type": "string",
+                  "example": "6765a809c044f8a8dc24ef08"
+                },
+                "tagId": {
+                  "type": "string",
+                  "example": "6765a3b549de95984148bf5b"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/{productId}/tags/{tagId}": {
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Xóa tag khỏi sản phẩm",
+        "description": "Endpoint để xóa tag khỏi sản phẩm",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tagId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Tạo giao dịch",
+        "description": "Endpoint để tạo giao dịch với danh sách các item",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Transaction data including items",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "609c0b1f531123456789abcd"
+                },
+                "orderStatus": {
+                  "type": "string",
+                  "example": "pending"
+                },
+                "totalValue": {
+                  "type": "number",
+                  "example": 1000
+                },
+                "paymentMethod": {
+                  "type": "string",
+                  "example": "cash"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "productId": {
+                        "type": "string",
+                        "example": "609c0b1f531123456789abce"
+                      },
+                      "variantId": {
+                        "type": "string",
+                        "example": "609c0b1f531123456789abcf"
+                      },
+                      "quantity": {
+                        "type": "number",
+                        "example": 2
+                      },
+                      "purchasePrice": {
+                        "type": "number",
+                        "example": 500
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Lấy danh sách giao dịch",
+        "description": "Endpoint để lấy danh sách giao dịch",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/transactions/{transactionId}": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Lấy thông tin giao dịch",
+        "description": "Endpoint để lấy thông tin giao dịch theo Id",
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{userId}/transactions": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Lấy thông tin giao dịch của user",
+        "description": "Endpoint để lấy thông tin giao dịch của user theo Id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/transactions/{transactionId}/items": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Lấy danh sách sản phẩm trong giao dịch",
+        "description": "Endpoint để lấy danh sách sản phẩm trong giao dịch theo Id",
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/transactions/{transactionId}/status": {
+      "put": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Cập nhật trạng thái giao dịch",
+        "description": "Endpoint để cập nhật trạng thái của giao dịch",
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Transaction status update data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transactionId": {
+                  "type": "string",
+                  "example": "609c0b1f531123456789abcd"
+                },
+                "orderStatus": {
+                  "type": "string",
+                  "example": "completed"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Lấy tất cả người dùng",
+        "description": "Endpoint để lấy tất cả người dùng",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Thêm người dùng",
+        "description": "Endpoint để thêm người dùng",
+        "parameters": [
+          {
+            "name": "User",
+            "in": "body",
+            "description": "User information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "Linh Ngọc Đàm"
+                },
+                "userPasswordHash": {
+                  "type": "string",
+                  "example": "12345678"
+                },
+                "userEmail": {
+                  "type": "string",
+                  "example": "linhngocdam@gmail.com"
+                },
+                "userPhone": {
+                  "type": "string",
+                  "example": "0123456789"
+                },
+                "userHeight": {
+                  "type": "number",
+                  "example": 170
+                },
+                "userWeight": {
+                  "type": "number",
+                  "example": 60
+                },
+                "userDateOfBirth": {
+                  "type": "string",
+                  "example": "01/01/2000"
+                },
+                "userAddress": {
+                  "type": "string",
+                  "example": "Thanh xuân Hà Nội"
+                },
+                "userImageUrl": {
+                  "type": "string",
+                  "example": "https://cdn.iconscout.com/icon/free/png-256/free-avatar-icon-download-in-svg-png-gif-file-formats--user-boy-avatars-flat-icons-pack-people-456322.png"
+                },
+                "userGender": {
+                  "type": "string",
+                  "example": "Female"
+                },
+                "userJob": {
+                  "type": "string",
+                  "example": "KOL"
+                },
+                "userCity": {
+                  "type": "string",
+                  "example": "Hà Nội"
+                },
+                "userRole": {
+                  "type": "string",
+                  "example": "User"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Lấy thông tin người dùng",
+        "description": "Endpoint để lấy thông tin người dùng theo Id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Cập nhật thông tin người dùng",
+        "description": "Endpoint để cập nhật thông tin người dùng theo Id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "User",
+            "in": "body",
+            "description": "User information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "Linh Ngọc Đàm 2"
+                },
+                "userPasswordHash": {
+                  "type": "string",
+                  "example": "12345678"
+                },
+                "userEmail": {
+                  "type": "string",
+                  "example": "linhngocdam@gmail.com"
+                },
+                "userPhone": {
+                  "type": "string",
+                  "example": "0123456789"
+                },
+                "userHeight": {
+                  "type": "number",
+                  "example": 170
+                },
+                "userWeight": {
+                  "type": "number",
+                  "example": 60
+                },
+                "userDateOfBirth": {
+                  "type": "string",
+                  "example": "01/01/2000"
+                },
+                "userAddress": {
+                  "type": "string",
+                  "example": "Thanh xuân Hà Nội"
+                },
+                "userImageUrl": {
+                  "type": "string",
+                  "example": "https://cdn.iconscout.com/icon/free/png-256/free-avatar-icon-download-in-svg-png-gif-file-formats--user-boy-avatars-flat-icons-pack-people-456322.png"
+                },
+                "userGender": {
+                  "type": "string",
+                  "example": "Female"
+                },
+                "userJob": {
+                  "type": "string",
+                  "example": "KOL"
+                },
+                "userCity": {
+                  "type": "string",
+                  "example": "Hà Nội"
+                },
+                "userRole": {
+                  "type": "string",
+                  "example": "User"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Xóa người dùng",
+        "description": "Endpoint để xóa người dùng theo Id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{userId}/preferences": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Thêm sở thích người dùng",
+        "description": "Endpoint để thêm sở thích người dùng theo Id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "User preference.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "example": "609c0b1f531123456789abcd"
+                },
+                "preferenceType": {
+                  "type": "string",
+                  "example": "Style"
+                },
+                "preferenceValue": {
+                  "type": "string",
+                  "example": "Casual"
+                },
+                "preferenceScore": {
+                  "type": "number",
+                  "example": 10
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Lấy tất cả sở thích người dùng",
+        "description": "Endpoint để lấy sở thích của người dùng theo Id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Xóa sở thích người dùng",
+        "description": "Endpoint để xóa sở thích người dùng theo Id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Đăng ký người dùng",
+        "description": "Endpoint để đăng ký người dùng",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "User information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "Linh Ngọc Đàm"
+                },
+                "userPasswordHash": {
+                  "type": "string",
+                  "example": "12345678"
+                },
+                "userEmail": {
+                  "type": "string",
+                  "example": "email@gmail.com"
+                },
+                "userPhone": {
+                  "type": "string",
+                  "example": "0123456789"
+                },
+                "userHeight": {
+                  "type": "number",
+                  "example": 170
+                },
+                "userWeight": {
+                  "type": "number",
+                  "example": 60
+                },
+                "userDateOfBirth": {
+                  "type": "string",
+                  "example": "01/01/2000"
+                },
+                "userAddress": {
+                  "type": "string",
+                  "example": "Thanh xuân Hà Nội"
+                },
+                "userImageUrl": {
+                  "type": "string",
+                  "example": "https://cdn-icons-png.flaticon.com/128/2202/2202112.png"
+                },
+                "userGender": {
+                  "type": "string",
+                  "example": "Male"
+                },
+                "userJob": {
+                  "type": "string",
+                  "example": "Software Engineer"
+                },
+                "userCity": {
+                  "type": "string",
+                  "example": "Hanoi"
+                },
+                "userRole": {
+                  "type": "string",
+                  "example": "User"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Đăng nhập người dùng",
+        "description": "Endpoint để đăng nhập người dùng",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "User information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userEmail": {
+                  "type": "string",
+                  "example": "an.nguyen@gmail.com"
+                },
+                "userPasswordHash": {
+                  "type": "string",
+                  "example": "newpass123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Đăng xuất người dùng",
+        "description": "Endpoint để đăng xuất người dùng theo Id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/forgot-password": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Quên mật khẩu",
+        "description": "Endpoint để quên mật khẩu theo email",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userEmail": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reset-password": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Đặt lại mật khẩu",
+        "description": "Endpoint để đặt lại mật khẩu theo email",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userEmail": {
+                  "example": "any"
+                },
+                "userPasswordHash": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Lấy thông tin người dùng hiện tại",
+        "description": "Endpoint để lấy thông tin người dùng hiện tại",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}

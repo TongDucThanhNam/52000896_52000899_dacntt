@@ -22,7 +22,7 @@ export default function TransactionDetails({transaction}: TransactionDetailsProp
                 <div className="flex justify-between items-center">
                     <div>
                         <CardTitle className="text-2xl font-bold">Thông tin đơn hàng</CardTitle>
-                        <CardDescription className="text-sm">ID: {transaction._id}</CardDescription>
+                        <CardDescription className="text-sm">ID: {transaction.id}</CardDescription>
                     </div>
                     <Badge className={`text-sm px-3 py-1 rounded-full ${statusColor}`}>{transaction.orderStatus}</Badge>
                 </div>

@@ -41,7 +41,7 @@ export default function EditProduct(
 
         try {
             const result = await updateProduct({
-                productId: product._id,
+                productId: product.id,
                 productName: productAttributes.productName,
                 productDescription: productAttributes.productDescription,
                 productBrand: productAttributes.productBrand,

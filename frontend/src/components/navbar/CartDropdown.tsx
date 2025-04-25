@@ -68,7 +68,7 @@ export default function CartDropdown() {
                                             <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-2">
                                                 {item.variants?.map((variant) => (
                                                     <div
-                                                        key={variant._id}
+                                                        key={variant.id}
                                                         className="text-xs bg-gray-100 rounded px-1 py-0.5"
                                                     >
                                                         {variant.variantColor} - {variant.variantSize} - {variant.variantMaterial}

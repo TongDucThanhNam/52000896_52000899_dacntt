@@ -1,17 +1,17 @@
-import type {NextFunction, Request, Response} from "express";
+import type { Context, Next } from "hono";
 import jwt from "jsonwebtoken";
 
 export async function AuthenticationMiddleWare(
-    req: Request,
-    res: Response,
-    next: NextFunction
+    c: Context,
+    next: Next
 ) {
     // Extract the Authorization header; expecting "Bearer <token>"
-    const authHeader = req.headers.authorization;
+    const authHeader = c.req.header('authorization');
     if (!authHeader) {
-        return res
-            .status(400)
-            .json({message: "Bad Request: Authorization header not provided."});
+        return c.json(
+            {message: "Bad Request: Authorization header not provided."},
+            400
+        );
     }
 
     const parts = authHeader.split(" ");
@@ -21,14 +21,14 @@ export async function AuthenticationMiddleWare(
     } else if (parts.length === 1) {
         token = parts[0];
     } else {
-        return res.status(400).json({
+        return c.json({
             message:
                 "Bad Request: Authorization header format is invalid. Expected format: Bearer <token>.",
-        });
+        }, 400);
     }
 
     if (!token) {
-        return res.status(400).json({message: "Bad Request: Token not provided."});
+        return c.json({message: "Bad Request: Token not provided."}, 400);
     }
 
     try {
@@ -36,28 +36,33 @@ export async function AuthenticationMiddleWare(
         const decoded: any = jwt.verify(token, secret);
 
         if (!decoded || !decoded.userId) {
-            return res
-                .status(403)
-                .json({message: "Forbidden: Token verification failed. Invalid token payload."});
+            return c.json(
+                {message: "Forbidden: Token verification failed. Invalid token payload."},
+                403
+            );
         }
 
-        // Attach userId to request body for further handlers
-        req.body.userId = decoded.userId;
-        next();
+        // Store userId in the context variables for further handlers
+        c.set('userId', decoded.userId);
+
+        // Continue to the next middleware or route handler
+        await next();
     } catch (error: any) {
         console.error("Authentication middleware error:", error);
         if (error.name === "TokenExpiredError") {
-
-            return res
-                .status(401)
-                .json({message: "Unauthorized: Token has expired. Please log in again."});
+            return c.json(
+                {message: "Unauthorized: Token has expired. Please log in again."},
+                401
+            );
         } else if (error.name === "JsonWebTokenError") {
-            return res
-                .status(401)
-                .json({message: "Unauthorized: Invalid token. Please log in again."});
+            return c.json(
+                {message: "Unauthorized: Invalid token. Please log in again."},
+                401
+            );
         }
-        return res
-            .status(500)
-            .json({message: "Internal Server Error: An error occurred during token verification."});
+        return c.json(
+            {message: "Internal Server Error: An error occurred during token verification."},
+            500
+        );
     }
 }

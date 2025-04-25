@@ -15,10 +15,10 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Card className="flex flex-col h-[460px]">
       <CardHeader className="p-0">
         <div className="relative h-52 w-full">
-          <Image
-            src={product.imageUrls[0] || "/placeholder.svg"}
+          <img
+            src={product.imageUrls[0] || "https://placehold.co/500x500"}
             alt={product.productName}
-            fill={true}
+            // fill={true}
             className="rounded-t-lg object-cover"
           />
         </div>
@@ -30,7 +30,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Badge>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Link href={`/chi-tiet-san-pham/${product._id}`} className="w-full">
+        <Link href={`/chi-tiet-san-pham/${product.id}`} className="w-full">
           <Button className="w-full font-bold">Chi tiết sản phẩm</Button>
         </Link>
       </CardFooter>

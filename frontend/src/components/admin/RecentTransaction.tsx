@@ -19,7 +19,7 @@ export function RecentTransactions({transactions}: RecentTransactionsProps) {
             <div className="space-y-4">
                 {transactions.map((transaction) => (
                     <Card
-                        key={transaction._id}
+                        key={transaction.id}
                         className="flex flex-col sm:flex-row sm:items-center justify-between p-4"
                     >
                         <div className="flex items-center mb-2 sm:mb-0">

@@ -11,9 +11,9 @@ interface TransactionItemTableProps {
 export default function TransactionItemTable({ items }: TransactionItemTableProps) {
     const columns: ColumnDef<TransactionItem>[] = [
         {
-            accessorKey: "_id",
+            accessorKey: "id",
             header: "Mã chi tiết",
-            cell: ({ row }) => <div className="font-medium">{row.getValue("_id")}</div>,
+            cell: ({ row }) => <div className="font-medium">{row.getValue("id")}</div>,
         },
         {
             accessorKey: "productId",

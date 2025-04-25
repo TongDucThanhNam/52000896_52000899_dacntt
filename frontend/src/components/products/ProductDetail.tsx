@@ -28,12 +28,12 @@ export default function ProductDetail({product}: ProductDetailProps) {
     const {addItem, items} = useCartStore()
 
     useEffect(() => {
-        if (!product._id) {
+        if (!product.id) {
             console.warn("Product not found, can't track interactions")
             return
         }
         trackViewInteraction({
-            productId: product._id,
+            productId: product.id,
             interactionContent: "View product",
             interactionScore: 1,
             variantId: "",
@@ -46,7 +46,7 @@ export default function ProductDetail({product}: ProductDetailProps) {
     }
 
     const isInCart =
-        variantChosen && items.some((item) => item.productId === product._id && item.variantId === variantChosen._id)
+        variantChosen && items.some((item) => item.productId === product.id && item.variantId === variantChosen.id)
 
     useEffect(() => {
         if (variantChosen) {
@@ -56,7 +56,7 @@ export default function ProductDetail({product}: ProductDetailProps) {
     }, [variantChosen])
 
     const handleAddToCart = () => {
-        if (!variantChosen || !variantChosen._id || !product._id) {
+        if (!variantChosen || !variantChosen.id || !product.id) {
             toast({
                 title: "Lỗi",
                 description: `Vui lòng chọn biến thể sản phẩm, variantChosen: ${variantChosen}`,
@@ -66,8 +66,8 @@ export default function ProductDetail({product}: ProductDetailProps) {
         }
 
         const newItem: CartItem = {
-            productId: product._id,
-            variantId: variantChosen._id,
+            productId: product.id,
+            variantId: variantChosen.id,
             productName: product.productName,
             variantPromotionPrice: variantChosen.variantPromotionPrice,
             quantity,
@@ -79,8 +79,8 @@ export default function ProductDetail({product}: ProductDetailProps) {
 
         // track cart interaction
         trackCartInteraction({
-            productId: product._id,
-            variantId: variantChosen._id,
+            productId: product.id,
+            variantId: variantChosen.id,
             interactionContent: "Add to cart",
             interactionScore: 1,
         }).then((r) => console.log("Track cart success", r))
@@ -94,7 +94,7 @@ export default function ProductDetail({product}: ProductDetailProps) {
         setIsFavorite(!isFavorite)
     }
 
-    if (!product._id) {
+    if (!product.id) {
         return <div>Product not found</div>
     }
 
@@ -134,7 +134,7 @@ export default function ProductDetail({product}: ProductDetailProps) {
                     {/* Variants Parts */}
                     <div className="bg-white p-6 rounded-lg shadow-md">
                         <ProductVariantDetail
-                            productId={product._id}
+                            productId={product.id}
                             setProductPrice={setProductPrice}
                             setVariantChosen={setVariantChosen}
                         />

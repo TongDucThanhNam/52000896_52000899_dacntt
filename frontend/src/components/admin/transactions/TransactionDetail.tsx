@@ -30,7 +30,7 @@ export default function TransactionDetail({transaction}: TransactionDetailProps)
         data: transactionItems,
         error,
         isLoading,
-    } = useSWR<TransactionItem[]>(isExpanded ? `/api/transactions/${transaction._id}/items` : null, fetchTransactionItems)
+    } = useSWR<TransactionItem[]>(isExpanded ? `/api/transactions/${transaction.id}/items` : null, fetchTransactionItems)
 
     const getStatusText = (status: string) => {
         switch (status) {
@@ -50,7 +50,7 @@ export default function TransactionDetail({transaction}: TransactionDetailProps)
 
         setIsUpdating(true)
         try {
-            const result = await updateTransactionStatus(transaction._id, newStatus)
+            const result = await updateTransactionStatus(transaction.id, newStatus)
 
             // console.log("Update transaction status result:", result)
 
@@ -92,7 +92,7 @@ export default function TransactionDetail({transaction}: TransactionDetailProps)
                 <CardHeader>
                     <div className="flex justify-between items-center">
                         <div>
-                            <CardTitle>Giao dịch #{transaction._id}</CardTitle>
+                            <CardTitle>Giao dịch #{transaction.id}</CardTitle>
                             <CardDescription>Tạo
                                 ngày {new Date(transaction.createdAt).toLocaleDateString("vi-VN")}</CardDescription>
                         </div>

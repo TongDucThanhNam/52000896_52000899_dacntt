@@ -14,7 +14,7 @@ export interface ProductAttributes {
 
 
 export interface Variant {
-    _id?: string,
+    id?: string,
     // attributes related to variant
     variantSku: string,
     variantName: string,
@@ -36,7 +36,7 @@ export interface Variant {
 }
 
 export interface Product {
-    _id?: string,
+    id?: string,
     productId: string,
     productName: string,
     productSlug?: string,
@@ -61,7 +61,7 @@ export interface CartItem {
 }
 
 export interface UserProfile {
-    _id: string,
+    id: string,
     //attributes related to account
     userName: string,
     userPasswordHash: string,
@@ -80,7 +80,7 @@ export interface UserProfile {
 }
 
 export interface Transaction {
-    _id: string
+    id: string
     userId: string
     orderStatus: string
     totalValue: number
@@ -93,7 +93,7 @@ export interface Transaction {
 }
 
 export interface TransactionItem {
-    _id: string
+    id: string
     transactionId: string
     productId: string
     variantId: string

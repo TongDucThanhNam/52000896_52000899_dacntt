@@ -32,7 +32,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/
 import {useRouter} from "next/navigation";
 
 export type Product = {
-    _id: string
+    id: string
     productName: string
     productSlug: string
     productDescription: string
@@ -103,10 +103,10 @@ export default function ManageProductTable(
         // -------------------------
         // // ID
         // {
-        //     accessorKey: "_id:",
+        //     accessorKey: "id:",
         //     header: "Product ID",
         //     cell: ({row}) => (
-        //         <div className="capitalize">{row.getValue("_id:")}</div>
+        //         <div className="capitalize">{row.getValue("id:")}</div>
         //     ),
         // },
         {
@@ -216,20 +216,20 @@ export default function ManageProductTable(
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem
-                                // onClick={() => navigator.clipboard.writeText(Product._id)}
-                                onSelect={() => navigator.clipboard.writeText(Product._id)}
+                                // onClick={() => navigator.clipboard.writeText(Product.id)}
+                                onSelect={() => navigator.clipboard.writeText(Product.id)}
                             >
                                 Sao chép ID sản phẩm
                             </DropdownMenuItem>
                             <DropdownMenuSeparator/>
                             <DropdownMenuItem
                                 // onClick={() => {
-                                //     const editUrl = `/admin/quan-ly-san-pham/sua-san-pham/${Product._id}`;
+                                //     const editUrl = `/admin/quan-ly-san-pham/sua-san-pham/${Product.id}`;
                                 //     router.prefetch(editUrl);
                                 //     window.open(editUrl, '_blank', 'noopener,noreferrer');
                                 // }}
                                 onSelect={() => {
-                                    router.push(`/admin/quan-ly-san-pham/sua-san-pham/${Product._id}`)
+                                    router.push(`/admin/quan-ly-san-pham/sua-san-pham/${Product.id}`)
                                 }}
                             >
                                 Sửa sản phẩm

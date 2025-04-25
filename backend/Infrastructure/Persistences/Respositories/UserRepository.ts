@@ -1,12 +1,12 @@
-import type {ClientSession} from "mongoose";
-import {UserWithBase} from "../../../Domain/Entities/UserEntities.ts";
 import type {IUserRepository} from "../../../Application/Persistences/IRepositories/IUserRepository.ts";
+import {getDb} from "../Config/db";
 
 class UserRepository implements IUserRepository {
-    async createUser(userData: any, session: ClientSession): Promise<typeof UserWithBase> {
+    private db = getDb();
+
+    async createUser(userData: any): Promise<any> {
         try {
-            const user = await UserWithBase.create([userData], {session});
-            return user[0];
+            const user = await this.db.insert(users)
         } catch (error) {
             throw new Error("Error at UserRepository: " + error);
         }

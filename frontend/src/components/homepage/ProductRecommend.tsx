@@ -27,7 +27,7 @@ export default function ProductReccomend() {
     const router = useRouter()
 
     const {data: products, error} = useSWR<Product[]>(
-        `/recommendations/${user?._id}`,
+        `/recommendations/${user?.id}`,
         fetchRecommendations,
     )
 
