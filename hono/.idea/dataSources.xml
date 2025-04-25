@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="fed2d0b8521b04f89efd002fdf70189425c9a29a44b909a18d34abbd7a1b7341.sqlite" uuid="4e0eb98e-0dc6-494f-b038-cf4d87607838">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:.wrangler/state/v3/d1/miniflare-D1DatabaseObject/fed2d0b8521b04f89efd002fdf70189425c9a29a44b909a18d34abbd7a1b7341.sqlite</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="fed2d0b8521b04f89efd002fdf70189425c9a29a44b909a18d34abbd7a1b7341" uuid="7625fca1-e8b1-48b7-a798-0b4f3c5ef370">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/.wrangler/state/v3/d1/miniflare-D1DatabaseObject/fed2d0b8521b04f89efd002fdf70189425c9a29a44b909a18d34abbd7a1b7341.sqlite</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/xerial/sqlite-jdbc/3.45.1.0/sqlite-jdbc-3.45.1.0.jar</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.45.1/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
