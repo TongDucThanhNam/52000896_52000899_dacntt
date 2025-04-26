@@ -45,3 +45,6 @@ next-env.d.ts
 
 # Million Lint
 .million
+.dev.vars
+.open-next
+.wrangler

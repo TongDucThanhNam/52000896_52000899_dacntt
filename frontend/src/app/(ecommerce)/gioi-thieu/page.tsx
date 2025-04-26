@@ -8,6 +8,7 @@ export default function IntroducePage() {
                 <div className={"w-3/4"}>
                     <BreadcumbComponent breadcrumbPages={breadcrumbPages}/>
 
+                    {process.env.NEXT_PUBLIC_BACKEND_URL}
                     <p>
                         Chào mừng bạn đến với trang web của chúng tôi.
                     </p>

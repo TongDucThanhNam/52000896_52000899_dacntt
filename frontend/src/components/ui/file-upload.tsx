@@ -3,7 +3,6 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import Image from "next/image";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {UploadDropzone} from "@/lib/uploadthing";
 
 interface FileUploadProps {
     imageUrls: string[],
@@ -59,46 +58,46 @@ export const FileUpload = (
                             </div>
                         </div>
                         <div className="w-full md:w-1/2">
-                            <UploadDropzone
-                                appearance={{
-                                    button:
-                                        "shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)] hover:bg-[rgba(0,118,255,0.9)] px-8 py-2 bg-[#0070f3] rounded-md text-white font-light transition duration-200 ease-linear ut-ready:bg-green-500 ut-uploading:cursor-not-allowed  after:bg-orange-400",
-                                    container: "p-4 flex-row rounded-md border-sky-400 ",
-                                    allowedContent:
-                                        "flex h-8 flex-col items-center justify-center px-2 text-white",
-                                }}
-                                content={{
-                                    button({ ready }) {
-                                        if (ready) return <div>Tải ảnh sản phẩm</div>;
+                            {/*<UploadDropzone*/}
+                            {/*    appearance={{*/}
+                            {/*        button:*/}
+                            {/*            "shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)] hover:bg-[rgba(0,118,255,0.9)] px-8 py-2 bg-[#0070f3] rounded-md text-white font-light transition duration-200 ease-linear ut-ready:bg-green-500 ut-uploading:cursor-not-allowed  after:bg-orange-400",*/}
+                            {/*        container: "p-4 flex-row rounded-md border-sky-400 ",*/}
+                            {/*        allowedContent:*/}
+                            {/*            "flex h-8 flex-col items-center justify-center px-2 text-white",*/}
+                            {/*    }}*/}
+                            {/*    content={{*/}
+                            {/*        button({ ready }) {*/}
+                            {/*            if (ready) return <div>Tải ảnh sản phẩm</div>;*/}
 
-                                        return "Đang upload...";
-                                    },
-                                }}
-                                endpoint="imageUploader"
-                                onClientUploadComplete={(res: any) => {
-                                    // Do something with the response
-                                    console.log("Files: ", res);
-                                    alert("Upload Completed");
-                                    //add to uploadedImages
+                            {/*            return "Đang upload...";*/}
+                            {/*        },*/}
+                            {/*    }}*/}
+                            {/*    endpoint="imageUploader"*/}
+                            {/*    onClientUploadComplete={(res: any) => {*/}
+                            {/*        // Do something with the response*/}
+                            {/*        console.log("Files: ", res);*/}
+                            {/*        alert("Upload Completed");*/}
+                            {/*        //add to uploadedImages*/}
 
-                                    setProductAttributes({
-                                        ...productAttributes,
-                                        imageUrls: [...uploadedImages, ...res.map((img: any) => img.url)]
-                                    })
-                                    setUploadedImages((prevImages) => [...prevImages, ...res.map((img: any) => img.url)]);
-                                }}
-                                onUploadError={(error: Error) => {
-                                    alert(`ERROR! ${error.message}`);
-                                }}
-                                onUploadBegin={(name) => {
-                                    // Do something once upload begins
-                                    console.log("Uploading: ", name);
-                                }}
-                                onDrop={(acceptedFiles) => {
-                                    // Do something with the accepted files
-                                    console.log("Accepted files: ", acceptedFiles);
-                                }}
-                            />
+                            {/*        setProductAttributes({*/}
+                            {/*            ...productAttributes,*/}
+                            {/*            imageUrls: [...uploadedImages, ...res.map((img: any) => img.url)]*/}
+                            {/*        })*/}
+                            {/*        setUploadedImages((prevImages) => [...prevImages, ...res.map((img: any) => img.url)]);*/}
+                            {/*    }}*/}
+                            {/*    onUploadError={(error: Error) => {*/}
+                            {/*        alert(`ERROR! ${error.message}`);*/}
+                            {/*    }}*/}
+                            {/*    onUploadBegin={(name) => {*/}
+                            {/*        // Do something once upload begins*/}
+                            {/*        console.log("Uploading: ", name);*/}
+                            {/*    }}*/}
+                            {/*    onDrop={(acceptedFiles) => {*/}
+                            {/*        // Do something with the accepted files*/}
+                            {/*        console.log("Accepted files: ", acceptedFiles);*/}
+                            {/*    }}*/}
+                            {/*/>*/}
 
                             <div className="mb-6">
                                 <p className="w-full text-center my-4 text-gray-500">Hoặc</p>

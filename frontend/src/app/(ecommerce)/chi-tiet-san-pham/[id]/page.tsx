@@ -1,6 +1,6 @@
 import BreadcumbComponent from "@/components/products/BreadcumbComponent";
 import {breadcrumbPages} from "@/config/site";
-import ProductReccomend from "@/components/homepage/ProductRecommend";
+// import ProductReccomend from "@/components/homepage/ProductRecommend";
 import ProductDetail from "../../../../components/products/ProductDetail";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {getProduct} from "@/app/actions";
@@ -35,7 +35,7 @@ export default async function ProductDetailPage(
                     {/* Related Products */}
                     <div className="mt-8">
                         <h2 className="text-2xl font-bold mb-4">Sản phẩm liên quan</h2>
-                        <ProductReccomend/>
+                        {/*<ProductReccomend/>*/}
                     </div>
                 </div>
             </main>
