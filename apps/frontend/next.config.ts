@@ -1,7 +1,7 @@
 import type {NextConfig} from "next";
 
 const nextConfig: NextConfig = {
-    output: "standalone",
+    // output: "standalone", // Docker
     /* config options here */
     images: {
 
@@ -24,3 +24,15 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+import NextBundleAnalyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = NextBundleAnalyzer({
+    enabled: process.env.ANALYZE === "true",
+});
+
+module.exports = withBundleAnalyzer(nextConfig)
+
+// Cloudflare
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+initOpenNextCloudflareForDev();

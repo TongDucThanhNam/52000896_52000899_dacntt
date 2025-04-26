@@ -1,6 +1,4 @@
 "use client";
-
-import {UploadButton} from "@/lib/uploadthing";
 import {Fragment} from "react";
 
 interface AvatarUploadProps {
@@ -15,25 +13,25 @@ export default function AvatarUpload(
     return (
         <Fragment>
             {/* */}
-            <UploadButton
-                content={{
-                    button({ready}) {
-                        if (ready) return <div>Tải Avatar</div>;
+            {/*<UploadButton*/}
+            {/*    content={{*/}
+            {/*        button({ready}) {*/}
+            {/*            if (ready) return <div>Tải Avatar</div>;*/}
 
-                        return "Đang upload...";
-                    },
-                }}
+            {/*            return "Đang upload...";*/}
+            {/*        },*/}
+            {/*    }}*/}
 
-                endpoint="imageUploader"
-                onClientUploadComplete={(res: any) => {
-                    console.log("url: ", res[0].url);
-                    setAvatarUrl(res[0].url);
-                }}
-                onUploadError={(error: Error) => {
-                    // Do something with the error.
-                    alert(`Lỗi! ${error.message}`);
-                }}
-            />
+            {/*    endpoint="imageUploader"*/}
+            {/*    onClientUploadComplete={(res: any) => {*/}
+            {/*        console.log("url: ", res[0].url);*/}
+            {/*        setAvatarUrl(res[0].url);*/}
+            {/*    }}*/}
+            {/*    onUploadError={(error: Error) => {*/}
+            {/*        // Do something with the error.*/}
+            {/*        alert(`Lỗi! ${error.message}`);*/}
+            {/*    }}*/}
+            {/*/>*/}
         </Fragment>
     );
 }

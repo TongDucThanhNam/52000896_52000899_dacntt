@@ -19,8 +19,17 @@ async function getProducts() {
         const products = res.json()
         // console.log(products)
         return products
-    } catch (error) {
+    } catch (error: any) {
         console.error("Lỗi khi tải danh sách sản phẩm:", error)
+
+        // Handle network connection errors specifically
+        if (error.message === "Network connection lost" || 
+            error.message === "Failed to fetch" || 
+            error.message.includes("network") ||
+            !navigator.onLine) {
+            throw new Error("Mất kết nối mạng. Vui lòng kiểm tra kết nối internet của bạn và thử lại.")
+        }
+
         throw error
     }
 }
