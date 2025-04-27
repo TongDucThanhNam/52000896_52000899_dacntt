@@ -25,13 +25,13 @@ const nextConfig: NextConfig = {
 
 export default nextConfig;
 
-import NextBundleAnalyzer from "@next/bundle-analyzer";
-
-const withBundleAnalyzer = NextBundleAnalyzer({
-    enabled: process.env.ANALYZE === "true",
-});
-
-module.exports = withBundleAnalyzer(nextConfig)
+// import NextBundleAnalyzer from "@next/bundle-analyzer";
+//
+// const withBundleAnalyzer = NextBundleAnalyzer({
+//     enabled: process.env.ANALYZE === "true",
+// });
+//
+// module.exports = withBundleAnalyzer(nextConfig)
 
 // Cloudflare
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";

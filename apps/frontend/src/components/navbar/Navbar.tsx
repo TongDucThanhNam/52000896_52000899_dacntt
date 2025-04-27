@@ -105,7 +105,6 @@ export default function Navbar() {
                         {/* Cart dropdown*/}
                         <CartDropdown/>
 
-
                         {/*Avatar dropdown*/}
                         <div className="absolute right-8">
                             <AvatarDropdown/>

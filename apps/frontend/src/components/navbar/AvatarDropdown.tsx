@@ -15,22 +15,27 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {CreditCard, LogOut, Settings, User} from "lucide-react"
-import {useAuthStore} from "@/store/useAuthStore"
+// import {useAuthStore} from "@/store/useAuthStore"
 import {Skeleton} from "@/components/ui/skeleton";
+import {authClient} from "@/lib/auth-client"
 
 export default function AvatarDropdown() {
     const router = useRouter()
-    // const { token, logout } = useAuth()
-    const {isLoaded, isSignedIn, user, signOut} = useAuthStore()
-
-    if (!isLoaded) {
+    const {
+        data: session,
+        isPending, //loading state
+        error, //error object
+        refetch //refetch the session
+    } = authClient.useSession()
+    console.log("Session: ", session)
+    if (isPending) {
         return <Skeleton className="h-8 w-8 rounded-full"/>
     }
 
-    if (!isSignedIn) {
+    if (!session) {
         return (
             <div className="flex space-x-2">
-                {user?.userEmail}
+                {/*{user?.userEmail}*/}
                 <Link href="/dang-nhap">
                     <Button variant="ghost">Đăng nhập</Button>
                 </Link>
@@ -46,16 +51,16 @@ export default function AvatarDropdown() {
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
-                        <AvatarImage src={user?.userImageUrl} alt={user?.userName}/>
-                        <AvatarFallback>{user?.userName.slice(0, 2).toUpperCase()}</AvatarFallback>
+                        <AvatarImage src={session.user.image || "https://placehold.co/50"} alt={session.user.name}/>
+                        <AvatarFallback>{session.user?.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                     </Avatar>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{user?.userName}</p>
-                        <p className="text-xs leading-none text-muted-foreground">{user?.userEmail}</p>
+                        <p className="text-sm font-medium leading-none">{session.user.name}</p>
+                        <p className="text-xs leading-none text-muted-foreground">{session.user.email}</p>
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator/>
@@ -77,7 +82,13 @@ export default function AvatarDropdown() {
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator/>
-                <DropdownMenuItem onSelect={() => signOut().then(() => router.push("/dang-nhap"))}>
+                <DropdownMenuItem onSelect={async () => await authClient.signOut({
+                        fetchOptions: {
+                            onSuccess: () => {
+                                router.push("/dang-nhap"); // redirect to login page
+                            },
+                        },
+                    })}>
                     <LogOut className="mr-2 h-4 w-4"/>
                     <span>Đăng xuất</span>
                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

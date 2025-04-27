@@ -1,0 +1,42 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "my-app",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-04-17",
+  "log_level": "debug",
+   "compatibility_flags": [
+     "nodejs_compat"
+   ],
+   "dev": {
+     "log_level": "debug"
+   },
+   "vars": {
+     "MY_VAR": "my-variable" // Some variable to use in your Worker
+   },
+  // "kv_namespaces": [
+  //   {
+  //     "binding": "MY_KV_NAMESPACE",
+  //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  //   }
+  // ],
+  // "r2_buckets": [
+  //   {
+  //     "binding": "MY_BUCKET",
+  //     "bucket_name": "my-bucket"
+  //   }
+  // ],
+   "d1_databases": [
+     {
+       "binding": "D1Database",
+       "database_name": "fashion-ai", // Change this to your database name
+       "database_id": "f81c3978-3f9b-47c8-bcae-010e6c8bb631" // Change this to your database ID
+     }
+   ]
+  // "ai": {
+  //   "binding": "AI"
+  // },
+  // "observability": {
+  //   "enabled": true,
+  //   "head_sampling_rate": 1
+  // }
+}

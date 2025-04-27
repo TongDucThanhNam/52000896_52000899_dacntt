@@ -1,30 +1,28 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import {useState} from "react"
+import {useRouter} from "next/navigation"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { useToast } from "@/hooks/use-toast"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import {Button} from "@/components/ui/button"
+import {Input} from "@/components/ui/input"
+import {Card} from "@/components/ui/card"
+import {Separator} from "@/components/ui/separator"
+import {useToast} from "@/hooks/use-toast"
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
+import {useForm} from "react-hook-form"
+import {zodResolver} from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { useAuthStore } from "@/store/useAuthStore"
+import {authClient} from "@/lib/auth-client"
 
 const loginSchema = z.object({
-    email: z.string().email({ message: "Email không hợp lệ" }),
-    password: z.string().min(6, { message: "Mật khẩu phải có ít nhất 6 ký tự" }),
+    email: z.string().email({message: "Email không hợp lệ"}),
+    password: z.string().min(6, {message: "Mật khẩu phải có ít nhất 6 ký tự"}),
 })
 
 export default function LoginPage() {
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
-    const { toast } = useToast()
-    const login = useAuthStore((state) => state.login)
-    const isSignedIn = useAuthStore((state) => state.isSignedIn)
+    const {toast} = useToast()
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -34,28 +32,31 @@ export default function LoginPage() {
         },
     })
 
-    useEffect(() => {
-        if (isSignedIn) {
-            router.push("/")
-        }
-    }, [isSignedIn, router])
-
     async function handleSubmit(values: z.infer<typeof loginSchema>) {
         try {
-            const result = await login(values.email, values.password)
-            if (result.error) {
-                toast({
-                    title: "Đăng nhập thất bại",
-                    description: result.error,
-                    variant: "destructive",
-                })
-            } else {
-                toast({
-                    title: "Đăng nhập thành công",
-                    description: "Chào mừng bạn trở lại",
-                })
-                router.push("/")
-            }
+            // const result = await login(values.email, values.password)
+            await authClient.signIn.email(
+                {
+                    email: values.email,
+                    password: values.password,
+                },
+                {
+                    onSuccess: () => {
+                        router.push("/")
+                        toast({
+                            title: "Đăng nhập thành công",
+                            description: "Chào mừng bạn trở lại",
+                        })
+                    },
+                    onError: (error: any) => {
+                        toast({
+                            title: "Đăng nhập thất bại",
+                            description: error.message,
+                            variant: "destructive",
+                        })
+                    },
+                },
+            );
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Đăng nhập thất bại"
             toast({
@@ -77,26 +78,26 @@ export default function LoginPage() {
                             <FormField
                                 control={form.control}
                                 name="email"
-                                render={({ field }) => (
+                                render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Email</FormLabel>
                                         <FormControl>
                                             <Input type="email" {...field} />
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage/>
                                     </FormItem>
                                 )}
                             />
                             <FormField
                                 control={form.control}
                                 name="password"
-                                render={({ field }) => (
+                                render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Mật khẩu</FormLabel>
                                         <FormControl>
                                             <Input type="password" {...field} />
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage/>
                                     </FormItem>
                                 )}
                             />
@@ -107,7 +108,7 @@ export default function LoginPage() {
                         </form>
                     </Form>
                     <div className="mt-6">
-                        <Separator />
+                        <Separator/>
                         <div className="mt-4 text-center text-sm text-gray-600">
                             Chưa có tài khoản?{" "}
                             <Link href="/dang-ky" className="text-primary hover:underline">
