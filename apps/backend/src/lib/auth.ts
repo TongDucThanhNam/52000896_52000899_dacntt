@@ -11,6 +11,14 @@ export function createAuthInstance(db: Variables['db'], env: Env) {
             provider: "sqlite",
             schema: schema,
         }),
+        advanced: {
+            disableCSRFCheck: true,
+
+          crossSubDomainCookies: {
+              enabled: true,
+              // domain: env.CORS_ORIGIN || "https://fashion-ai.tongducthanhnam.id.vn",
+          }
+        },
         user: {
             additionalFields: {
                 role: {
@@ -66,7 +74,10 @@ export function createAuthInstance(db: Variables['db'], env: Env) {
                 },
             },
         },
-        trustedOrigins: [process.env.CORS_ORIGIN || "http://localhost:3000"],
+        trustedOrigins: [
+            process.env.CORS_ORIGIN || "https://fashion-ai.terasumi.workers.dev",
+            "https://fashion-ai.terasumi.workers.dev"
+        ],
         emailAndPassword: {
             enabled: true,
         },

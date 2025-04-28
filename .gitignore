@@ -4,3 +4,6 @@
 node_modules
 package-lock.json
 bun.lock
+
+/apps/backend/.dev.vars
+/apps/frontend/.prod.vars

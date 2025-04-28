@@ -2,12 +2,27 @@ import ProductCard from "@/components/products/ProductCard";
 
 async function getProducts() {
     try {
+        console.log("getProducts from ", `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`)
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`, {
             headers: {
                 Accept: "application/json",
             },
             cache: "no-store",
-        })
+        });
+
+// Kiểm tra response có phải JSON không trước khi parse
+        const contentType = res.headers.get('content-type');
+
+        let result;
+
+        if (contentType && contentType.includes('application/json')) {
+            result = await res.json();
+        } else {
+            const text = await res.text();
+            throw new Error(`Server trả về dữ liệu không phải JSON: ${text}`);
+        }
+
+        console.log("getProducts res", result)
 
         if (!res.ok) {
             if (res.status === 500) {
@@ -16,7 +31,7 @@ async function getProducts() {
             throw new Error(`Lỗi! status: ${res.status}`)
         }
 
-        const products = res.json()
+        const products = result
         // console.log(products)
         return products
     } catch (error: any) {

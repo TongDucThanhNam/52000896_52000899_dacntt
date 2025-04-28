@@ -46,6 +46,10 @@ export default function AvatarDropdown() {
         )
     }
 
+    if (error) {
+        return <div>Error: {error.message}</div>
+    }
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
