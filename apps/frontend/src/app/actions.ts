@@ -43,7 +43,7 @@ export async function createProduct(productData: Omit<Product, 'id' | 'productId
             throw new Error(`Failed to create product: ${response.status} - ${response.statusText}`);
         }
 
-        const createdProduct = await response.json();
+        const createdProduct:any = await response.json();
 
         return {
             success: true,
@@ -253,7 +253,7 @@ export async function register(formData: FormData) {
         })
 
         if (!response.ok) {
-            const errorData = await response.json()
+            const errorData:any = await response.json()
             return {error: errorData.message || "Đăng ký thất bại"}
         }
 
@@ -282,7 +282,7 @@ export async function login(formData: FormData) {
         })
 
         if (res.ok) {
-            const data = await res.json()
+            const data:any = await res.json()
             if (data.accessToken) {
                 // set cookies
                 (await cookies()).set('token', data.accessToken, {
@@ -297,7 +297,7 @@ export async function login(formData: FormData) {
                 // throw new Error("Token not received from server")
             }
         } else {
-            const errorData = await res.json()
+            const errorData:any = await res.json()
             return {error: errorData.message || "Đăng nhập thất bại"}
         }
     } catch (error) {
@@ -335,7 +335,7 @@ export async function getUserProfile(token: string): Promise<UserProfile | null>
             //clean local storage
         }
 
-        const data = await res.json()
+        const data:any = await res.json()
         return {
             id: data.id,
             userCity: data.userCity,
@@ -368,7 +368,7 @@ export async function createUser(userData: any) {
     })
 
     if (!response.ok) {
-        const errorData = await response.json()
+        const errorData:any = await response.json()
         return {error: errorData.message || "Đăng ký thất bại"}
     }
 

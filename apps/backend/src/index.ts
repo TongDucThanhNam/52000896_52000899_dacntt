@@ -1,4 +1,3 @@
-import { streamText } from "ai";
 import interactionRoutes from "./Api/Routes/InteractionRoutes";
 import productRoutes from "./Api/Routes/ProductRoutes";
 import {UnitOfWorkFactory} from './Infrastructure/Persistences/Factories/UnitOfWorkFactory';
@@ -8,13 +7,11 @@ import {cors} from 'hono/cors'
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { createAuthInstance } from "./lib/auth";
-import { stream } from "hono/streaming";
 import 'dotenv/config';
 
 
 import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "./routers";
-import { google } from "@ai-sdk/google";
 
 import { createContext } from "./lib/context";
 import {DrizzleDB} from "./lib/drizzle";
@@ -27,6 +24,8 @@ export type Variables = {
 };
 export type Env = {
     D1Database: D1Database; // <BINDING_NAME>: D1Database;
+	CORS_ORIGIN: string;
+	BETTER_AUTH_URL: string;
 }
 
 const app = new Hono<
@@ -40,7 +39,7 @@ app.use(logger());
 app.use(
 	"/*",
 	cors({
-		origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+		origin: process.env.CORS_ORIGIN || "http://localhost:8787",
 		allowMethods: ["GET", "POST", "OPTIONS"],
 		allowHeaders: ["Content-Type", "Authorization"],
 		credentials: true,
@@ -59,15 +58,30 @@ app.use(async (ctx, next) => {
 	await next();
 });
 
-// TODO: Fix error: [wrangler:inf] POST /api/auth/sign-up/email 422 UNPROCESSABLE_ENTITY (218ms)
-app.on(["POST", "GET"], "/api/auth/*", (c, next) => {
-	console.log("Auth handler"); // This line not executed
-	const db = c.get("db");
-	const authInstance = createAuthInstance(db, c.env);
-	console.log("Auth instance created");
-	console.log("Request: ", c.req.raw);
+app.on(["POST", "GET"], "/api/auth/*", async (c, next) => {
+	try {
+		const db = c.get("db");
+		// Thêm log để kiểm tra db và env có tồn tại không
+		console.log("Database instance retrieved:", !!db);
+		console.log("Environment variables:", JSON.stringify(c.env)); // Cẩn thận không log thông tin nhạy cảm
 
-	return authInstance.handler(c.req.raw);
+		if (!c.env.BETTER_AUTH_URL) {
+			console.error("BETTER_AUTH_URL environment variable is not set!");
+			return c.json({ error: "Server configuration error" }, 500);
+		}
+
+		const authInstance = createAuthInstance(db, c.env);
+		console.log("Auth instance created");
+
+		const response = await authInstance.handler(c.req.raw);
+		console.log("Auth handler executed successfully");
+		return response;
+	} catch (error) {
+		// Log lỗi chi tiết ra console của Cloudflare Worker
+		console.error("Error in /api/auth/* handler:", error);
+		// Có thể trả về một thông báo lỗi chung cho client
+		return c.json({ error: "Internal Server Error", message: error instanceof Error ? error.message : 'Unknown error' }, 500);
+	}
 });
 
 app.use(
@@ -81,7 +95,13 @@ app.use(
 );
 
 app.get("/", (c) => {
-	return c.text("OK");
+	return c.json(
+		{
+			CORS_ORIGIN: c.env.CORS_ORIGIN,
+			BETTER_AUTH_URL: c.env.BETTER_AUTH_URL,
+			message: "Hello World!",
+		}
+	);
 });
 
 app.route('/api', interactionRoutes);

@@ -1,23 +1,25 @@
-import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { baseColumns } from './BaseEntities';
+import {integer, sqliteTable, text} from 'drizzle-orm/sqlite-core';
 
 // --- User ---
-export const users = sqliteTable('users', {
-    id: integer('id').primaryKey({ autoIncrement: true }),
-    userName: text('userName'),
-    userPasswordHash: text('userPasswordHash'),
-    userEmail: text('userEmail'),
-    userPhone: text('userPhone'),
-    userHeight: real('userHeight'),
-    userWeight: real('userWeight'),
-    userDateOfBirth: text('userDateOfBirth'),
-    userAddress: text('userAddress'),
-    userImageUrl: text('userImageUrl'),
-    userGender: text('userGender'),
-    userJob: text('userJob'),
-    userCity: text('userCity'),
-    userRole: text('userRole'),
-    ...baseColumns,
+export const user = sqliteTable("user", {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    email: text("email").notNull().unique(),
+    emailVerified: integer("email_verified").notNull(), // Use integer for boolean
+    image: text("image"),
+    createdAt: integer("created_at", {mode: "timestamp"}).notNull(),
+    updatedAt: integer("updated_at", {mode: "timestamp"}).notNull(),
+    // additionalFields
+    phone: text("phone"),
+    height: integer("height"),
+    weight: integer("weight"),
+    dateOfBirth: text("dateOfBirth"),
+    address: text("address"),
+    imageUrl: text("imageUrl"),
+    gender: text("gender"),
+    job: text("job"),
+    city: text("city"),
+    role: text("role"),
 });
 
-export type User = typeof users.$inferSelect;
+export type User = typeof user.$inferSelect;

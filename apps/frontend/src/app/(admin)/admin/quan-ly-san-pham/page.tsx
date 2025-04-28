@@ -11,7 +11,7 @@ async function getProducts() {
 }
 
 export default async function ProductManagePage() {
-    const products = await getProducts()
+    const products:any = await getProducts()
     // console.log(products)
 
     if (!products) {

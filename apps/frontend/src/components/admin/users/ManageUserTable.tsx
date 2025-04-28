@@ -34,7 +34,7 @@ import {UserProfile} from "@/types";
 import {deleteUser} from "@/app/actions";
 
 interface UserTableProps {
-    users: UserProfile[]
+    users: any[]
 }
 
 export default function ManageUserTable({users}: UserTableProps) {

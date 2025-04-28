@@ -45,6 +45,7 @@ class ProductTagRepository implements IProductTagRepository {
 
     async deleteProductTag(productId: string, tagId: string): Promise<any> {
         try {
+            // TODO: Soft Delete
             const updateData = {
                 isActive: false,
                 isDeleted: true,
@@ -53,7 +54,7 @@ class ProductTagRepository implements IProductTagRepository {
 
             const result = await this.db
                 .update(productTags)
-                .set(updateData)
+                .set({})
                 .where(
                     and(
                         eq(productTags.productId, parseInt(productId, 10)),

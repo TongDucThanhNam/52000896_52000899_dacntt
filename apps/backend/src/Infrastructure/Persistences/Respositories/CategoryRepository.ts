@@ -54,12 +54,6 @@ class CategoryRepository implements ICategoryRepository {
     async deleteCategoryById(categoryId: string): Promise<any> {
         try {
             const category: any = await this.db.update(categories)
-                .set({
-                    isActive: false,
-                    isDeleted: true,
-                    updatedAt: new Date().toISOString()
-                })
-                .where(eq(categories.id, Number(categoryId)))
             return category[0] || null;
         } catch (error) {
             throw new Error("Error at CategoryRepository: " + error);

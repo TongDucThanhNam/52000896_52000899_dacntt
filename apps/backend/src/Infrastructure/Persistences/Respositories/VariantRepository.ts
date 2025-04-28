@@ -57,10 +57,9 @@ class VariantRepository implements IVariantRepository {
 
     async deleteVariantById(variantId: string): Promise<any> {
         try {
+            // TODO: Soft Delete
             const result = await this.db.update(variants)
                 .set({
-                    isDeleted: true,
-                    isActive: false
                 })
                 .where(eq(variants.id, parseInt(variantId)));
 

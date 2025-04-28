@@ -64,10 +64,9 @@ class TransactionItemRepository implements ITransactionItemRepository {
 
     async deleteTransactionItemById(transactionId: string): Promise<any> {
         try {
+            // TODO: Soft Delete
             await this.db.update(transactionItems)
                 .set({
-                    isActive: false,
-                    isDeleted: true
                 })
                 .where(eq(transactionItems.id, parseInt(transactionId)));
 

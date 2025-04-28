@@ -18,7 +18,6 @@ export default function RootLayout({
             className={`${darkerGrotesque.className} antialiased`}
         >
         <Providers>
-
             {/*<AuthProvider>*/}
             {children}
             {/*</AuthProvider>*/}

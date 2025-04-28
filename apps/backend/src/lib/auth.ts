@@ -1,6 +1,6 @@
 import {betterAuth} from "better-auth";
 import {drizzleAdapter} from "better-auth/adapters/drizzle";
-import * as schema from "../Domain/Entities/auth";
+import * as schema from "../Domain/Entities/index";
 import type { Variables } from "../index";
 import type { Env } from "../index";
 
@@ -11,6 +11,61 @@ export function createAuthInstance(db: Variables['db'], env: Env) {
             provider: "sqlite",
             schema: schema,
         }),
+        user: {
+            additionalFields: {
+                role: {
+                    type: "string",
+                    required: false,
+                    defaultValue: "user",
+                    input: false, // không cho phép người dùng đặt vai trò
+                },
+                phone: {
+                    type: "string",
+                    required: false, // Đặt thành true nếu bắt buộc
+                    input: true,
+                },
+                height: {
+                    type: "number",
+                    required: false,
+                    input: true,
+                },
+                weight: {
+                    type: "number",
+                    required: false,
+                    input: true,
+                },
+                dateOfBirth: {
+                    type: "string", // Giả sử ngày sinh được lưu dưới dạng chuỗi
+                    required: false,
+                    input: true,
+                },
+                address: {
+                    type: "string",
+                    required: false,
+                    input: true,
+                },
+                imageUrl: {
+                    type: "string",
+                    required: false,
+                    input: true,
+                },
+                gender: {
+                    type: "string",
+                    required: false,
+                    input: true,
+                },
+                job: {
+                    type: "string",
+                    required: false,
+                    input: true,
+                },
+                city: {
+                    type: "string",
+                    required: false,
+                    input: true,
+                },
+            },
+        },
         trustedOrigins: [process.env.CORS_ORIGIN || "http://localhost:3000"],
         emailAndPassword: {
             enabled: true,

@@ -1,13 +1,14 @@
 {
   "name": "my-app",
   "scripts": {
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --remote",
     "start": "wrangler dev --remote",
     "deploy": "wrangler deploy --minify ",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "db:up": "drizzle-kit up"
+    "db:up": "drizzle-kit up",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.13",
@@ -16,6 +17,7 @@
     "@hono/zod-openapi": "^0.19.5",
     "@libsql/client": "^0.15.4",
     "ai": "^4.3.10",
+    "better-auth": "^1.2.7",
     "drizzle-orm": "^0.42.0",
     "hono": "^4.7.7"
   },

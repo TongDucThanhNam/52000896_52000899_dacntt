@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
   "name": "fashion-ai",
-  "compatibility_date": "2025-03-25",
+  "compatibility_date": "2025-03-01",
   "compatibility_flags": [
     "nodejs_compat"
   ],
@@ -17,6 +17,9 @@
       "service": "fashion-ai"
     }
   ],
+  "env": {
+
+  },
   "r2_buckets": [
     // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
     {

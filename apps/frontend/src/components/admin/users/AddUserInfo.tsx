@@ -54,7 +54,7 @@ export default function AddUserInfo() {
         setIsLoading(true)
         try {
             // Update existing user
-            const result = await createUser(data)
+            const result:any = await createUser(data)
             if (result.error) {
                 toast({
                     title: "Lỗi khi thêm người dùng",

@@ -41,7 +41,7 @@ export default async function ViewUserTransactionsPage(
     }
 ) {
     const userId = (await params).id
-    let transactions
+    let transactions:any
     try {
         transactions = await getTranactionOfUser(userId)
     } catch (error) {
@@ -51,7 +51,7 @@ export default async function ViewUserTransactionsPage(
     return (
         <div className="container mx-auto py-8 w-3/4">
             <div className="mb-6">
-                <Button asChild variant="ghost">
+                <Button asChild variant="noShadow">
                     <Link href={"/admin/quan-ly-nguoi-dung/"}>
                         <ArrowLeft className="mr-2 h-4 w-4"/>
                         Trở về danh sách người dùng

@@ -20,9 +20,9 @@ const loginSchema = z.object({
 })
 
 export default function LoginPage() {
+    const {toast} = useToast()
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
-    const {toast} = useToast()
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -43,27 +43,31 @@ export default function LoginPage() {
                 {
                     onSuccess: () => {
                         router.push("/")
-                        toast({
-                            title: "Đăng nhập thành công",
-                            description: "Chào mừng bạn trở lại",
-                        })
+                        toast(
+                            {
+                                title: "Đăng nhập thành công",
+                                description: "Chào mừng bạn đến với Shopee",
+                            }
+                        )
                     },
                     onError: (error: any) => {
-                        toast({
-                            title: "Đăng nhập thất bại",
-                            description: error.message,
-                            variant: "destructive",
-                        })
+                        toast(
+                            {
+                                title: "Đăng nhập thất bại",
+                                description: error.message,
+                            }
+                        )
                     },
                 },
             );
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Đăng nhập thất bại"
-            toast({
-                title: "Đăng nhập",
-                description: errorMessage,
-                variant: "destructive",
-            })
+            toast(
+                {
+                    title: "Đăng nhập thất bại",
+                    description: errorMessage,
+                }
+            )
             setError(errorMessage)
         }
     }

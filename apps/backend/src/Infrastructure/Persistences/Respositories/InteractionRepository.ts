@@ -49,10 +49,8 @@ class InteractionRepository implements IInteractionRepository {
 
     async deleteInteractionById(interactionId: string): Promise<any> {
         try {
-            const interaction: any = this.db.update(interactions).set({
-                isDeleted: true,
-                isActive: false
-            }).where(eq(interactions.id, parseInt(interactionId)))
+            //TODO: Soft Delete
+            const interaction: any = this.db.update(interactions).set({})
             return interaction;
         } catch (error) {
             throw new Error("Error at InteractionRepository: " + error);

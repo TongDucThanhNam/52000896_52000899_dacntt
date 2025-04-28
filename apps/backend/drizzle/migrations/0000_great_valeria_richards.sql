@@ -10,17 +10,17 @@ CREATE TABLE `account` (
 	`refresh_token_expires_at` text,
 	`scope` text,
 	`password` text,
-	`created_at` text NOT NULL,
-	`updated_at` text NOT NULL,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL,
 	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `session` (
 	`id` text PRIMARY KEY NOT NULL,
-	`expires_at` text NOT NULL,
+	`expires_at` integer NOT NULL,
 	`token` text NOT NULL,
-	`created_at` text NOT NULL,
-	`updated_at` text NOT NULL,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL,
 	`ip_address` text,
 	`user_agent` text,
 	`user_id` text NOT NULL,
@@ -28,32 +28,20 @@ CREATE TABLE `session` (
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `session_token_unique` ON `session` (`token`);--> statement-breakpoint
-CREATE TABLE `user` (
-	`id` text PRIMARY KEY NOT NULL,
-	`name` text NOT NULL,
-	`email` text NOT NULL,
-	`email_verified` integer NOT NULL,
-	`image` text,
-	`created_at` text NOT NULL,
-	`updated_at` text NOT NULL
-);
---> statement-breakpoint
-CREATE UNIQUE INDEX `user_email_unique` ON `user` (`email`);--> statement-breakpoint
 CREATE TABLE `verification` (
 	`id` text PRIMARY KEY NOT NULL,
 	`identifier` text NOT NULL,
 	`value` text NOT NULL,
-	`expires_at` text NOT NULL,
-	`created_at` text,
-	`updated_at` text
+	`expires_at` integer NOT NULL,
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `base` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `categories` (
@@ -61,9 +49,8 @@ CREATE TABLE `categories` (
 	`categoryName` text,
 	`categorySlug` text,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `interactions` (
@@ -75,9 +62,8 @@ CREATE TABLE `interactions` (
 	`interaction_content` text,
 	`interaction_score` integer,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `logs` (
@@ -91,9 +77,8 @@ CREATE TABLE `logs` (
 	`device_id` text,
 	`timestamp` integer,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `preferences` (
@@ -103,9 +88,8 @@ CREATE TABLE `preferences` (
 	`preference_value` text NOT NULL,
 	`preference_score` numeric NOT NULL,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `products` (
@@ -119,9 +103,8 @@ CREATE TABLE `products` (
 	`product_avg_rating` integer,
 	`product_total_views` integer,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `product_tags` (
@@ -129,9 +112,8 @@ CREATE TABLE `product_tags` (
 	`product_id` integer NOT NULL,
 	`tag_id` integer NOT NULL,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true,
+	`created_at` integer,
+	`updated_at` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`tag_id`) REFERENCES `tags`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -143,18 +125,16 @@ CREATE TABLE `reviews` (
 	`rating` real,
 	`reviewContent` text,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `tags` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`tag_name` text,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `transactions` (
@@ -162,11 +142,10 @@ CREATE TABLE `transactions` (
 	`user_id` integer,
 	`transaction_status` text,
 	`transaction_total` numeric,
-	`transaction_updated_at` text DEFAULT '2025-04-27T14:52:54.124Z',
+	`transaction_updated_at` text DEFAULT '2025-04-28T02:48:15.206Z',
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `transaction_items` (
@@ -177,32 +156,31 @@ CREATE TABLE `transaction_items` (
 	`quantity` integer,
 	`purchase_price` numeric,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );
 --> statement-breakpoint
-CREATE TABLE `users` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`userName` text,
-	`userPasswordHash` text,
-	`userEmail` text,
-	`userPhone` text,
-	`userHeight` real,
-	`userWeight` real,
-	`userDateOfBirth` text,
-	`userAddress` text,
-	`userImageUrl` text,
-	`userGender` text,
-	`userJob` text,
-	`userCity` text,
-	`userRole` text,
-	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+CREATE TABLE `user` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`email` text NOT NULL,
+	`email_verified` integer NOT NULL,
+	`image` text,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL,
+	`phone` text,
+	`height` integer,
+	`weight` integer,
+	`dateOfBirth` text,
+	`address` text,
+	`imageUrl` text,
+	`gender` text,
+	`job` text,
+	`city` text,
+	`role` text
 );
 --> statement-breakpoint
+CREATE UNIQUE INDEX `user_email_unique` ON `user` (`email`);--> statement-breakpoint
 CREATE TABLE `variants` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`product_id` integer NOT NULL,
@@ -220,7 +198,6 @@ CREATE TABLE `variants` (
 	`variant_promotion_price` numeric,
 	`variant_stock_quantity` integer,
 	`is_deleted` integer DEFAULT false,
-	`created_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`updated_at` text DEFAULT '2025-04-27T14:52:54.099Z',
-	`is_active` integer DEFAULT true
+	`created_at` integer,
+	`updated_at` integer
 );

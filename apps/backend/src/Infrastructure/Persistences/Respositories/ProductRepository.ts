@@ -102,6 +102,7 @@ class ProductRepository implements IProductRepository {
 
     async deleteProductById(productId: string): Promise<any> {
         try {
+            //TODO: Soft Delete
             const updateData = {
                 isActive: false,
                 isDeleted: true,
@@ -110,7 +111,7 @@ class ProductRepository implements IProductRepository {
 
             const result = await this.db
                 .update(products)
-                .set(updateData)
+                .set({})
                 .where(eq(products.id, parseInt(productId, 10)))
                 .returning();
 

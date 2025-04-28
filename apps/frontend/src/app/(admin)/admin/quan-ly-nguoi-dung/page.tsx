@@ -11,7 +11,7 @@ async function getUsers() {
 }
 
 export default async function UserManagerPage() {
-    const users = await getUsers()
+    const users: any = await getUsers()
     // console.log(products)
 
     if (!users) {

@@ -27,7 +27,7 @@ export default function AvatarDropdown() {
         error, //error object
         refetch //refetch the session
     } = authClient.useSession()
-    console.log("Session: ", session)
+    console.log("Current User: ", session)
     if (isPending) {
         return <Skeleton className="h-8 w-8 rounded-full"/>
     }

@@ -44,11 +44,9 @@ class PreferenceRepository implements IPreferenceRepository {
 
     async deletePreferenceById(preferenceId: string): Promise<any> {
         try {
+            // TODO: Soft Delete
             const preference: any = await this.db.update(preferences)
                 .set({
-                    isActive: false,
-                    isDeleted: true,
-                    updatedAt: new Date().toISOString()
                 })
                 .where(eq(preferences.id, Number(preferenceId)));
             return preference[0] || null;

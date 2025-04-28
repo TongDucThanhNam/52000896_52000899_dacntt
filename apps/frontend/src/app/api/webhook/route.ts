@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
         }
 
         // Lấy dữ liệu từ body request
-        const body = await req.json();
+        const body:any = await req.json();
 
         // Kiểm tra các trường bắt buộc
         const {

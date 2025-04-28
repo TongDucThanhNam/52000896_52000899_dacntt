@@ -3,13 +3,16 @@
   "name": "my-app",
   "main": "src/index.ts",
   "compatibility_date": "2025-04-17",
-  "log_level": "debug",
-   "compatibility_flags": [
+  "compatibility_flags": [
      "nodejs_compat"
    ],
    "dev": {
-     "log_level": "debug"
    },
+  "minify": true,
+  // Need Paid plan
+//  "limits": {
+//    "cpu_ms": 300000 // default is 30000 (30 seconds)
+//  },
    "vars": {
      "MY_VAR": "my-variable" // Some variable to use in your Worker
    },

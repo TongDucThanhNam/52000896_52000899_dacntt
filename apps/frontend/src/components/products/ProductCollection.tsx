@@ -35,7 +35,7 @@ async function getProducts() {
 }
 
 export default async function ProductCollection() {
-    const products = await getProducts()
+    const products:any = await getProducts()
     // console.log(products)
     return (
         <div className="container mx-auto px-4 py-8">

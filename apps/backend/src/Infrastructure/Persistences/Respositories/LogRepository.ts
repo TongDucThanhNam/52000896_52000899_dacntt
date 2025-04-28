@@ -21,11 +21,9 @@ class LogRepository implements ILogRepository {
 
     async deleteLogById(logId: string): Promise<any> {
         try {
+            //TODO: Soft Delete
             const result = await this.db.update(logs)
                 .set({
-                    isActive: false,
-                    isDeleted: true,
-                    updatedAt: new Date().toISOString()
                 })
                 .where(eq(logs.id, parseInt(logId)));
 
@@ -97,6 +95,7 @@ class LogRepository implements ILogRepository {
 
     async updateLogById(logId: string, logData: any): Promise<any> {
         try {
+            //TODO: Soft Delete
             const result = await this.db.update(logs)
                 .set({
                     userId: logData.userId,
@@ -107,7 +106,6 @@ class LogRepository implements ILogRepository {
                     ipAddress: logData.ipAddress,
                     deviceId: logData.deviceId,
                     timeStamp: logData.timeStamp,
-                    updatedAt: new Date().toISOString()
                 })
                 .where(eq(logs.id, parseInt(logId)));
 

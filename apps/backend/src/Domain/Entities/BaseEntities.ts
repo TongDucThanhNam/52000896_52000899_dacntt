@@ -6,9 +6,9 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
  */
 export const baseColumns = {
     isDeleted: integer('is_deleted', { mode: 'boolean' }).default(false),
-    createdAt: text('created_at').default(new Date().toISOString()),
-    updatedAt: text('updated_at').default(new Date().toISOString()),
-    isActive: integer('is_active', { mode: 'boolean' }).default(true)
+    createdAt: integer('created_at', { mode: 'timestamp' }),
+    deleteAt: integer("created_at", { mode: "timestamp" }),
+    updatedAt: integer("updated_at", { mode: "timestamp" }),
 };
 
 /**

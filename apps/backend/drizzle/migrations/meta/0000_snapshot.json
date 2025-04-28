@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "f8ab11b4-2ced-4f1d-8687-4bfc19908514",
+  "id": "7a3ae26b-6bb8-4af4-b23e-ac58881b225a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -86,14 +86,14 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -131,7 +131,7 @@
         },
         "expires_at": {
           "name": "expires_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -145,14 +145,14 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -207,73 +207,6 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "user": {
-      "name": "user",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "email_verified": {
-          "name": "email_verified",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "image": {
-          "name": "image",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "user_email_unique": {
-          "name": "user_email_unique",
-          "columns": [
-            "email"
-          ],
-          "isUnique": true
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
     "verification": {
       "name": "verification",
       "columns": {
@@ -300,21 +233,21 @@
         },
         "expires_at": {
           "name": "expires_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -346,27 +279,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -409,27 +332,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -500,27 +413,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -605,27 +508,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -682,27 +575,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -787,27 +670,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -850,27 +723,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -954,27 +817,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -1010,27 +863,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -1076,7 +919,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.124Z'"
+          "default": "'2025-04-28T02:48:15.206Z'"
         },
         "is_deleted": {
           "name": "is_deleted",
@@ -1088,27 +931,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -1172,27 +1005,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -1201,141 +1024,138 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "users": {
-      "name": "users",
+    "user": {
+      "name": "user",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
-        "userName": {
-          "name": "userName",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
-        "userPasswordHash": {
-          "name": "userPasswordHash",
+        "email": {
+          "name": "email",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
-        "userEmail": {
-          "name": "userEmail",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userPhone": {
-          "name": "userPhone",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userHeight": {
-          "name": "userHeight",
-          "type": "real",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userWeight": {
-          "name": "userWeight",
-          "type": "real",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userDateOfBirth": {
-          "name": "userDateOfBirth",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userAddress": {
-          "name": "userAddress",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userImageUrl": {
-          "name": "userImageUrl",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userGender": {
-          "name": "userGender",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userJob": {
-          "name": "userJob",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userCity": {
-          "name": "userCity",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "userRole": {
-          "name": "userRole",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "is_deleted": {
-          "name": "is_deleted",
+        "email_verified": {
+          "name": "email_verified",
           "type": "integer",
           "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": false
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
+          "notNull": true,
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "phone": {
+          "name": "phone",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
+          "autoincrement": false
         },
-        "is_active": {
-          "name": "is_active",
+        "height": {
+          "name": "height",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "weight": {
+          "name": "weight",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dateOfBirth": {
+          "name": "dateOfBirth",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "imageUrl": {
+          "name": "imageUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "gender": {
+          "name": "gender",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "job": {
+          "name": "job",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "city": {
+          "name": "city",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
@@ -1459,27 +1279,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'2025-04-27T14:52:54.099Z'"
-        },
-        "is_active": {
-          "name": "is_active",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": true
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},

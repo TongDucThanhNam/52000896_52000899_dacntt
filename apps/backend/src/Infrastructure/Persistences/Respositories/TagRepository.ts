@@ -56,11 +56,9 @@ class TagRepository implements ITagRepository {
 
     async deleteTagById(tagId: string): Promise<any> {
         try {
+            // TODO: Soft Delete
             const result = await this.db.update(tags)
                 .set({
-                    isDeleted: true,
-                    isActive: false,
-                    updatedAt: new Date().toISOString()
                 })
                 .where(eq(tags.id, parseInt(tagId)));
 

@@ -19,6 +19,8 @@ export const queryClient = new QueryClient({
 	}),
 });
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 const trpcClient = createTRPCClient<AppRouter>({
 	links: [
 		httpBatchLink({
@@ -33,6 +35,8 @@ const trpcClient = createTRPCClient<AppRouter>({
 	],
 });
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 export const trpc = createTRPCOptionsProxy<AppRouter>({
 	client: trpcClient,
 	queryClient,

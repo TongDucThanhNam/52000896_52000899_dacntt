@@ -1,14 +1,5 @@
 import {integer, sqliteTable, text} from "drizzle-orm/sqlite-core";
-
-export const user = sqliteTable("user", {
-    id: text("id").primaryKey(),
-    name: text("name").notNull(),
-    email: text("email").notNull().unique(),
-    emailVerified: integer("email_verified").notNull(), // Use integer for boolean
-    image: text("image"),
-    createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
-    updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
-});
+import { user } from "./UserEntities";
 
 export const session = sqliteTable("session", {
     id: text("id").primaryKey(),
