@@ -1,5 +1,5 @@
 import type {IProductRepository} from "../../../Application/Persistences/IRepositories/IProductRepository";
-import {products} from "../../../Domain/Entities/ProductEntities";
+import {Product, products} from "../../../Domain/Entities/ProductEntities";
 import {productTags} from "../../../Domain/Entities/ProductTagEntities";
 import {eq} from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
@@ -49,10 +49,26 @@ class ProductRepository implements IProductRepository {
 
     async createProduct(productData: any): Promise<any> {
         try {
+            const data = {
+                productName: productData.productName,
+                productSlug: productData.productSlug,
+                productDescription: productData.productDescription,
+                productBrand: productData.productBrand,
+                imageUrls: productData.imageUrls,
+                categoryId: productData.categoryId,
+                productAvgRating: productData.productAvgRating,
+                productTotalViews: 0,
+                isDeleted: false,
+                deleteAt: null,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            }
+            console.log("Product data:", productData)
             const result = await this.db
                 .insert(products)
-                .values(productData)
+                .values(data)
                 .returning() // return the inserted product
+            console.log('result', result);
             return result;
         } catch (error: any) {
             throw new Error(`Error at ProductRepository.createProduct: ${error.message}`);

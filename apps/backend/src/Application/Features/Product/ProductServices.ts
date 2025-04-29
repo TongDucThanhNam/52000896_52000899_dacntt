@@ -1,6 +1,6 @@
 import type {IProductServices} from "../../Persistences/IServices/IProductServices";
 import type {IUnitOfWork} from "../../Persistences/IRepositories/IUnitOfWork";
-import { UnitOfWorkFactory } from "../../../Infrastructure/Persistences/Factories/UnitOfWorkFactory.js";
+import {UnitOfWorkFactory} from "../../../Infrastructure/Persistences/Factories/UnitOfWorkFactory.js";
 
 class ProductServices implements IProductServices {
     private get unitOfWork(): IUnitOfWork {
@@ -30,7 +30,7 @@ class ProductServices implements IProductServices {
             const product = await this.unitOfWork.productRepository.createProduct(data);
             return product[0];
         } catch (error) {
-            throw error;
+            throw Error(`Error at ProductServices.createProduct: ${error}`);
         }
     }
 
@@ -61,7 +61,7 @@ class ProductServices implements IProductServices {
         }
     }
 
-    async getAllProducts(data: any): Promise<any > {
+    async getAllProducts(data: any): Promise<any> {
         try {
             const {
                 page,
@@ -74,7 +74,11 @@ class ProductServices implements IProductServices {
             }
 
             const products = await this.unitOfWork.productRepository.getAllProducts(queryData);
-            return products;
+            const result = products.map((product: any) => ({
+                ...product,
+                imageUrls: JSON.parse(product.imageUrls),
+            }));
+            return result;
         } catch (error) {
             throw error;
         }
@@ -96,6 +100,12 @@ class ProductServices implements IProductServices {
                 isActive: true
             }
             const product = await this.unitOfWork.productRepository.getProductById(data, queryData);
+            if (product) {
+                return {
+                    ...product,
+                    imageUrls: JSON.parse(product.imageUrls),
+                };
+            }
             return product;
         } catch (error) {
             throw error;
@@ -114,6 +124,12 @@ class ProductServices implements IProductServices {
             }
             const productId = variant.productId;
             const product = await this.unitOfWork.productRepository.getProductById(productId, queryData);
+            if (product) {
+                return {
+                    ...product,
+                    imageUrls: JSON.parse(product.imageUrls),
+                };
+            }
             return product;
         } catch (error) {
             throw error;
@@ -133,7 +149,11 @@ class ProductServices implements IProductServices {
         try {
             //TODO: implement this
             // const products = await this.unitOfWork.productTagRepository.getProductsByTag(data);
-            // return products;
+            // const result = products.map((product: any) => ({
+            //     ...product,
+            //     imageUrls: JSON.parse(product.imageUrls),
+            // }));
+            // return result;
 
             return null;
 
@@ -190,6 +210,11 @@ class ProductServices implements IProductServices {
                 ...restData
             } = data
             const product = await this.unitOfWork.productRepository.updateProductById(productId, restData);
+            if (product) {
+                return {
+                    ...product,
+                };
+            }
             return product;
         } catch (error) {
             throw error;
@@ -237,6 +262,12 @@ class ProductServices implements IProductServices {
             })
 
             await Promise.all(variantPromises);
+
+            if (resultProduct) {
+                return [{
+                    ...resultProduct,
+                }];
+            }
             return product;
         } catch (error) {
             throw error;
