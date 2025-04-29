@@ -1,11 +1,10 @@
-import {betterAuth} from "better-auth";
-import {drizzleAdapter} from "better-auth/adapters/drizzle";
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import type { DrizzleD1Database } from "drizzle-orm/d1";
 import * as schema from "../Domain/Entities/index";
-import type { Variables } from "../index";
-import type { Env } from "../index";
+import { Env } from "..";
 
-export function createAuthInstance(db: Variables['db'], env: Env) {
-    console.log("Creating auth instance");
+export const auth = (db: DrizzleD1Database, env: Env) => {
     return betterAuth({
         database: drizzleAdapter(db, {
             provider: "sqlite",
@@ -82,11 +81,6 @@ export function createAuthInstance(db: Variables['db'], env: Env) {
             enabled: true,
         },
     });
-}
-
-// For backward compatibility
-export const auth = {
-    handler: (req: Request) => {
-        throw new Error("Direct usage of auth.handler is deprecated. Use createAuthInstance instead.");
-    }
 };
+
+export type BetterAuth = ReturnType<typeof auth>;

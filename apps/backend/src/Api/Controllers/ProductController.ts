@@ -15,6 +15,7 @@ const createSlug = (text: string): string => {
 const productServices: IProductServices = new ProductServices();
 
 // GET /products
+
 export const getAllProducts = async (c: Context) => {
     try {
         const query = c.req.query();
