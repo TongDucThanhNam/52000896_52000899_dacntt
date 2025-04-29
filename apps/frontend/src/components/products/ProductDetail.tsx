@@ -175,7 +175,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 onChange={(e) =>
                   setQuantity(Number.parseInt(e.target.value) || 1)
                 }
-                className="w-20 text-center"
+                className="w-14 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
               <Button
                 variant="noShadow"
