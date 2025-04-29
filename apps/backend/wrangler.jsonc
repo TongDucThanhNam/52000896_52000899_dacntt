@@ -3,23 +3,20 @@
   "name": "fashion-ai-be",
   "main": "src/index.ts",
   "compatibility_date": "2025-04-17",
-  "compatibility_flags": [
-     "nodejs_compat"
-   ],
-   "dev": {
-   },
+  "compatibility_flags": ["nodejs_compat"],
+  "dev": {},
   "minify": true,
   // Need Paid plan
-//  "limits": {
-//    "cpu_ms": 300000 // default is 30000 (30 seconds)
-//  },
-   "vars": {
-     "MY_VAR": "my-variable" // Some variable to use in your Worker
-   },
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1
+  //  "limits": {
+  //    "cpu_ms": 300000 // default is 30000 (30 seconds)
+  //  },
+  "vars": {
+    "MY_VAR": "my-variable", // Some variable to use in your Worker
   },
+  // "observability": {
+  //   "enabled": true,
+  //   "head_sampling_rate": 1
+  // },
   // "kv_namespaces": [
   //   {
   //     "binding": "MY_KV_NAMESPACE",
@@ -32,13 +29,13 @@
   //     "bucket_name": "my-bucket"
   //   }
   // ],
-   "d1_databases": [
-     {
-       "binding": "D1Database",
-       "database_name": "fashion-ai", // Change this to your database name
-       "database_id": "f81c3978-3f9b-47c8-bcae-010e6c8bb631" // Change this to your database ID
-     }
-   ]
+  "d1_databases": [
+    {
+      "binding": "D1Database",
+      "database_name": "fashion-ai", // Change this to your database name
+      "database_id": "f81c3978-3f9b-47c8-bcae-010e6c8bb631", // Change this to your database ID
+    },
+  ],
 
   // "ai": {
   //   "binding": "AI"
