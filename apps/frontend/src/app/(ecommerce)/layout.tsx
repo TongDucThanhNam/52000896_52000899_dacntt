@@ -17,7 +17,11 @@ export default function EcommerceLayout({
   return (
     <Fragment>
       <Navbar />
-      {children}
+      <main className={"flex flex-col items-center justify-center"}>
+        <div className={"w-3/4"}>
+          {children}
+        </div>
+      </main>
       <Footer />
     </Fragment>
   );

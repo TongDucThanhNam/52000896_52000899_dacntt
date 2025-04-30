@@ -7,11 +7,13 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
-import {Product} from "@/types";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Product } from "@/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
 interface ProductGridComponentProps {
+    isLoading: boolean
     products: Product[]
     currentPage: number
     onPageChange: (page: number) => void
@@ -20,17 +22,24 @@ interface ProductGridComponentProps {
 }
 
 export default function ProductGridComponent({
-                                                 products,
-                                                 currentPage,
-                                                 onPageChange,
-                                                 onSortChange,
-                                                 sortBy,
-                                             }: ProductGridComponentProps) {
+    isLoading,
+    products,
+    currentPage,
+    onPageChange,
+    onSortChange,
+    sortBy,
+}: ProductGridComponentProps) {
     const productsPerPage = 8
-    const totalPages = Math.ceil(products.length / productsPerPage)
-    const startIndex = (currentPage - 1) * productsPerPage
+    let totalPages = 5
+    let startIndex = 0
+    let currentProducts = Array(productsPerPage).fill({
+    })
+    if (!isLoading) {
+        totalPages = Math.ceil(products.length / productsPerPage)
+        startIndex = (currentPage - 1) * productsPerPage
+        currentProducts = products.slice(startIndex, startIndex + productsPerPage)
+    }
     const endIndex = startIndex + productsPerPage
-    const currentProducts = products.slice(startIndex, endIndex)
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -39,7 +48,7 @@ export default function ProductGridComponent({
                 <div className="flex gap-4">
                     <Select onValueChange={onSortChange} value={sortBy}>
                         <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Sắp xếp theo"/>
+                            <SelectValue placeholder="Sắp xếp theo" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="newest">Mới nhất</SelectItem>
@@ -50,17 +59,23 @@ export default function ProductGridComponent({
                     </Select>
                 </div>
             </div>
+
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {currentProducts.map((product: Product) => (
-                    <ProductCard key={product.id} product={product}/>
+                {currentProducts.map((product, index) => (
+                    <ProductCard
+                        key={isLoading ? `product-skeleton-${index}` : product.id}
+                        isLoading={isLoading}
+                        product={product}
+                    />
                 ))}
             </div>
+
             <div className="mt-8 flex justify-center">
                 <Pagination>
                     <PaginationContent>
                         <PaginationItem>
                             <PaginationPrevious
-                                size={"icon"}
                                 onClick={() => onPageChange(Math.max(1, currentPage - 1))}
                                 className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
                             />
@@ -68,16 +83,14 @@ export default function ProductGridComponent({
                         {[...Array(totalPages)].map((_, index) => (
                             <PaginationItem key={index}>
                                 <PaginationLink
-                                    size={"icon"}
                                     onClick={() => onPageChange(index + 1)}
-                                                isActive={currentPage === index + 1}>
+                                    isActive={currentPage === index + 1}>
                                     {index + 1}
                                 </PaginationLink>
                             </PaginationItem>
                         ))}
                         <PaginationItem>
                             <PaginationNext
-                                size={"icon"}
                                 onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
                                 className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
                             />

@@ -14,8 +14,10 @@ export default function ProductCollectionErrorBoundary({ children }: ErrorBounda
   useEffect(() => {
     // Add event listener for unhandled promise rejections
     const handleError = (event: PromiseRejectionEvent) => {
-      console.error("Unhandled promise rejection:", event.reason)
-      
+      console.error(
+        "Unhandled promise rejection:",
+        event.reason)
+
       // Check if it's a network error
       if (
         event.reason?.message === "Network connection lost" ||

@@ -1,16 +1,17 @@
 "use client"
 
-import {useState, useMemo, useCallback} from "react"
+import { useState, useMemo, useCallback } from "react"
 import useSWR from "swr"
-import {Button} from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import BreadcumbComponent from "@/components/products/BreadcumbComponent"
-import {breadcrumbPages} from "@/config/site"
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
-import {Badge} from "@/components/ui/badge"
-import type {Product} from "@/types"
+import { breadcrumbPages } from "@/config/site"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Badge } from "@/components/ui/badge"
+import type { Product } from "@/types"
+
 import ProductGridComponent from "@/components/products/ProductGridComponent"
-import {Loader2} from "lucide-react"
-import {fetchProducts} from "@/app/actions"
+import { fetchProducts } from "@/app/actions"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export const dynamic = 'force-dynamic'
 
@@ -35,7 +36,7 @@ const filters: FilterOption[] = [
             "676fc421aef26543aa192dad",
         ],
     },
-    {name: "Còn hàng", options: ["Còn hàng", "Hết hàng"]},
+    { name: "Còn hàng", options: ["Còn hàng", "Hết hàng"] },
 ]
 
 export default function ProductListPage() {
@@ -44,7 +45,7 @@ export default function ProductListPage() {
     const [activeFilters, setActiveFilters] = useState<string[]>([])
 
     // Use SWR with the server action
-    const {data: products, error, isLoading} = useSWR<Product[]>("products", fetchProducts)
+    const { data: products, error, isLoading } = useSWR<Product[]>("products", fetchProducts)
 
     // parse image from text to array image
     const parsedProducts = useMemo(() => {
@@ -76,7 +77,7 @@ export default function ProductListPage() {
     // Memoized handlers to prevent unnecessary re-renders
     const handlePageChange = useCallback((page: number) => {
         setCurrentPage(page)
-        window.scrollTo({top: 0, behavior: "smooth"})
+        window.scrollTo({ top: 0, behavior: "smooth" })
     }, [])
 
     const handleSortChange = useCallback((sort: string) => {
@@ -135,15 +136,6 @@ export default function ProductListPage() {
         return result
     }, [parsedProducts, activeFilters, sortBy])
 
-    // Loading state
-    if (isLoading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen">
-                <Loader2 className="h-8 w-8 animate-spin"/>
-            </div>
-        )
-    }
-
     // Error state
     if (error) {
         return (
@@ -158,62 +150,82 @@ export default function ProductListPage() {
         <main className="container mx-auto py-8 px-4">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                <BreadcumbComponent breadcrumbPages={breadcrumbPages}/>
+                <BreadcumbComponent breadcrumbPages={breadcrumbPages} />
+
             </div>
 
             {/* Header and Filters */}
             <div className="mb-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+
                     <h1 className="text-xl font-semibold">
-                        Sản phẩm <span
-                        className="text-sm text-muted-foreground">({filteredAndSortedProducts.length})</span>
+                        Sản phẩm:
+                        <span className="text-sm text-muted-foreground ml-2">
+                            {isLoading ? "" : filteredAndSortedProducts.length}
+                        </span>
+
                     </h1>
                     <div className="flex flex-wrap gap-2">
-                        {filters.map((filter) => (
-                            <DropdownMenu key={filter.name}>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="neutral" className="bg-background whitespace-nowrap">
-                                        {filter.name}
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    {filter.options.map((option) => (
-                                        <DropdownMenuItem
-                                            key={option}
-                                            onSelect={() => handleFilterChange(option)}
-                                            className="cursor-pointer"
-                                        >
-                                            {option}
-                                        </DropdownMenuItem>
-                                    ))}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        ))}
+                        {
+                            filters.map((filter) => (
+                                <DropdownMenu key={filter.name}>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="neutral" className="bg-background whitespace-nowrap">
+                                            {filter.name}
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        {filter.options.map((option) => (
+                                            <DropdownMenuItem
+                                                key={option}
+                                                onSelect={() => handleFilterChange(option)}
+                                                className="cursor-pointer"
+                                            >
+                                                {option}
+                                            </DropdownMenuItem>
+                                        ))}
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            ))}
+
                     </div>
                 </div>
 
                 {/* Active Filters */}
-                {activeFilters.length > 0 && (
-                    <div className="flex gap-2 flex-wrap">
-                        {activeFilters.map((filter: string, index: number) => (
-                            <Badge key={`${filter}-${index}`} variant="default" className="rounded-full px-3 py-1">
-                                {filter}
-                                <button
-                                    className="ml-2 hover:text-primary"
-                                    onClick={() => removeFilter(filter)}
-                                    aria-label={`Remove ${filter} filter`}
-                                >
-                                    ×
-                                </button>
-                            </Badge>
-                        ))}
-                    </div>
-                )}
+                <div className="h-8">
+                    {isLoading ? (
+                        <div className="flex gap-2 flex-wrap">
+                            <Skeleton className="w-20 h-8 rounded-full">
+                                <div className="h-8 w-20 rounded-full bg-default-300" />
+                            </Skeleton>
+                            <Skeleton className="w-16 h-8 rounded-full">
+                                <div className="h-8 w-16 rounded-full bg-default-300" />
+                            </Skeleton>
+                        </div>
+                    ) : activeFilters.length > 0 && (
+                        <div className="flex gap-2 flex-wrap">
+                            {activeFilters.map((filter: string, index: number) => (
+                                <Badge key={`${filter}-${index}`} variant="default" className="rounded-full px-3 py-1">
+                                    {filter}
+                                    <button
+                                        className="ml-2 hover:text-primary"
+                                        onClick={() => removeFilter(filter)}
+                                        aria-label={`Remove ${filter} filter`}
+                                    >
+                                        ×
+                                    </button>
+                                </Badge>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
             </div>
 
             <h1 className="text-4xl font-bold mb-8 text-center">Khám phá bộ sưu tập của chúng tôi</h1>
 
             <ProductGridComponent
+                isLoading={isLoading}
                 products={filteredAndSortedProducts}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}

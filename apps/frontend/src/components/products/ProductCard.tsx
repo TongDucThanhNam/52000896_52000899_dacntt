@@ -6,12 +6,46 @@ import Link from "next/link";
 import type { Product } from "@/types";
 import { getCategoryName } from "@/lib/utils";
 import { Heart, ShoppingCart } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ProductCardProps {
+  isLoading?: boolean;
   product: Product;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ isLoading, product }: ProductCardProps) {
+  if (isLoading) {
+    return (
+      <Card className="flex h-[460px] overflow-hidden rounded-lg">
+        <div className="w-full h-full relative overflow-hidden rounded-t-lg">
+          <Skeleton className="h-full w-full rounded-t-lg" />
+        </div>
+
+        <CardContent className="flex-grow p-4 flex flex-col">
+          <div className="flex items-center gap-2 mb-2">
+            <Skeleton className="h-4 w-20 rounded-md" />
+            <Skeleton className="h-3 w-16 rounded-md" />
+          </div>
+
+          <Skeleton className="h-6 w-3/4 rounded-md mb-2" />
+          <Skeleton className="h-4 w-full rounded-md mb-1" />
+          <Skeleton className="h-4 w-2/3 rounded-md" />
+
+          <div className="mt-auto flex items-center gap-2">
+            <Skeleton className="h-6 w-20 rounded-md" />
+          </div>
+        </CardContent>
+
+
+        <CardFooter className="p-4 pt-0 mt-auto">
+          <Button className="w-full font-medium">
+            Chi tiết sản phẩm
+          </Button>
+        </CardFooter>
+      </Card>
+    );
+  }
+
   // Get the lowest price from variants if available
   const getLowestPrice = () => {
     if (!product.variants || product.variants.length === 0) {
