@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getUserProfile } from '@/app/actions'
 
 export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname

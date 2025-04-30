@@ -1,11 +1,10 @@
 import {betterAuth} from "better-auth";
 import {drizzleAdapter} from "better-auth/adapters/drizzle";
+import type {DrizzleD1Database} from "drizzle-orm/d1";
 import * as schema from "../Domain/Entities/index";
-import type { Variables } from "../index";
-import type { Env } from "../index";
+import {Env} from "..";
 
-export function createAuthInstance(db: Variables['db'], env: Env) {
-    console.log("Creating auth instance");
+export const auth = (db: DrizzleD1Database, env: Env) => {
     return betterAuth({
         database: drizzleAdapter(db, {
             provider: "sqlite",
@@ -13,11 +12,16 @@ export function createAuthInstance(db: Variables['db'], env: Env) {
         }),
         advanced: {
             disableCSRFCheck: true,
+            defaultCookieAttributes: {
+                sameSite: "none",
+                secure: true,
+                partitioned: true // New browser standards will mandate this for foreign cookies
+            },
+            crossSubDomainCookies: {
 
-          crossSubDomainCookies: {
-              enabled: true,
-              // domain: env.CORS_ORIGIN || "https://fashion-ai.tongducthanhnam.id.vn",
-          }
+                enabled: true,
+                // domain: env.CORS_ORIGIN || "https://fashion-ai.tongducthanhnam.id.vn",
+            },
         },
         user: {
             additionalFields: {
@@ -75,18 +79,16 @@ export function createAuthInstance(db: Variables['db'], env: Env) {
             },
         },
         trustedOrigins: [
-            process.env.CORS_ORIGIN || "https://fashion-ai.terasumi.workers.dev",
-            "https://fashion-ai.terasumi.workers.dev"
+            process.env.CORS_ORIGIN || "https://fashion-ai.tongducthanhnam.id.vn",
+            "https://fashion-ai.terasumi.workers.dev",
+            "https://fashion-ai-peach.vercel.app",
+            "http://localhost:8787", // for local development
+            "http://localhost:3000",
         ],
         emailAndPassword: {
             enabled: true,
         },
     });
-}
-
-// For backward compatibility
-export const auth = {
-    handler: (req: Request) => {
-        throw new Error("Direct usage of auth.handler is deprecated. Use createAuthInstance instead.");
-    }
 };
+
+export type BetterAuth = ReturnType<typeof auth>;

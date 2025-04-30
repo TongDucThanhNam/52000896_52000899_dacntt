@@ -1,24 +1,29 @@
+import { drizzle } from "drizzle-orm/d1";
 import type { Context as HonoContext } from "hono";
-import { createAuthInstance } from "./auth";
-import type { Variables, Env } from "../index";
+import { auth } from "./auth";
+import { Env } from "..";
 
-export type CreateContextOptions = {
-	context: HonoContext;
-};
+export async function createContext({
+  req,
+  env,
+  workerCtx,
+}: {
+  req: Request;
+  env: Env;
+  workerCtx: HonoContext["executionCtx"];
+}) {
+  const db = drizzle(env.DB);
 
-export async function createContext({ context }: CreateContextOptions) {
-	console.log("Creating context");
-	const db = context.get("db") as Variables['db'];
-	const env = context.env as Env;
-	const authInstance = createAuthInstance(db, env);
+  const session = await auth(db, env).api.getSession({
+    headers: req.headers,
+  });
 
-	const session = await authInstance.api.getSession({
-		headers: context.req.raw.headers,
-	});
-
-	return {
-		session,
-	};
+  return {
+    req,
+    env,
+    workerCtx,
+    session,
+  };
 }
 
 export type Context = Awaited<ReturnType<typeof createContext>>;

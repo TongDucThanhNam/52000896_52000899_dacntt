@@ -1,7 +1,7 @@
 import "@/app/globals.css";
 import {Toaster} from "@/components/ui/toaster"
 import {darkerGrotesque} from "@/app/fonts/fonts";
-import Providers from "@/components/provider";
+// import Providers from "@/components/provider";
 
 export default function RootLayout({
                                        children,
@@ -17,11 +17,11 @@ export default function RootLayout({
         <body
             className={`${darkerGrotesque.className} antialiased`}
         >
-        <Providers>
+        {/*<Providers>*/}
             {/*<AuthProvider>*/}
             {children}
             {/*</AuthProvider>*/}
-        </Providers>
+        {/*</Providers>*/}
         <Toaster/>
         </body>
         </html>
