@@ -1,4 +1,4 @@
-## Product instructionss
+## Product instructions
 1. This Project using Hono as Backend Framework, target deploy to Cloudflare Workers.
 2. Project split into 4 layers:
    1. Routes: API Routes
