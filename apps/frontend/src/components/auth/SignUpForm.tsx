@@ -6,23 +6,21 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { format } from "date-fns"
 import { Building, CalendarIcon } from "lucide-react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Slider } from "@/components/ui/slider"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Calendar } from "@/components/ui/calendar"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import AvatarUpload from "@/components/auth/AvatarUpload";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { cities } from "@/config/site";
+import AvatarUpload from "@/components/auth/AvatarUpload"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { cities } from "@/config/site"
 import { authClient } from "@/lib/auth-client"
 
 const FormSchema = z
@@ -47,7 +45,10 @@ const FormSchema = z
         path: ["confirmPassword"],
     })
 
-export default function RegisterPage() {
+/**
+ * Component form đăng ký có thể tái sử dụng
+ */
+export function SignUpForm() {
     const router = useRouter()
     const { toast } = useToast()
     const [avatarUrl, setAvatarUrl] = useState("")
@@ -70,8 +71,11 @@ export default function RegisterPage() {
         },
     })
 
+    /**
+     * Xử lý submit form đăng ký
+     * @param {z.infer<typeof FormSchema>} data - Giá trị form
+     */
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        //on signup
         await authClient.signUp.email(
             {
                 email: data.userEmail,
@@ -330,12 +334,10 @@ export default function RegisterPage() {
                                                 <Building className="w-4 h-4" />
                                                 <span>Thành phố sinh sống</span>
                                             </FormLabel>
-                                            <Select onValueChange={field.onChange} value={field.value}
-                                                defaultValue={field.value}>
+                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                 <FormControl>
-                                                    <SelectTrigger
-                                                        className="transition duration-200 ease-in-out focus:ring-2 focus:ring-blue-500">
-                                                        <SelectValue placeholder="Lựa chọn thành phố" />
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Chọn thành phố" />
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
@@ -351,23 +353,11 @@ export default function RegisterPage() {
                                     )}
                                 />
                             </div>
-                            <Button
-                                type="submit"
-                                className="w-full"
-                            >
+                            <Button type="submit" className="w-full">
                                 Đăng ký
                             </Button>
                         </form>
                     </Form>
-                    <div className="mt-8">
-                        <Separator />
-                        <div className="mt-4 text-center text-sm text-gray-600">
-                            Đã có tài khoản?{" "}
-                            <Link href="/dang-nhap" className="text-primary hover:underline font-semibold">
-                                Đăng nhập
-                            </Link>
-                        </div>
-                    </div>
                 </div>
             </Card>
         </div>

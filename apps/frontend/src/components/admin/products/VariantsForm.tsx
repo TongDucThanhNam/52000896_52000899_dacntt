@@ -1,10 +1,10 @@
-import {Variant} from "@/types";
-import React, {Fragment} from "react";
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
-import {Table, TableBody, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import {Button} from "@/components/ui/button";
-import {PlusCircle} from "lucide-react";
+import { Variant } from "@/types";
+import React, { Fragment } from "react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
 import VariantRow from "@/components/admin/products/VariantRow";
 
 interface VariantsFormProps {
@@ -13,7 +13,7 @@ interface VariantsFormProps {
 }
 
 export default function VariantsForm(
-    {variants, setVariants}: VariantsFormProps
+    { variants, setVariants }: VariantsFormProps
 ) {
     const [header, setHeader] = React.useState<string[]>([
         'Size',
@@ -25,7 +25,10 @@ export default function VariantsForm(
 
     return (
         <Fragment>
-            <Card>
+            <Card
+                className='py-6'
+
+            >
                 <CardHeader>
                     <CardTitle>Thêm biến thể</CardTitle>
                     <CardDescription>
@@ -40,7 +43,7 @@ export default function VariantsForm(
                             setHeader(value)
                         }}
                     >
-                        <ToggleGroupItem variant={"outline"} value="Size">Size</ToggleGroupItem>
+                        <ToggleGroupItem value="Size">Size</ToggleGroupItem>
                         <ToggleGroupItem value="Style">Style</ToggleGroupItem>
                         <ToggleGroupItem value="Color">Màu</ToggleGroupItem>
                         <ToggleGroupItem value="Material">Chất liệu</ToggleGroupItem>
@@ -73,7 +76,7 @@ export default function VariantsForm(
                                         keyIndex={variant.variantKeyIndex}
                                         header={header}
                                         variant={variant}
-                                        setVariants={setVariants}/>
+                                        setVariants={setVariants} />
                                 ))
                             }
                         </TableBody>
@@ -81,30 +84,30 @@ export default function VariantsForm(
                 </CardContent>
                 <CardFooter className="justify-center border-t p-4">
                     <Button size="sm" variant={"default"} className="gap-1"
-                            onClick={() => {
-                                const currentVariantLength = variants.length
-                                setVariants([...variants, {
-                                    variantSku: '',
-                                    variantName: '',
-                                    variantSlug: '',
-                                    variantKeyIndex: currentVariantLength,
-                                    variantImageUrl: '',
+                        onClick={() => {
+                            const currentVariantLength = variants.length
+                            setVariants([...variants, {
+                                variantSku: '',
+                                variantName: '',
+                                variantSlug: '',
+                                variantKeyIndex: currentVariantLength,
+                                variantImageUrl: '',
 
-                                    // attributes related to product variant
-                                    variantSize: '',
-                                    variantColor: '',
-                                    variantStyle: '',
-                                    variantMaterial: '',
-                                    variantSeason: '',
-                                    // attributes related to price and stock
-                                    variantPrice: 0,
-                                    variantPromotionPrice: 0,
-                                    variantStockQuantity: 0,
-                                    variantStatus: ''
-                                }])
-                            }}
+                                // attributes related to product variant
+                                variantSize: '',
+                                variantColor: '',
+                                variantStyle: '',
+                                variantMaterial: '',
+                                variantSeason: '',
+                                // attributes related to price and stock
+                                variantPrice: 0,
+                                variantPromotionPrice: 0,
+                                variantStockQuantity: 0,
+                                variantStatus: ''
+                            }])
+                        }}
                     >
-                        <PlusCircle className="h-3.5 w-3.5"/>
+                        <PlusCircle className="h-3.5 w-3.5" />
                         Thêm biến thể
                     </Button>
                 </CardFooter>

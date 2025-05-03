@@ -22,7 +22,7 @@ const buttonVariants = cva(
         ghost: "text-main-foreground hover:bg-main hover:text-main-foreground",
         link: "text-main-foreground hover:underline",
         destructive:
-          "text-white bg-destructive border-2 border-destructive hover:bg-destructive/90",
+          "text-destructive-foreground bg-destructive hover:bg-destructive/90",
         reverse:
           "text-main-foreground bg-main border-2 border-border hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-shadow",
       },

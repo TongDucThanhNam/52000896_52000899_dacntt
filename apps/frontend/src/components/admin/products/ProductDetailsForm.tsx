@@ -1,28 +1,30 @@
-import React, {Fragment} from 'react'
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
-import {Input} from "@/components/ui/input"
-import {Textarea} from "@/components/ui/textarea"
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
-import {ProductAttributes} from '@/types'
-import {FileUpload} from "@/components/ui/file-upload";
-import {Label} from "@/components/ui/label";
-import {TagsInput} from "@/components/ui/tag-input";
+import React, { Fragment } from 'react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ProductAttributes } from '@/types'
+import { FileUpload } from "@/components/ui/file-upload";
+import { Label } from "@/components/ui/label";
+import { TagsInput } from "@/components/ui/tag-input";
 
 interface ProductDetailsFormProps {
     productAttributes: ProductAttributes
     setProductAttributes: React.Dispatch<React.SetStateAction<ProductAttributes>>
 }
 
-export default function ProductDetailsForm({productAttributes, setProductAttributes}: ProductDetailsFormProps) {
+export default function ProductDetailsForm({ productAttributes, setProductAttributes }: ProductDetailsFormProps) {
     return (
         <Fragment>
             {/* Image Upload */}
             <FileUpload
                 imageUrls={productAttributes.imageUrls}
                 setProductAttributes={setProductAttributes}
-                productAttributes={productAttributes}/>
+                productAttributes={productAttributes} />
 
-            <Card x-chunk="A card with a form to edit the product details">
+            <Card
+                className="py-6"
+                x-chunk="A card with a form to edit the product details">
                 <CardHeader>
                     <CardTitle>Thông tin sản phẩm</CardTitle>
                     <CardDescription>
@@ -63,7 +65,7 @@ export default function ProductDetailsForm({productAttributes, setProductAttribu
                             <Label htmlFor="name">Tag sản phẩm</Label>
                             <TagsInput
                                 value={productAttributes.productTag || []}
-                                onValueChange={(value:string[]) => setProductAttributes(
+                                onValueChange={(value: string[]) => setProductAttributes(
                                     {
                                         ...productAttributes,
                                         productTag: value
@@ -91,7 +93,9 @@ export default function ProductDetailsForm({productAttributes, setProductAttribu
             </Card>
 
 
-            <Card x-chunk="A card with a form to edit the product category and subcategory">
+            <Card
+                className='py-6'
+                x-chunk="A card with a form to edit the product category and subcategory">
                 <CardHeader>
                     <CardTitle>Thể loại và Nhãn hàng</CardTitle>
                 </CardHeader>
@@ -110,7 +114,7 @@ export default function ProductDetailsForm({productAttributes, setProductAttribu
                                     id="category"
                                     aria-label="Select category"
                                 >
-                                    <SelectValue placeholder="Chọn loại quần áo"/>
+                                    <SelectValue placeholder="Chọn loại quần áo" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="67947c2be443c89e47753076">
@@ -155,7 +159,10 @@ export default function ProductDetailsForm({productAttributes, setProductAttribu
                 </CardContent>
             </Card>
 
-            <Card x-chunk="A card with a form to edit the product status">
+            <Card
+                className='py-6'
+
+                x-chunk="A card with a form to edit the product status">
                 <CardHeader>
                     <CardTitle>Trạng thái sản phẩm</CardTitle>
                 </CardHeader>
@@ -167,7 +174,7 @@ export default function ProductDetailsForm({productAttributes, setProductAttribu
                                 defaultValue={"active"}
                             >
                                 <SelectTrigger id="status" aria-label="Chọn trạng thái">
-                                    <SelectValue placeholder="Chọn trạng thái"/>
+                                    <SelectValue placeholder="Chọn trạng thái" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="deactive">Hết hàng</SelectItem>
