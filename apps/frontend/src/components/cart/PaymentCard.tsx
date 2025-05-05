@@ -1,12 +1,12 @@
 "use client"
 
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
-import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group"
-import {Label} from "@/components/ui/label"
-import {Input} from "@/components/ui/input"
-import {Button} from "@/components/ui/button"
-import {IconCash} from "@tabler/icons-react"
-import {CreditCard, QrCodeIcon} from "lucide-react"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { IconCash } from "@tabler/icons-react"
+import { CreditCard, QrCodeIcon } from "lucide-react"
 import NextImage from "next/image";
 
 interface PaymentCardProps {
@@ -26,25 +26,29 @@ export default function PaymentCard(
     }
 
     return (
-        <Card>
-            <CardHeader>
+        <Card
+            className="pb-6"
+        >
+            <CardHeader
+                className="py-3"
+            >
                 <CardTitle>Phương thức thanh toán</CardTitle>
                 <CardDescription>Thêm phương thức thanh toán mới vào tài khoản của bạn.</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-6">
                 <RadioGroup
                     defaultValue={paymentMethod} className="grid grid-cols-3 gap-4"
-                            onValueChange={handlePaymentMethodChange}>
+                    onValueChange={handlePaymentMethodChange}>
                     <div>
                         <RadioGroupItem
                             disabled={true}
-                            value="card" id="card" className="peer sr-only" aria-label="Thẻ"/>
+                            value="card" id="card" className="peer sr-only" aria-label="Thẻ" />
                         <Label
                             htmlFor="card"
                             className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
                             <div className="mb-3 h-6 w-6">
-                                <CreditCard/>
+                                <CreditCard />
                             </div>
                             Thẻ Visa / Mastercard
                         </Label>
@@ -58,20 +62,20 @@ export default function PaymentCard(
                             className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
                             <div className="mb-3 h-6 w-6">
-                                <QrCodeIcon/>
+                                <QrCodeIcon />
                             </div>
                             QR code
                         </Label>
                     </div>
 
                     <div>
-                        <RadioGroupItem value="cash" id="cash" className="peer sr-only" aria-label="Cash"/>
+                        <RadioGroupItem value="cash" id="cash" className="peer sr-only" aria-label="Cash" />
                         <Label
                             htmlFor="cash"
                             className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
                             <div className="mb-3 h-6 w-6">
-                                <IconCash/>
+                                <IconCash />
                             </div>
                             Thanh toán khi nhận hàng
                         </Label>
@@ -84,11 +88,11 @@ export default function PaymentCard(
                     <>
                         <div className="grid gap-2">
                             <Label htmlFor="name">Tên trên thẻ</Label>
-                            <Input id="name" placeholder="NGUYEN VAN A"/>
+                            <Input id="name" placeholder="NGUYEN VAN A" />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="number">Số thẻ</Label>
-                            <Input id="number" placeholder="4212222222"/>
+                            <Input id="number" placeholder="4212222222" />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="grid gap-2">
@@ -107,7 +111,7 @@ export default function PaymentCard(
                             </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="cvc">CVC</Label>
-                                <Input id="cvc" placeholder="CVC" maxLength={4}/>
+                                <Input id="cvc" placeholder="CVC" maxLength={4} />
                             </div>
                         </div>
                     </>

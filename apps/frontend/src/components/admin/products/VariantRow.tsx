@@ -1,8 +1,8 @@
-import {TableCell, TableRow} from "@/components/ui/table";
-import {Input} from "@/components/ui/input";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
 import React from "react";
-import {Variant} from "@/types";
-import {Label} from "@/components/ui/label";
+import { Variant } from "@/types";
+import { Label } from "@/components/ui/label";
 
 const HeaderMap = {
     Size: 'variantSize',
@@ -40,7 +40,7 @@ export default function VariantRow(
                             setVariants((prev) =>
                                 prev.map((variant, index) =>
                                     index === keyIndex
-                                        ? {...variant, variantSku: e.target.value}
+                                        ? { ...variant, variantSku: e.target.value }
                                         : variant
                                 )
                             );
@@ -59,7 +59,7 @@ export default function VariantRow(
                         setVariants((prev) =>
                             prev.map((variant, index) =>
                                 index === keyIndex
-                                    ? {...variant, variantImageUrl: e.target.value}
+                                    ? { ...variant, variantImageUrl: e.target.value }
                                     : variant
                             )
                         );
@@ -78,7 +78,7 @@ export default function VariantRow(
                             setVariants((prev) =>
                                 prev.map((variant, index) =>
                                     index === keyIndex
-                                        ? {...variant, variantName: e.target.value}
+                                        ? { ...variant, variantName: e.target.value }
                                         : variant
                                 )
                             );
@@ -126,7 +126,7 @@ export default function VariantRow(
                             setVariants((prev) =>
                                 prev.map((variant, index) =>
                                     index === keyIndex
-                                        ? {...variant, variantPrice: parseFloat(e.target.value)}
+                                        ? { ...variant, variantPrice: parseFloat(e.target.value) }
                                         : variant
                                 )
                             );
@@ -146,7 +146,7 @@ export default function VariantRow(
                             setVariants((prev) =>
                                 prev.map((variant, index) =>
                                     index === keyIndex
-                                        ? {...variant, variantPromotionPrice: parseFloat(e.target.value)}
+                                        ? { ...variant, variantPromotionPrice: parseFloat(e.target.value) }
                                         : variant
                                 )
                             );
@@ -166,7 +166,7 @@ export default function VariantRow(
                             setVariants((prev) =>
                                 prev.map((variant, index) =>
                                     index === keyIndex
-                                        ? {...variant, variantStockQuantity: parseInt(e.target.value)}
+                                        ? { ...variant, variantStockQuantity: parseInt(e.target.value) }
                                         : variant
                                 )
                             );

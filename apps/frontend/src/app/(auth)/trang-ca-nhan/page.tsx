@@ -1,23 +1,23 @@
 "use client"
 
-import {useState} from "react"
-import {zodResolver} from "@hookform/resolvers/zod"
-import {useForm} from "react-hook-form"
-import {z} from "zod"
-import {format} from "date-fns"
-import {CalendarIcon, Loader2} from "lucide-react"
-import {Button} from "@/components/ui/button"
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
-import {Input} from "@/components/ui/input"
-import {Textarea} from "@/components/ui/textarea"
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
-import {Calendar} from "@/components/ui/calendar"
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover"
-import {cn} from "@/lib/utils"
-import {useToast} from "@/hooks/use-toast"
-import {authClient} from "@/lib/auth-client";
+import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { format } from "date-fns"
+import { CalendarIcon, Loader2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { cn } from "@/lib/utils"
+import { useToast } from "@/hooks/use-toast"
+import { authClient } from "@/lib/auth-client";
 
 // Define the form schema with validation
 const profileFormSchema = z.object({
@@ -46,7 +46,7 @@ const profileFormSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-export default function ProfileForm() {
+export default function TrangCaNhan() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const {
         data: session,
@@ -56,7 +56,7 @@ export default function ProfileForm() {
     } = authClient.useSession()
 
     // Fetch user data with SWR
-    const {toast} = useToast()
+    const { toast } = useToast()
     const currentUser = session?.user
 
     // Initialize form with user data when available
@@ -96,7 +96,7 @@ export default function ProfileForm() {
     if (isPending) {
         return (
             <div className="flex justify-center items-center min-h-[400px]">
-                <Loader2 className="h-8 w-8 animate-spin text-primary"/>
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
         )
     }
@@ -110,11 +110,11 @@ export default function ProfileForm() {
     }
 
     return (
-        <div className="space-y-8">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Personal Information</CardTitle>
-                    <CardDescription>Update your personal details and preferences</CardDescription>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4 md:p-8">
+            <Card className="pb-6 max-w-4xl mx-auto shadow-lg rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl">
+                <CardHeader className="py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+                    <CardTitle className="text-2xl font-bold">Thông Tin Cá Nhân</CardTitle>
+                    <CardDescription className="text-blue-100">Cập nhật thông tin cá nhân của bạn</CardDescription>
                 </CardHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -122,11 +122,11 @@ export default function ProfileForm() {
                             <div className="flex flex-col md:flex-row gap-6">
                                 <div className="flex flex-col items-center space-y-4">
                                     <Avatar className="h-24 w-24">
-                                        <AvatarImage src={currentUser?.image || ""} alt={currentUser?.name}/>
+                                        <AvatarImage src={currentUser?.image || ""} alt={currentUser?.name} />
                                         <AvatarFallback>{currentUser?.name?.charAt(0) || "U"}</AvatarFallback>
                                     </Avatar>
-                                    <Button variant="outline" size="sm">
-                                        Change Avatar
+                                    <Button variant="outline" size="sm" className="transition-colors duration-300 hover:bg-blue-100">
+                                        Đổi Ảnh Đại Diện
                                     </Button>
                                 </div>
 
@@ -135,13 +135,13 @@ export default function ProfileForm() {
                                         <FormField
                                             control={form.control}
                                             name="name"
-                                            render={({field}) => (
+                                            render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Full Name</FormLabel>
+                                                    <FormLabel>Họ và tên</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Your name" {...field} />
+                                                        <Input placeholder="Nhập họ tên" {...field} />
                                                     </FormControl>
-                                                    <FormMessage/>
+                                                    <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
@@ -149,15 +149,15 @@ export default function ProfileForm() {
                                         <FormField
                                             control={form.control}
                                             name="email"
-                                            render={({field}) => (
+                                            render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>Email</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Your email" {...field} disabled
-                                                               className="bg-muted/50"/>
+                                                        <Input placeholder="Nhập email" {...field} disabled
+                                                            className="bg-muted/50" />
                                                     </FormControl>
                                                     <FormDescription>Email cannot be changed</FormDescription>
-                                                    <FormMessage/>
+                                                    <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
@@ -167,13 +167,13 @@ export default function ProfileForm() {
                                         <FormField
                                             control={form.control}
                                             name="phone"
-                                            render={({field}) => (
+                                            render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Phone Number</FormLabel>
+                                                    <FormLabel>Số điện thoại</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Your phone number" {...field} />
+                                                        <Input placeholder="Nhập số điện thoại" {...field} />
                                                     </FormControl>
-                                                    <FormMessage/>
+                                                    <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
@@ -181,13 +181,13 @@ export default function ProfileForm() {
                                         <FormField
                                             control={form.control}
                                             name="job"
-                                            render={({field}) => (
+                                            render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Occupation</FormLabel>
+                                                    <FormLabel>Nghề nghiệp</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Your occupation" {...field} />
+                                                        <Input placeholder="Nhập nghề nghiệp" {...field} />
                                                     </FormControl>
-                                                    <FormMessage/>
+                                                    <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
@@ -199,13 +199,13 @@ export default function ProfileForm() {
                                 <FormField
                                     control={form.control}
                                     name="gender"
-                                    render={({field}) => (
+                                    render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Gender</FormLabel>
+                                            <FormLabel>Giới tính</FormLabel>
                                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger>
-                                                        <SelectValue placeholder="Select gender"/>
+                                                        <SelectValue placeholder="Chọn giới tính" />
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
@@ -214,7 +214,7 @@ export default function ProfileForm() {
                                                     <SelectItem value="Other">Other</SelectItem>
                                                 </SelectContent>
                                             </Select>
-                                            <FormMessage/>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />
@@ -222,9 +222,9 @@ export default function ProfileForm() {
                                 <FormField
                                     control={form.control}
                                     name="dateOfBirth"
-                                    render={({field}) => (
+                                    render={({ field }) => (
                                         <FormItem className="flex flex-col">
-                                            <FormLabel>Date of Birth</FormLabel>
+                                            <FormLabel>Ngày sinh</FormLabel>
                                             <Popover>
                                                 <PopoverTrigger asChild>
                                                     <FormControl>
@@ -236,8 +236,8 @@ export default function ProfileForm() {
                                                             )}
                                                         >
                                                             {field.value ? format(field.value, "PPP") :
-                                                                <span>Pick a date</span>}
-                                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50"/>
+                                                                <span>Chọn ngày</span>}
+                                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                         </Button>
                                                     </FormControl>
                                                 </PopoverTrigger>
@@ -251,7 +251,7 @@ export default function ProfileForm() {
                                                     />
                                                 </PopoverContent>
                                             </Popover>
-                                            <FormMessage/>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />
@@ -260,13 +260,13 @@ export default function ProfileForm() {
                                     <FormField
                                         control={form.control}
                                         name="height"
-                                        render={({field}) => (
+                                        render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Height (cm)</FormLabel>
+                                                <FormLabel>Chiều cao (cm)</FormLabel>
                                                 <FormControl>
                                                     <Input type="number" {...field} />
                                                 </FormControl>
-                                                <FormMessage/>
+                                                <FormMessage />
                                             </FormItem>
                                         )}
                                     />
@@ -274,13 +274,13 @@ export default function ProfileForm() {
                                     <FormField
                                         control={form.control}
                                         name="weight"
-                                        render={({field}) => (
+                                        render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Weight (kg)</FormLabel>
+                                                <FormLabel>Cân nặng (kg)</FormLabel>
                                                 <FormControl>
                                                     <Input type="number" {...field} />
                                                 </FormControl>
-                                                <FormMessage/>
+                                                <FormMessage />
                                             </FormItem>
                                         )}
                                     />
@@ -291,14 +291,14 @@ export default function ProfileForm() {
                                 <FormField
                                     control={form.control}
                                     name="address"
-                                    render={({field}) => (
+                                    render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Address</FormLabel>
+                                            <FormLabel>Địa chỉ</FormLabel>
                                             <FormControl>
-                                                <Textarea placeholder="Your address"
-                                                          className="resize-none" {...field} />
+                                                <Textarea placeholder="Nhập địa chỉ"
+                                                    className="resize-none" {...field} />
                                             </FormControl>
-                                            <FormMessage/>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />
@@ -306,13 +306,13 @@ export default function ProfileForm() {
                                 <FormField
                                     control={form.control}
                                     name="city"
-                                    render={({field}) => (
+                                    render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>City</FormLabel>
+                                            <FormLabel>Thành phố</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Your city" {...field} />
+                                                <Input placeholder="Nhập thành phố" {...field} />
                                             </FormControl>
-                                            <FormMessage/>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />
@@ -320,12 +320,12 @@ export default function ProfileForm() {
                         </CardContent>
 
                         <CardFooter className="flex justify-end space-x-2">
-                            <Button variant="outline" type="button" onClick={() => form.reset()}>
-                                Cancel
+                            <Button variant="outline" type="button" onClick={() => form.reset()} className="transition-colors duration-300 hover:bg-gray-100">
+                                Hủy
                             </Button>
-                            <Button type="submit" disabled={isSubmitting}>
-                                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>}
-                                Save Changes
+                            <Button type="submit" disabled={isSubmitting} className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300">
+                                {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                Lưu Thay Đổi
                             </Button>
                         </CardFooter>
                     </form>

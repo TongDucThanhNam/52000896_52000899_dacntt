@@ -1,19 +1,19 @@
 "use client"
 
 import BreadcumbComponent from "@/components/products/BreadcumbComponent";
-import {breadcrumbPages} from "@/config/site";
+import { breadcrumbPages } from "@/config/site";
 import PaymentCard from "@/components/cart/PaymentCard";
 import TransactionSumartCard from "@/components/cart/TransactionSumaryCard";
-import {checkoutCart} from "@/app/actions";
-import {useState} from "react";
-import {useAuthStore} from "@/store/useAuthStore";
-import {toast} from "@/hooks/use-toast";
-import {useCartStore} from "@/store/useCartStore";
+import { checkoutCart } from "@/app/actions";
+import { useState } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
+import { toast } from "@/hooks/use-toast";
+import { useCartStore } from "@/store/useCartStore";
 
 
 export default function CartPage() {
-    const {isLoaded, isSignedIn, user} = useAuthStore()
-    const {items, removeItem, clearCart} = useCartStore()
+    const { isLoaded, isSignedIn, user } = useAuthStore()
+    const { items, removeItem, clearCart } = useCartStore()
     const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
     const [paymentMethod, setPaymentMethod] = useState("cash")
     const handleCheckout = () => {
@@ -73,9 +73,9 @@ export default function CartPage() {
     }
 
     return (
-        <main className="min-h-screen bg-gray-100">
+        <main className="min-h-screen">
             <div className="container mx-auto px-4 py-8">
-                <BreadcumbComponent breadcrumbPages={breadcrumbPages}/>
+                <BreadcumbComponent breadcrumbPages={breadcrumbPages} />
 
                 <h1 className="text-3xl font-bold mb-8 mt-4">Giỏ hàng của bạn</h1>
 
@@ -89,7 +89,7 @@ export default function CartPage() {
                                 {/*<TransactionForm/>*/}
 
                                 {/* Payment Method */}
-                                <PaymentCard paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod}/>
+                                <PaymentCard paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
                             </div>
 
                             {/* Transaction Summary */}

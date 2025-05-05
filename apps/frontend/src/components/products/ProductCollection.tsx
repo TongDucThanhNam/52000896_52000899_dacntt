@@ -2,7 +2,7 @@ import ProductCard from "@/components/products/ProductCard";
 
 async function getProducts() {
     try {
-        console.log("getProducts from ", `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`)
+        // console.log("getProducts from ", `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`)
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`, {
             headers: {
                 Accept: "application/json",
@@ -22,7 +22,7 @@ async function getProducts() {
             throw new Error(`Server trả về dữ liệu không phải JSON: ${text}`);
         }
 
-        console.log("getProducts res", result)
+        // console.log("getProducts res", result)
 
         if (!res.ok) {
             if (res.status === 500) {

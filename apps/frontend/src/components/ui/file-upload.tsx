@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import React, { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface FileUploadProps {
     imageUrls: string[],
@@ -23,7 +23,7 @@ export const FileUpload = (
 
     return (
         <div className="w-full">
-            <Card className="overflow-hidden  mx-auto">
+            <Card className="overflow-hidden  mx-auto py-6">
                 <CardHeader className="text-center">
                     <CardTitle>Ảnh sản phẩm</CardTitle>
                     <CardDescription>
@@ -44,7 +44,7 @@ export const FileUpload = (
                             <div className="grid grid-cols-3 gap-2 mt-4">
                                 {uploadedImages.slice(1, 4).map((img, index) => (
                                     <button key={index}
-                                            className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md">
+                                        className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md">
                                         <Image
                                             unoptimized={true}
                                             alt={`Product image ${index + 1}`}
@@ -148,14 +148,14 @@ export const FileUpload = (
                                                     <span className="flex-grow w-[300px] truncate ">{img}</span>
                                                 </a>
                                                 <Button size="sm"
-                                                        onClick={() => {
-                                                            setProductAttributes({
-                                                                ...productAttributes,
-                                                                imageUrls: uploadedImages.filter((_, i) => i !== index)
-                                                            })
-                                                            setUploadedImages((prevImages) => prevImages.filter((_, i) => i !== index));
-                                                        }}
-                                                        variant="destructive"
+                                                    onClick={() => {
+                                                        setProductAttributes({
+                                                            ...productAttributes,
+                                                            imageUrls: uploadedImages.filter((_, i) => i !== index)
+                                                        })
+                                                        setUploadedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+                                                    }}
+                                                    variant="neutral"
                                                 >
                                                     Xóa
                                                 </Button>
