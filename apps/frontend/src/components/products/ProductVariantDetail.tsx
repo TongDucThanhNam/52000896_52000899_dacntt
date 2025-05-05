@@ -141,12 +141,8 @@ export default function ProductVariantDetail({
             {variantGroups.colors.map((color) => (
               <Button
                 key={color}
-                variant="neutral"
-                className={cn(
-                  "rounded-full px-4 py-2",
-                  selectedColor === color &&
-                    "bg-primary text-primary-foreground",
-                )}
+                variant={selectedColor === color ? "default" : "outline"}
+                className={cn("rounded-full px-4 py-2")}
                 onClick={() => setSelectedColor(color)}
               >
                 {color}
@@ -163,11 +159,11 @@ export default function ProductVariantDetail({
             {variantGroups.sizes.map((size) => (
               <Button
                 key={size}
-                variant="neutral"
-                className={cn(
-                  "px-4 py-2",
-                  selectedSize === size && "bg-primary text-primary-foreground",
-                )}
+                variant={selectedSize === size ? "default" : "outline"}
+                // className={cn(
+                //   "px-4 py-2",
+                //   selectedSize === size && "bg-primary text-primary-foreground",
+                // )}
                 onClick={() => setSelectedSize(size)}
               >
                 {size}
@@ -184,12 +180,8 @@ export default function ProductVariantDetail({
             {variantGroups.materials.map((material) => (
               <Button
                 key={material}
-                variant="neutral"
-                className={cn(
-                  "px-4 py-2",
-                  selectedMaterial === material &&
-                    "bg-primary text-primary-foreground",
-                )}
+                variant={selectedMaterial === material ? "default" : "outline"}
+                className={cn("px-4 py-2")}
                 onClick={() => setSelectedMaterial(material)}
               >
                 {material}
