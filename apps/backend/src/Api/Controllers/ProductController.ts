@@ -245,6 +245,8 @@ export const createProductWithVariants = async (c: Context) => {
 export const getProductAndVariants = async (c: Context) => {
     try {
         const productId = c.req.param('productId');
+        console.log("ProductId: ", productId)
+
         const product = await productServices.getProductById(productId);
         const variants = await productServices.getVariantsByProduct(productId);
         const result = {

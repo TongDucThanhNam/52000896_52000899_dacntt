@@ -34,7 +34,7 @@ class VariantRepository implements IVariantRepository {
             // console.log('queryData', queryData);
 
             // If queryData contains filters, we would apply them here
-            const result = await this.db.select().from(variants);
+            const result = await this.db.select().from(variants).where(eq(variants.productId,queryData.productId ));
             return result;
         } catch (error: any) {
             throw new Error("Error at VariantRepository: " + error);

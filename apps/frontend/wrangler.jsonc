@@ -3,32 +3,30 @@
   "main": ".open-next/worker.js",
   "name": "fashion-ai",
   "compatibility_date": "2025-03-01",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+
+  "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true,
-    "head_sampling_rate": 1
+    "head_sampling_rate": 1,
   },
   "assets": {
     "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
   },
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
       // The service should match the "name" of your worker
-      "service": "fashion-ai"
-    }
+      "service": "fashion-ai",
+    },
   ],
-  "env": {
 
-  },
+  "env": {},
   "r2_buckets": [
     // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
     {
       "binding": "NEXT_INC_CACHE_R2_BUCKET",
-      "bucket_name": "fashion-ai"
-    }
-  ]
+      "bucket_name": "fashion-ai",
+    },
+  ],
 }
