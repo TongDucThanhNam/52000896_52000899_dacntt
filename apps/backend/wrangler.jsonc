@@ -10,9 +10,7 @@
   //  "limits": {
   //    "cpu_ms": 300000 // default is 30000 (30 seconds)
   //  },
-  "vars": {
-    "MY_VAR": "my-variable", // Some variable to use in your Worker
-  },
+  "vars": {},
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1,

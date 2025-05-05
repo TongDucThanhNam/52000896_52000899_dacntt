@@ -44,8 +44,8 @@ const route = app
         "http://localhost:8787", // for local development
         "http://localhost:3000",
       ], // Don't know why but this is the only way to make it work
-      allowMethods: ["GET", "POST", "OPTIONS"],
-      allowHeaders: ["Content-Type", "Authorization"],
+      allowMethods: ["*"],
+      allowHeaders: ["*"],
       credentials: true,
     })(c, next);
   })
@@ -55,7 +55,6 @@ const route = app
     c.set("db", db);
     await next();
   })
-
   .on(["POST", "GET"], "/api/auth/*", (c) => {
     // console.log("Authenticating request")
     const db = c.get("db");
@@ -102,12 +101,10 @@ const route = app
   .get("/", (c) => {
     // console.log("Handling GET request")
     return c.json({
-      CORS_ORIGIN: c.env.CORS_ORIGIN
-        ? `https://${c.env.CORS_ORIGIN}`
-        : "https://fashion-ai.tongducthanhnam.id.vn",
+      CORS_ORIGIN: c.env.CORS_ORIGIN,
       BETTER_AUTH_URL: c.env.BETTER_AUTH_URL,
       message: "Hello World!",
-    });
+    }); // Should be removed in production
   })
   // Add global error handling middleware
   .onError(async (err, c) => {

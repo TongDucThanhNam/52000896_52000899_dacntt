@@ -1,7 +1,7 @@
 import type { ITransactionRepository } from "../../../Application/Persistences/IRepositories/ITransactionRepository.ts";
 import { transactions } from "../../../Domain/Entities/TransactionEntities.js";
 import { eq } from "drizzle-orm";
-import { DrizzleD1Database } from "drizzle-orm/d1";
+import type { DrizzleD1Database } from "drizzle-orm/d1";
 
 class TransactionRepository implements ITransactionRepository {
   private db: DrizzleD1Database<Record<string, never>>;
@@ -18,7 +18,9 @@ class TransactionRepository implements ITransactionRepository {
         .returning();
       return result[0] || null;
     } catch (error) {
-      throw new Error("Error at TransactionRepository: " + error);
+      throw new Error(
+        `Error at TransactionRepository.createTransaction: ${error}`,
+      );
     }
   }
 
@@ -30,13 +32,13 @@ class TransactionRepository implements ITransactionRepository {
       const result = await this.db
         .select()
         .from(transactions)
-        .where(eq(transactions.id, parseInt(transactionId, 10)))
+        .where(eq(transactions.id, Number.parseInt(transactionId, 10)))
         .limit(1);
 
       return result[0] || null;
     } catch (error) {
       throw new Error(
-        "Error at TransactionRepository.getTransactionById: " + error,
+        `Error at TransactionRepository.getTransactionById: ${error}`,
       );
     }
   }
@@ -48,7 +50,7 @@ class TransactionRepository implements ITransactionRepository {
       return result;
     } catch (error) {
       throw new Error(
-        "Error at TransactionRepository.getAllTransactions: " + error,
+        `Error at TransactionRepository.getAllTransactions: ${error}`,
       );
     }
   }
@@ -64,13 +66,13 @@ class TransactionRepository implements ITransactionRepository {
       const result = await this.db
         .update(transactions)
         .set(transactionData)
-        .where(eq(transactions.id, parseInt(transactionId, 10)))
+        .where(eq(transactions.id, Number.parseInt(transactionId, 10)))
         .returning();
 
       return result[0] || null;
     } catch (error) {
       throw new Error(
-        "Error at TransactionRepository.updateTransactionById: " + error,
+        `Error at TransactionRepository.updateTransactionById: ${error}`,
       );
     }
   }
@@ -80,12 +82,12 @@ class TransactionRepository implements ITransactionRepository {
       const result = await this.db
         .select()
         .from(transactions)
-        .where(eq(transactions.userId, parseInt(userId, 10)));
+        .where(eq(transactions.userId, Number.parseInt(userId, 10)));
 
       return result;
     } catch (error) {
       throw new Error(
-        "Error at TransactionRepository.getTransactionsByUserId: " + error,
+        `Error at TransactionRepository.getTransactionsByUserId: ${error}`,
       );
     }
   }

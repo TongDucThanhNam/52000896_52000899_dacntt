@@ -52,7 +52,9 @@ class TransactionServices implements ITransactionService {
         );
       return transactions;
     } catch (error) {
-      throw error;
+      throw new Error(
+        `Error at TransactionServices.getAllTransactions: ${error}`,
+      );
     }
   }
 
@@ -67,7 +69,9 @@ class TransactionServices implements ITransactionService {
         );
       return transaction;
     } catch (error) {
-      throw error;
+      throw new Error(
+        `Error at TransactionServices.getTransactionById: ${error}`,
+      );
     }
   }
 
@@ -81,7 +85,7 @@ class TransactionServices implements ITransactionService {
         );
       return transactionItems;
     } catch (error) {
-      throw error;
+      throw `Error at TransactionServices.getTransactionItems: ${error}`;
     }
   }
 
@@ -95,7 +99,9 @@ class TransactionServices implements ITransactionService {
         );
       return transactions;
     } catch (error) {
-      throw error;
+      throw new Error(
+        `Error at TransactionServices.getUserTransactions: ${error}`,
+      );
     }
   }
 
@@ -108,7 +114,9 @@ class TransactionServices implements ITransactionService {
         );
       return transaction;
     } catch (error) {
-      throw error;
+      throw new Error(
+        `Error at TransactionServices.updateTransactionStatus: ${error}`,
+      );
     }
   }
 }
