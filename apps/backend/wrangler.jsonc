@@ -13,10 +13,10 @@
   "vars": {
     "MY_VAR": "my-variable", // Some variable to use in your Worker
   },
-  // "observability": {
-  //   "enabled": true,
-  //   "head_sampling_rate": 1
-  // },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+  },
   // "kv_namespaces": [
   //   {
   //     "binding": "MY_KV_NAMESPACE",

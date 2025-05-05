@@ -15,6 +15,13 @@
       "when": 1745810347464,
       "tag": "0001_flat_ink",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1746431150446,
+      "tag": "0002_smart_cerebro",
+      "breakpoints": true
     }
   ]
 }

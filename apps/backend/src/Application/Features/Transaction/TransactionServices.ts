@@ -1,5 +1,5 @@
 import type { IUnitOfWork } from "../../Persistences/IRepositories/IUnitOfWork.ts";
-import { type ITransactionService } from "../../Persistences/IServices/ITransactionServices";
+import type { ITransactionService } from "../../Persistences/IServices/ITransactionServices";
 import { UnitOfWorkFactory } from "../../../Infrastructure/Persistences/Factories/UnitOfWorkFactory";
 
 class TransactionServices implements ITransactionService {

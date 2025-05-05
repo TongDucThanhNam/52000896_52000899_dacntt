@@ -1,45 +1,45 @@
-import type {IUserServices} from "../../Application/Persistences/IServices/IUserServices.ts";
+import type { IUserServices } from "../../Application/Persistences/IServices/IUserServices.ts";
 import UserServices from "../../Application/Features/User/UserServices";
-import {Context} from "hono";
+import type { Context } from "hono";
 
 export default class UserController {
-    private userServices: IUserServices = new UserServices();
+  private userServices: IUserServices = new UserServices();
 
-    //CRUD
-    getAllUsers = async (c: Context): Promise<any> => {
-        try {
-            /*
+  //CRUD
+  getAllUsers = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Lấy tất cả người dùng'
               #swagger.description = 'Endpoint để lấy tất cả người dùng'
             */
-            const query = c.req.queries();
-            console.log(query);
-            const result = await this.userServices.getAllUsers(query);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message});
-        }
-    };
+      const query = c.req.queries();
+      console.log(query);
+      const result = await this.userServices.getAllUsers(query);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message });
+    }
+  };
 
-    getUserById = async (c: Context): Promise<any> => {
-        try {
-            /*
+  getUserById = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Lấy thông tin người dùng'
               #swagger.description = 'Endpoint để lấy thông tin người dùng theo Id'
             */
-            const userId = c.req.param('userId');
-            const result = await this.userServices.getUserById(userId);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
+      const userId = c.req.param("userId");
+      const result = await this.userServices.getUserById(userId);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
 
-    createUser = async (c: Context): Promise<any> => {
-        try {
-            /*
+  createUser = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Thêm người dùng'
               #swagger.description = 'Endpoint để thêm người dùng'
@@ -67,54 +67,54 @@ export default class UserController {
                   }
               }
             */
-            const body = await c.req.json();
-            const {
-                userName,
-                userPasswordHash,
-                userEmail,
-                userPhone,
-                userHeight,
-                userWeight,
-                userDateOfBirth,
-                userAddress,
-                userImageUrl,
-                userGender,
-                userJob,
-                userCity,
-                userRole,
-            } = body;
+      const body = await c.req.json();
+      const {
+        userName,
+        userPasswordHash,
+        userEmail,
+        userPhone,
+        userHeight,
+        userWeight,
+        userDateOfBirth,
+        userAddress,
+        userImageUrl,
+        userGender,
+        userJob,
+        userCity,
+        userRole,
+      } = body;
 
-            const data = {
-                userName,
-                userPasswordHash,
-                userEmail,
-                userPhone,
-                userHeight,
-                userWeight,
-                userDateOfBirth,
-                userAddress,
-                userImageUrl,
-                userGender,
-                userJob,
-                userCity,
-                userRole,
-            };
-            const result: any = await this.userServices.createUser(data);
+      const data = {
+        userName,
+        userPasswordHash,
+        userEmail,
+        userPhone,
+        userHeight,
+        userWeight,
+        userDateOfBirth,
+        userAddress,
+        userImageUrl,
+        userGender,
+        userJob,
+        userCity,
+        userRole,
+      };
+      const result: any = await this.userServices.createUser(data);
 
-            // console.log(result);
+      // console.log(result);
 
-            if (result.statusCode != undefined)
-                return c.json({message: result.message}, result.statusCode);
+      if (result.statusCode !== undefined)
+        return c.json({ message: result.message }, result.statusCode);
 
-            return c.json(result, 201);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
+      return c.json(result, 201);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
 
-    updateUser = async (c: Context): Promise<any> => {
-        try {
-            /*
+  updateUser = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Cập nhật thông tin người dùng'
               #swagger.description = 'Endpoint để cập nhật thông tin người dùng theo Id'
@@ -141,65 +141,65 @@ export default class UserController {
                   }
               }
             */
-            const userId = c.req.param('userId');
-            const body = await c.req.json();
-            const {
-                userName,
-                userPasswordHash,
-                userEmail,
-                userPhone,
-                userHeight,
-                userWeight,
-                userDateOfBirth,
-                userAddress,
-                userImageUrl,
-                userGender,
-                userJob,
-                userCity,
-                userRole,
-            } = body;
+      const userId = c.req.param("userId");
+      const body = await c.req.json();
+      const {
+        userName,
+        userPasswordHash,
+        userEmail,
+        userPhone,
+        userHeight,
+        userWeight,
+        userDateOfBirth,
+        userAddress,
+        userImageUrl,
+        userGender,
+        userJob,
+        userCity,
+        userRole,
+      } = body;
 
-            const userData = {
-                userId,
-                userName,
-                userPasswordHash,
-                userEmail,
-                userPhone,
-                userHeight,
-                userWeight,
-                userDateOfBirth,
-                userAddress,
-                userImageUrl,
-                userGender,
-                userJob,
-                userCity,
-                userRole,
-            };
-            const result = await this.userServices.updateUser(userData);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
+      const userData = {
+        userId,
+        userName,
+        userPasswordHash,
+        userEmail,
+        userPhone,
+        userHeight,
+        userWeight,
+        userDateOfBirth,
+        userAddress,
+        userImageUrl,
+        userGender,
+        userJob,
+        userCity,
+        userRole,
+      };
+      const result = await this.userServices.updateUser(userData);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
 
-    deleteUser = async (c: Context): Promise<any> => {
-        try {
-            /*
+  deleteUser = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Xóa người dùng'
               #swagger.description = 'Endpoint để xóa người dùng theo Id'
             */
-            const userId = c.req.param('userId');
-            const result = await this.userServices.deleteUser(userId);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
+      const userId = c.req.param("userId");
+      const result = await this.userServices.deleteUser(userId);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
 
-    updateUserPreferences = async (c: Context): Promise<any> => {
-        try {
-            /*
+  updateUserPreferences = async (c: Context): Promise<any> => {
+    try {
+      /*
                 #swagger.tags = ['Users']
                 #swagger.summary = 'Cập nhật sở thích người dùng'
                 #swagger.description = 'Endpoint để cập nhật sở thích người dùng theo Id'
@@ -215,39 +215,36 @@ export default class UserController {
                     }
                 }
             */
-            const body = await c.req.json();
-            const {
-                userId,
-                userPreferences
-            } = body;
+      const body = await c.req.json();
+      const { userId, userPreferences } = body;
 
-            const data = {
-                userId,
-                userPreferences
-            }
-            const result = await this.userServices.updateUserPreferences(data);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
+      const data = {
+        userId,
+        userPreferences,
+      };
+      const result = await this.userServices.updateUserPreferences(data);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
     }
-    getUserPreferences = async (c: Context): Promise<any> => {
-        try {
-            /*
+  };
+  getUserPreferences = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Lấy tất cả sở thích người dùng'
               #swagger.description = 'Endpoint để lấy sở thích của người dùng theo Id'
             */
-            const userId = c.req.param('userId');
-            const result = await this.userServices.getUserPreferences(userId);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
-    addUserPreference = async (c: Context): Promise<any> => {
-        try {
-            /*
+      const userId = c.req.param("userId");
+      const result = await this.userServices.getUserPreferences(userId);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
+  addUserPreference = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Thêm sở thích người dùng'
               #swagger.description = 'Endpoint để thêm sở thích người dùng theo Id'
@@ -264,38 +261,38 @@ export default class UserController {
                   }
               }
             */
-            const body = await c.req.json();
-            const {userId, preferenceType, preferenceValue, preferenceScore} = body;
+      const body = await c.req.json();
+      const { userId, preferenceType, preferenceValue, preferenceScore } = body;
 
-            const data = {
-                userId,
-                preferenceType,
-                preferenceValue,
-                preferenceScore,
-            };
-            const result = await this.userServices.addUserPreference(data);
-            return c.json(result, 201);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
-    removeUserPreference = async (c: Context): Promise<any> => {
-        try {
-            /*
+      const data = {
+        userId,
+        preferenceType,
+        preferenceValue,
+        preferenceScore,
+      };
+      const result = await this.userServices.addUserPreference(data);
+      return c.json(result, 201);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
+  removeUserPreference = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Xóa sở thích người dùng'
               #swagger.description = 'Endpoint để xóa sở thích người dùng theo Id'
             */
-            const userId = c.req.param('userId');
-            const result = await this.userServices.removeUserPreference(userId);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
-    registerUser = async (c: Context): Promise<any> => {
-        try {
-            /*
+      const userId = c.req.param("userId");
+      const result = await this.userServices.removeUserPreference(userId);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
+  registerUser = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Đăng ký người dùng'
               #swagger.description = 'Endpoint để đăng ký người dùng'
@@ -323,51 +320,51 @@ export default class UserController {
               }
             */
 
-            const body = await c.req.json();
-            const {
-                userName,
-                userPasswordHash,
-                userEmail,
-                userPhone,
-                userHeight,
-                userWeight,
-                userDateOfBirth,
-                userAddress,
-                userImageUrl,
-                userGender,
-                userJob,
-                userCity,
-            } = body;
+      const body = await c.req.json();
+      const {
+        userName,
+        userPasswordHash,
+        userEmail,
+        userPhone,
+        userHeight,
+        userWeight,
+        userDateOfBirth,
+        userAddress,
+        userImageUrl,
+        userGender,
+        userJob,
+        userCity,
+      } = body;
 
-            console.log("req.body", body);
+      console.log("req.body", body);
 
-            const data = {
-                userName,
-                userPasswordHash,
-                userEmail,
-                userPhone,
-                userHeight,
-                userWeight,
-                userDateOfBirth,
-                userAddress,
-                userImageUrl,
-                userGender,
-                userJob,
-                userCity,
-            };
-            const result: any = await this.userServices.registerUser(data);
+      const data = {
+        userName,
+        userPasswordHash,
+        userEmail,
+        userPhone,
+        userHeight,
+        userWeight,
+        userDateOfBirth,
+        userAddress,
+        userImageUrl,
+        userGender,
+        userJob,
+        userCity,
+      };
+      const result: any = await this.userServices.registerUser(data);
 
-            if (result.statusCode != undefined)
-                return c.json({message: result.message}, result.statusCode);
+      if (result.statusCode !== undefined)
+        return c.json({ message: result.message }, result.statusCode);
 
-            return c.json(result, 201);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
-    loginUser = async (c: Context): Promise<any> => {
-        try {
-            /*
+      return c.json(result, 201);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
+  loginUser = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Đăng nhập người dùng'
               #swagger.description = 'Endpoint để đăng nhập người dùng'
@@ -383,100 +380,100 @@ export default class UserController {
                   }
               }
             */
-            const body = await c.req.json();
-            const {userEmail, userPasswordHash} = body;
+      const body = await c.req.json();
+      const { userEmail, userPasswordHash } = body;
 
-            const data = {
-                userEmail,
-                userPasswordHash,
-            };
-            const result = await this.userServices.loginUser(data);
-            if (result.statusCode != undefined)
-                return c.json({message: result.message}, result.statusCode);
+      const data = {
+        userEmail,
+        userPasswordHash,
+      };
+      const result = await this.userServices.loginUser(data);
+      if (result.statusCode !== undefined)
+        return c.json({ message: result.message }, result.statusCode);
 
-            // console.log(result);
-            // save result to cookie
-            // c.cookie("accessToken", result.data?.accessToken, {
-            //     // httpOnly: true, //Cookie is not accessible via client-side script
-            //     // signed: true, // Indicates if the cookie should be signed
-            //     maxAge: 1000 * 60 * 60 * 8, // 8 hours
-            // });
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
+      // console.log(result);
+      // save result to cookie
+      // c.cookie("accessToken", result.data?.accessToken, {
+      //     // httpOnly: true, //Cookie is not accessible via client-side script
+      //     // signed: true, // Indicates if the cookie should be signed
+      //     maxAge: 1000 * 60 * 60 * 8, // 8 hours
+      // });
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
 
-    logoutUser = async (c: Context): Promise<any> => {
-        try {
-            /*
+  logoutUser = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Đăng xuất người dùng'
               #swagger.description = 'Endpoint để đăng xuất người dùng theo Id'
             */
-            const userId = c.req.param('userId');
-            const result = await this.userServices.logoutUser(userId);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
+      const userId = c.req.param("userId");
+      const result = await this.userServices.logoutUser(userId);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
 
-    forgotPassword = async (c: Context): Promise<any> => {
-        try {
-            /*
+  forgotPassword = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Quên mật khẩu'
               #swagger.description = 'Endpoint để quên mật khẩu theo email'
             */
-            const body = await c.req.json();
-            const userEmail = body.userEmail;
-            const result = await this.userServices.forgotPassword(userEmail);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
+      const body = await c.req.json();
+      const userEmail = body.userEmail;
+      const result = await this.userServices.forgotPassword(userEmail);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
 
-    resetPassword = async (c: Context): Promise<any> => {
-        try {
-            /*
+  resetPassword = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Đặt lại mật khẩu'
               #swagger.description = 'Endpoint để đặt lại mật khẩu theo email'
             */
-            const body = await c.req.json();
-            const {userEmail, userPasswordHash} = body;
+      const body = await c.req.json();
+      const { userEmail, userPasswordHash } = body;
 
-            const data = {
-                userEmail,
-                userPasswordHash,
-            };
-            const result = await this.userServices.resetPassword(data);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
-    getCurrentUser = async (c: Context): Promise<any> => {
-        try {
-            /*
+      const data = {
+        userEmail,
+        userPasswordHash,
+      };
+      const result = await this.userServices.resetPassword(data);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
+  getCurrentUser = async (c: Context): Promise<any> => {
+    try {
+      /*
               #swagger.tags = ['Users']
               #swagger.summary = 'Lấy thông tin người dùng hiện tại'
               #swagger.description = 'Endpoint để lấy thông tin người dùng hiện tại'
               #swagger.security = [{ "bearerAuth": [] }]
             */
-            // get header token
-            // Get userId from context (set by AuthenticationMiddleWare)
-            const userId = c.get('userId');
-            if (!userId) {
-                return c.json({message: "Unauthorized: User not authenticated"}, 401);
-            }
+      // get header token
+      // Get userId from context (set by AuthenticationMiddleWare)
+      const userId = c.get("userId");
+      if (!userId) {
+        return c.json({ message: "Unauthorized: User not authenticated" }, 401);
+      }
 
-            const result = await this.userServices.getUserById(userId);
-            return c.json(result);
-        } catch (error: any) {
-            return c.json({message: error.message}, 500);
-        }
-    };
+      const result = await this.userServices.getUserById(userId);
+      return c.json(result);
+    } catch (error: any) {
+      return c.json({ message: error.message }, 500);
+    }
+  };
 }
