@@ -59,7 +59,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 
   useEffect(() => {
     if (variantChosen) {
-      console.log("variantChosen", variantChosen);
+      // console.log("variantChosen", variantChosen);
       setProductPrice(variantChosen.variantPromotionPrice.toString());
     }
   }, [variantChosen]);
