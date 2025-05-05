@@ -36,11 +36,8 @@ export default function ProductCard({ isLoading, product }: ProductCardProps) {
           </div>
         </CardContent>
 
-
         <CardFooter className="p-4 pt-0 mt-auto">
-          <Button className="w-full font-medium">
-            Chi tiết sản phẩm
-          </Button>
+          <Button className="w-full font-medium">Chi tiết sản phẩm</Button>
         </CardFooter>
       </Card>
     );
